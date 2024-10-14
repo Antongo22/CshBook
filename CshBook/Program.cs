@@ -1,1 +1,1 @@
-﻿
+﻿int num = int.Parse("123Б");
