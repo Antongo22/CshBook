@@ -1,1 +1,2 @@
-﻿int num = int.Parse("123Б");
+﻿
+Console.WriteLine("h" == 'h');
