@@ -1,3 +1,11 @@
-﻿using System.Threading.Channels;
+﻿// вложенный цикл
+for (int i = 0; i < 10; ++i)
+{
+    for (int j = 0; j < 10; j++)
+    {
+        Console.Write($"{i + j}, ");
+    }
+    Console.WriteLine();
+}
 
-Console.WriteLine(10/3);
+Console.WriteLine();
