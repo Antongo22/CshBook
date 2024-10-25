@@ -144,7 +144,7 @@ namespace CshBook.Lessons
 
             // Ну и с тернарным оператором
 
-            Console.WriteLine( a > b ? "A больше чем B" : b > a ? "B больше чем A" : "A и B равны");
+            Console.WriteLine($"{( (a > b) ? ("A больше чем B") : ( (b > a) ? ("B больше чем A") : ("A и B равны") ))}" );
         }
 
         /* Задачи
