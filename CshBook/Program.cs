@@ -1,1 +1,1 @@
-﻿Console.WriteLine(123%10);
+﻿
