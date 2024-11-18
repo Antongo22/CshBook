@@ -32,7 +32,22 @@ namespace CshBook.Lessons
             object[] objects = new object[] { 1, "Hello", 3.14, new object() }; // проблем не будет 
             objects[0] = "Hello"; // можно спокойно менять 
 
+            for (int i = 0; i < objects.Length; i++)
+            {
+                Console.WriteLine(objects[i]);
+            }
+
+
+
             // Вывод элементов массива
+
+            for (int i = 0; i < numbers.Length; i++)
+            {
+                Console.WriteLine(numbers[i]);
+            }
+
+            // или 
+
             foreach (int number in numbers)
             {
                 Console.WriteLine(number);
@@ -202,6 +217,8 @@ namespace CshBook.Lessons
         /* Финальная задача
           Написать программу, которая будет вставлять число введённое пользователем по индексу в массив 
           (число элементов в массиве должно стать больше)
+
+          Сделать сортировку одномерного и двумерного массива (любая)
          */
     }
 }
