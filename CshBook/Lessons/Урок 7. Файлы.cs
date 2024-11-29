@@ -122,11 +122,11 @@ namespace CshBook.Lessons
 
             #region FileStream
 
-
+            string text;
             // Запись в файл
             using (FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write))
             {
-                string text = "Hello, World!";
+                text = "Hello, World!";
                 byte[] bytes = System.Text.Encoding.UTF8.GetBytes(text);
                 fs.Write(bytes, 0, bytes.Length);
                 fs.Flush(); // Очистка буферов
@@ -137,7 +137,7 @@ namespace CshBook.Lessons
             {
                 byte[] buffer = new byte[fs.Length];
                 int bytesRead = fs.Read(buffer, 0, buffer.Length);
-                string text = System.Text.Encoding.UTF8.GetString(buffer);
+                text = System.Text.Encoding.UTF8.GetString(buffer);
                 Console.WriteLine(text);
 
                 // Перемещение позиции в начало потока
@@ -157,7 +157,7 @@ namespace CshBook.Lessons
 
             #region File
             // Запись в файл
-            string text = "Hello, World!";
+            text = "Hello, World!";
             File.WriteAllText(filePath, text);
 
             // Чтение из файла
