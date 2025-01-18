@@ -94,7 +94,7 @@ namespace CshBook.Lessons
 
     internal static class EighthLesson
     {
-        public static int Fib(int val)
+        public static int Factorial(int val)
         {
             int res = 1;
             for (int i = 1; i <= val; i++)
@@ -107,12 +107,12 @@ namespace CshBook.Lessons
         public static void Main()
         {
             int val = int.Parse(Console.ReadLine());
-            int res = Fib(val);
+            int res = Factorial(val);
             Console.WriteLine(res);
 
             Console.WriteLine("А теперь ещё раз");
             int val1 = int.Parse(Console.ReadLine());
-            Console.WriteLine(Fib(val1));
+            Console.WriteLine(Factorial(val1));
         }
     }
 }
