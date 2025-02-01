@@ -7,4 +7,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Include="Lessons\Урок 10. Ref, Out, In.cs" />
+  </ItemGroup>
+
 </Project>
