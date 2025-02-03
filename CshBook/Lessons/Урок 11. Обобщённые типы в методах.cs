@@ -88,7 +88,7 @@ namespace CshBook.Lessons
         }
         #endregion
 
-
+        #region Сложно
         // Метод с ограничением IComparable для сравнения
         public static T FindMax<T>(T a, T b) where T : IComparable<T>
         {
@@ -96,20 +96,20 @@ namespace CshBook.Lessons
             return a.CompareTo(b) > 0 ? a : b;
         }
 
-        // Пример 3: Ограничение new() для создания экземпляров
+        // Ограничение new() для создания экземпляров
         public static T CreateInstance<T>() where T : new()
         {
             // Можем создавать объекты: new T()
             return new T();
         }
 
-        //Ограничение struct для значимых типов
+        // Ограничение struct для значимых типов
         public static string GetTypeKind<T>(T value) where T : struct
         {
             return "Это значимый тип!";
         }
 
-        // Пример 5: Комбинирование ограничений
+        // Комбинирование ограничений
         public static bool AreEqual<T>(T a, T b) where T : IEquatable<T>, new()
         {
             // Используем Equals из IEquatable и создаём новый объект
@@ -117,12 +117,13 @@ namespace CshBook.Lessons
             return a.Equals(b);
         }
 
-        // Пример 6: Ограничение class для ссылочных типов
+        // Ограничение class для ссылочных типов
         public static void CheckForNull<T>(T obj) where T : class
         {
             // Можем проверять на null
             Console.WriteLine(obj == null ? "Null!" : "Not null");
         }
+        #endregion
 
         // Демонстрация всех возможностей
         public static void Main()
