@@ -103,6 +103,29 @@ namespace CshBook.Lessons
             Console.WriteLine(GetDayOfWeekClassic(3));
             Console.WriteLine(GetCharType('e'));
             Console.WriteLine(GetSeason(7));
+
+            // Альтернатива в when
+            object obj = "Hello";
+
+            switch (obj)
+            {
+                case string s when s.Length > 5:
+                    Console.WriteLine("Длинная строка");
+                    break;
+                case string s:
+                    Console.WriteLine("Короткая строка");
+                    break;
+                case int i when i > 0:
+                    Console.WriteLine("Положительное число");
+                    break;
+                case int i:
+                    Console.WriteLine("Отрицательное число или ноль");
+                    break;
+                default:
+                    Console.WriteLine("Неизвестный тип");
+                    break;
+            }
+
         }
     }
 }
