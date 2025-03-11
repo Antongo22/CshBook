@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,6 +13,7 @@ namespace CshBook.Lessons
     Неудобно заполнять вручную поля. 
     Поэтому есть конструкторы, которые вызываются при создании экземпляра класса.
 
+    Конструкторов может быть несколько у одного класса.
     Так же можно наследовать конструкторы, чтобы была гибкость.
      */
 
@@ -26,11 +28,97 @@ namespace CshBook.Lessons
 
     /* Ссылки
      
+    Важно сказать, что мы можем ссылаться на один объект сразу несколькими переменными. Об этом подробнее в коде
+
      */
 
+    class Pet2
+    {
+        public string name; // поле имени питомца
+
+        // У поля мы убрали public, по умолчанию private. Это значит что менять значения в этом поле можно только внутри этого класса
+
+        int age; // поле возраста питомца
+
+        public Pet2(string name, int age)
+        {
+            // this внутри класса по сути указывает на самого себя
+            this.name = name;
+            this.age = age;
+
+            Console.WriteLine("Я появился!");
+        }
+
+        public Pet2(string _name) : this(_name, 1) // если пользователь не указывает возраст, то 
+        {
+            Console.WriteLine($"Мне задали только имя - {name}, поэтому мой возраст по умолчанию - {age}");
+        }
+
+        public void Play() // метод для игры
+        {
+            Console.WriteLine($"{name} играет!");
+        }
+
+        public void GettingOld() // метод старения
+        {
+            age++;
+            Console.WriteLine($"{name} постарел на 1 год(. Теперь ему {age}");
+        }
+
+        ~Pet2() // аргументов не может быть, 1 на всё
+        {
+            Console.WriteLine($"Сообщение от - {name}: Я умер!((((");
+        }
+    }
 
     internal class EighteenthLesson
     {
+        public static void Main()
+        {
+            //Pet2 pet1 = new Pet2(); 
+            // так нельзя, тк мы не указали пустой конструктор
 
+            Pet2 pet1 = new Pet2("Бобик");
+            Console.WriteLine();
+            Pet2 pet2 = new Pet2("Шарик", 5);
+            Console.WriteLine();
+
+            // обрати внимание в каком порядке вызывались конструкторы
+
+            // теперь нельзя, тк private
+            //pet2.age = 2;
+
+
+            // Теперь поговорим про ссылки
+            // Если мы сделаем так - 
+            Pet2 pet3 = pet1;
+            pet3.name = "Барбос";
+
+            Console.WriteLine(pet1.name); // имя поменялось, тк pet1 и pet3 указывают на оин и тот же экземпляр класса
+
+
+            // Создаём нагрузку на память
+            for (int i = 0; i < 10; i++)
+            {
+                var temp = new Pet2(i.ToString());
+            }
+
+            // Принудительно вызываем сборщик мусора
+            GC.Collect();
+            GC.WaitForPendingFinalizers(); // Ждём завершения финализаторов
+
+            // Даём время для вывода сообщений
+            Thread.Sleep(1000);
+
+            Console.WriteLine("Программа завершена.");
+
+            // Можно увидеть что не всё успели удалиться.А те что удалялись вызывались в хаотичном порядке
+
+        }
     }
 }
+
+
+/* Задание
+    Дополни предыдущее задание новыми знаниями 
+ */

@@ -69,7 +69,7 @@ namespace CshBook.Lessons
             Console.WriteLine($"{name} играет!");
         }
 
-        public void GettingOld() // меотд старения
+        public void GettingOld() // метод старения
         {
             age++;
             Console.WriteLine($"{name} постарел на 1 год(. Теперь ему {age}");
