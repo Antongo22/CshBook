@@ -39,7 +39,7 @@ namespace CshBook.Lessons
     {
         public static void Main()
         {
-            Console.WriteLine("🔹 Демонстрация работы с перечислениями (enum)\n");
+            Console.WriteLine("Демонстрация работы с перечислениями (enum)\n");
 
             // 1. Базовое использование enum
             UseBasicEnum();
