@@ -27,6 +27,7 @@ Where с классами
 Интерфейсы vs Абстрактные классы
 boxing/unboxing
 Коллекции
+Тестирование
 LINQ
 Extension методы
 Nullable типы и операторы null-объединения
