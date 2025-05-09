@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CshBook.Lessons._28
+namespace CshBook.Lessons._27
 {
     #region Теория
     /*
