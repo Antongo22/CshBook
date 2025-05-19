@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace CshBook.Lessons._29
 {
@@ -12,6 +13,7 @@ namespace CshBook.Lessons._29
      * В этом уроке ты узнаешь о boxing и unboxing в C#:
      * - Что такое boxing (упаковка) и unboxing (распаковка)
      * - Когда происходит boxing и unboxing
+     * - Операторы is и as для безопасного приведения типов
      * - Влияние на производительность
      * - Как избежать ненужных операций boxing/unboxing
      * - Практические примеры использования
@@ -68,6 +70,62 @@ namespace CshBook.Lessons._29
        
        Распаковка всегда требует явного приведения типов и может генерировать исключение
        InvalidCastException, если типы не совпадают.
+    */
+
+    /*
+       Операторы is и as для безопасного приведения типов
+       ==============================================
+       
+       При работе с боксингом и анбоксингом часто возникает необходимость проверить тип объекта 
+       или безопасно привести его к другому типу. Для этого в C# существуют специальные операторы:
+       
+       1. Оператор is
+       ---------------
+       Оператор is проверяет, является ли объект экземпляром указанного типа, и возвращает
+       булево значение (true или false):
+       
+       object boxed = 42;
+       if (boxed is int)  // Вернет true, так как boxed содержит упакованный int
+       {
+           // Выполняется, если boxed содержит int
+       }
+       
+       С C# 7.0 оператор is получил дополнительные возможности - сопоставление с образцом
+       (pattern matching):
+       
+       if (boxed is int unboxedValue)  // Проверка и распаковка в одной операции
+       {
+           // unboxedValue уже содержит распакованное значение типа int
+           // Это безопасный unboxing без явного приведения типов
+       }
+       
+       2. Оператор as
+       --------------
+       Оператор as пытается преобразовать объект к указанному типу и возвращает null,
+       если преобразование невозможно (вместо генерации исключения):
+       
+       object boxed = 42;
+       int? unboxed = boxed as int?;  // Для значимых типов нужно использовать nullable версию
+       
+       // Более распространенный пример с ссылочными типами:
+       object obj = "строка";
+       string str = obj as string;  // Вернет "строка"
+       
+       object obj2 = 42;
+       string str2 = obj2 as string;  // Вернет null, без исключения
+       
+       3. Связь с boxing/unboxing
+       ------------------------
+       Эти операторы особенно полезны при работе с упакованными значениями:
+       
+       - is позволяет безопасно проверить тип упакованного значения
+       - as позволяет избежать исключений при распаковке (для ссылочных типов)
+       - В современном C# сопоставление с образцом (boxed is int value) объединяет
+         проверку и распаковку в один шаг
+       
+       Важно помнить, что оператор as работает только с ссылочными типами и nullable
+       типами. Для обычных значимых типов нужно использовать явное приведение с предварительной
+       проверкой через is.
     */
 
     /*
@@ -204,8 +262,18 @@ namespace CshBook.Lessons._29
             DisplayValues(1, 2.5, "три", true);  // 1, 2.5 и true будут упакованы
             Console.WriteLine();
             
-            // Пример 6: Производительность boxing/unboxing
-            Console.WriteLine("Пример 6: Сравнение производительности");
+            // Пример 6: Использование операторов is и as
+            Console.WriteLine("Пример 6: Использование операторов is и as для безопасного приведения типов");
+            DemonstrateIsAndAs();
+            Console.WriteLine();
+            
+            // Пример 7: Pattern matching с is (C# 7.0+)
+            Console.WriteLine("Пример 7: Pattern matching с оператором is");
+            DemonstratePatternMatching();
+            Console.WriteLine();
+            
+            // Пример 8: Производительность boxing/unboxing
+            Console.WriteLine("Пример 8: Сравнение производительности");
             PerformanceTest();
         }
         
@@ -219,32 +287,180 @@ namespace CshBook.Lessons._29
             }
         }
         
+        // Метод для демонстрации операторов is и as
+        static void DemonstrateIsAndAs()
+        {
+            // Создадим несколько объектов разных типов
+            object[] objects = new object[] { 42, "строка", 3.14, true, new DateTime(2025, 5, 19) };
+            
+            Console.WriteLine("Использование оператора is:");
+            foreach (object obj in objects)
+            {
+                // Использование is для проверки типа
+                if (obj is int)
+                    Console.WriteLine($"  {obj} - это int");
+                else if (obj is string)
+                    Console.WriteLine($"  {obj} - это string");
+                else if (obj is double)
+                    Console.WriteLine($"  {obj} - это double");
+                else if (obj is bool)
+                    Console.WriteLine($"  {obj} - это bool");
+                else
+                    Console.WriteLine($"  {obj} - другой тип: {obj.GetType().Name}");
+            }
+            
+            Console.WriteLine("\nБезопасное приведение типов с as (ссылочные типы):");
+            
+            object strObj = "Привет, мир!";
+            // Безопасное приведение к string с помощью as
+            string str = strObj as string;
+            Console.WriteLine($"  Приведение строки: {(str != null ? str : "null")}");
+            
+            // Попытка привести int к string (не удастся)
+            object intObj = 42;
+            string strFromInt = intObj as string;
+            Console.WriteLine($"  Приведение числа к строке: {(strFromInt != null ? strFromInt : "null (не удалось)")}\n");
+            
+            // Попытка привести значимый тип напрямую через as (не скомпилируется)
+            // int? num = intObj as int; // Ошибка: Cannot convert type 'object' to 'int' via a reference conversion
+            
+            Console.WriteLine("Работа с Nullable типами и as:");
+            object nullableInt = 42;
+            int? extractedInt = nullableInt as int?;
+            Console.WriteLine($"  Извлечение int? из object: {extractedInt?.ToString() ?? "null"}");
+            
+            // Сравнение безопасности приведения типов
+            Console.WriteLine("\nСравнение безопасности приведения типов:");
+            
+            object wrongType = "не число";
+            
+            // Безопасный способ с is
+            Console.WriteLine("  Использование is:");
+            if (wrongType is int)
+            {
+                int extractedWithIs = (int)wrongType;
+                Console.WriteLine($"    Значение: {extractedWithIs}");
+            }
+            else
+            {
+                Console.WriteLine("    Объект не является int, приведение не выполняется");
+            }
+            
+            // Небезопасный способ с прямым приведением
+            Console.WriteLine("  Прямое приведение типов (try-catch):");
+            try
+            {
+                int extractedUnsafe = (int)wrongType;
+                Console.WriteLine($"    Значение: {extractedUnsafe}");
+            }
+            catch (InvalidCastException ex)
+            {
+                Console.WriteLine($"    Произошло исключение: {ex.Message}");
+            }
+        }
+        
+        // Метод для демонстрации pattern matching (сопоставления с образцом)
+        static void DemonstratePatternMatching()
+        {
+            // Создадим массив с разными типами объектов
+            object[] mixedObjects = new object[] { 10, "Hello", 3.14, true, null, new List<int>() { 1, 2, 3 } };
+            
+            Console.WriteLine("Pattern matching с оператором is (C# 7.0+):");
+            foreach (object item in mixedObjects)
+            {
+                // Pattern matching для разных типов
+                if (item is int value)  // Проверка типа и распаковка в одном выражении
+                {
+                    Console.WriteLine($"  Целое число: {value}, квадрат: {value * value}");
+                }
+                else if (item is string text) // Работает и для ссылочных типов
+                {
+                    Console.WriteLine($"  Строка: \"{text}\", длина: {text.Length}");
+                }
+                else if (item is double number)
+                {
+                    Console.WriteLine($"  Дробное число: {number:F2}, округлено: {Math.Round(number)}");
+                }
+                else if (item is bool flag)
+                {
+                    Console.WriteLine($"  Логическое значение: {flag}, отрицание: {!flag}");
+                }
+                else if (item is IList<int> list) // Работает с интерфейсами
+                {
+                    Console.WriteLine($"  Список: [{string.Join(", ", list)}], сумма: {list.Sum()}");
+                }
+                else if (item is null) // Проверка на null
+                {
+                    Console.WriteLine("  Значение null");
+                }
+                else
+                {
+                    Console.WriteLine($"  Неопознанный тип: {item.GetType().Name}");
+                }
+            }
+            
+            Console.WriteLine("\nSwitch с pattern matching (C# 8.0+):");
+            foreach (object item in mixedObjects)
+            {
+                string result = item switch
+                {
+                    int i => $"Целое число: {i}",
+                    string s => $"Строка: \"{s}\"",
+                    double d => $"Дробное число: {d:F2}",
+                    bool b => $"Логическое значение: {b}",
+                    IList<int> list => $"Список с {list.Count} элементами",
+                    null => "Значение null",
+                    _ => $"Другой тип: {item.GetType().Name}"
+                };
+                
+                Console.WriteLine($"  {result}");
+            }
+        }
+        
         // Метод для демонстрации разницы в производительности
         static void PerformanceTest()
         {
             const int iterations = 1000000;
             
             // Тест с boxing/unboxing
-            DateTime start1 = DateTime.Now;
+            Stopwatch sw1 = Stopwatch.StartNew();
             for (int i = 0; i < iterations; i++)
             {
                 object boxed = i;       // Boxing
                 int unboxed = (int)boxed;   // Unboxing
             }
-            TimeSpan elapsed1 = DateTime.Now - start1;
+            sw1.Stop();
+            TimeSpan elapsed1 = sw1.Elapsed;
             
             // Тест без boxing/unboxing
-            DateTime start2 = DateTime.Now;
+            Stopwatch sw2 = Stopwatch.StartNew();
             for (int i = 0; i < iterations; i++)
             {
                 int value = i;          // Без boxing
                 int copied = value;     // Без unboxing
             }
-            TimeSpan elapsed2 = DateTime.Now - start2;
+            sw2.Stop();
+            TimeSpan elapsed2 = sw2.Elapsed;
             
-            Console.WriteLine($"Время с boxing/unboxing:    {elapsed1.TotalMilliseconds} мс");
-            Console.WriteLine($"Время без boxing/unboxing:  {elapsed2.TotalMilliseconds} мс");
-            Console.WriteLine($"Соотношение:                {elapsed1.TotalMilliseconds / elapsed2.TotalMilliseconds:F2}x");
+            // Тест с использованием is и pattern matching
+            Stopwatch sw3 = Stopwatch.StartNew();
+            for (int i = 0; i < iterations; i++)
+            {
+                object boxed = i;       // Boxing
+                if (boxed is int value) // Pattern matching с распаковкой
+                {
+                    int result = value;
+                }
+            }
+            sw3.Stop();
+            TimeSpan elapsed3 = sw3.Elapsed;
+            
+            // Вывод результатов
+            Console.WriteLine($"Время с boxing/unboxing:            {elapsed1.TotalMilliseconds} мс");
+            Console.WriteLine($"Время без boxing/unboxing:          {elapsed2.TotalMilliseconds} мс");
+            Console.WriteLine($"Время с pattern matching:           {elapsed3.TotalMilliseconds} мс");
+            Console.WriteLine($"Соотношение (boxing/обычный):      {elapsed1.TotalMilliseconds / elapsed2.TotalMilliseconds:F2}x");
+            Console.WriteLine($"Соотношение (pattern/обычный):     {elapsed3.TotalMilliseconds / elapsed2.TotalMilliseconds:F2}x");
         }
     }
     
@@ -329,24 +545,29 @@ namespace CshBook.Lessons._29
     #region Задачи
     /*
         # Создайте метод, который принимает параметр типа object и определяет, является ли он 
-          упакованным значением примитивного типа (int, double, bool и т.д.). Если да, то 
-          распакуйте значение и выведите его вместе с типом.
+          упакованным значением примитивного типа (int, double, bool и т.д.). Используйте 
+          операторы is и as для безопасного приведения типов. Выведите результат распаковки.
         
         # Напишите программу, которая демонстрирует разницу в производительности между ArrayList 
           и List<int> при добавлении и извлечении большого количества целых чисел. Измерьте и 
           выведите время выполнения для обоих случаев.
         
-        # Создайте структуру Money с полями Amount (decimal) и Currency (string). Реализуйте 
-          интерфейсы IComparable и IComparable<Money>. Сравните производительность обеих 
-          реализаций при сортировке массива объектов Money.
+        # Создайте метод ProcessValue, который обрабатывает объект в зависимости от его типа:
+          - Для целых чисел (int) - вычисляет факториал
+          - Для строк - выводит длину и переворачивает строку
+          - Для логических значений - выводит отрицание
+          - Для дробных чисел - округляет до двух знаков после запятой
+          Используйте pattern matching для реализации этой логики.
         
-        # Разработайте метод, который принимает параметр типа object и пытается преобразовать 
-          его в различные числовые типы (int, double, decimal) с использованием безопасных методов 
-          преобразования. Обработайте все возможные исключения.
+        # Создайте обобщенный класс SafeCast<T> с методом TryCast, который принимает object 
+          и возвращает tuple (bool success, T value). Метод должен пытаться безопасно привести 
+          объект к типу T. Если приведение невозможно, возвращается (false, default(T)).
+          Продемонстрируйте работу с разными типами.
         
-        # Создайте класс ObjectCache, который хранит обобщенную коллекцию объектов. 
-          Реализуйте методы для добавления, получения и удаления объектов. Сравните два подхода: 
-          хранение всех объектов как object и хранение с использованием обобщений.
+        # Разработайте иерархию классов Shape с подклассами Circle, Rectangle и Triangle.
+          Создайте метод, который принимает object и проверяет, является ли он фигурой, и если да, 
+          то вычисляет и возвращает площадь. Используйте операторы is, as и pattern matching.
+          Сравните подходы с точки зрения читаемости и производительности.
     */
     #endregion
 }
