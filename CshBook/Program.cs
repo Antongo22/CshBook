@@ -1,3 +1,4 @@
-﻿using CshBook.Lessons;
+﻿using CshBook.Answers.Answ0;
+using CshBook.Lessons;
 
-EighteenthLesson.Main();
+BaseSolutions.Main_();
