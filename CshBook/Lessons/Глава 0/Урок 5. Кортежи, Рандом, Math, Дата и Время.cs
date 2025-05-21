@@ -7,52 +7,76 @@ using System.Threading.Tasks;
 namespace CshBook.Lessons
 {
     /* Кортежи (Tuples)
-    В C# кортежи представляют собой легковесные, неизменяемые структуры данных, которые позволяют хранить несколько элементов разных типов в одном объекте.
-    Кортежи полезны, когда вам нужно вернуть несколько значений из метода или временно сгруппировать данные без создания отдельного класса.
 
-    Кортежи могут быть созданы с использованием синтаксиса (item1, item2, ...) или с помощью метода Tuple.Create.
+       В C# кортеж — это структура, позволяющая хранить несколько значений разных типов в одной переменной.
+       Кортежи удобны, когда нужно быстро сгруппировать несколько значений без создания отдельного класса.
+
+       Современные кортежи (ValueTuple) были введены начиная с C# 7.0.
+       Они поддерживают именованные элементы и могут использоваться без явного вызова методов.
+
+       Пример простого кортежа:
+       var tuple = (1, "apple", 3.14); // тип (int, string, double)
+
+       Доступ к элементам:
+       tuple.Item1, tuple.Item2, tuple.Item3
+
+       Или с именами:
+       var person = (name: "Анна", age: 25);
+       person.name, person.age
+
+       Кортежи можно использовать:
+       - для возврата нескольких значений из метода (будет в следующих уроках);
+       - как временное объединение данных;
+       - для упрощения кода без создания новых классов или структур.
     */
 
     internal class FifthLesson
     {
-        public static void Main()
+        public static void Main_()
         {
 
 
-            // Кортеж с одним элементом
-            Tuple<int> singleElementTuple = Tuple.Create(42);
+            var tuple1 = (1, "яблоко", 3.14);
+            Console.WriteLine($"tuple1: {tuple1.Item1}, {tuple1.Item2}, {tuple1.Item3}");
 
-            // Кортеж с несколькими элементами
-            Tuple<int, int, int> tuple1 = Tuple.Create(1, 2, 3);
+            // Пример с именованными элементами
+            var person = (name: "Анна", age: 25);
+            Console.WriteLine($"Имя: {person.name}, Возраст: {person.age}");
 
-            // Кортеж с элементами разных типов
-            Tuple<int, string, double> tuple2 = Tuple.Create(1, "apple", 3.14);
+            // Кортеж для координат
+            var point = (x: 10, y: 20);
+            Console.WriteLine($"Координаты точки: x = {point.x}, y = {point.y}");
 
-            // Кортеж с вложенными структурами данных
-            Tuple<int, Tuple<int, int>> tuple3 = Tuple.Create(1, Tuple.Create(4, 5));
+            // Обновление значений кортежа
+            point.x = 15;  // можно изменить, так как это переменная
+            point.y = 30;
+            Console.WriteLine($"Обновлённые координаты: x = {point.x}, y = {point.y}");
 
-            // Доступ к элементам кортежа
-            Tuple<int, int, int, int> myTuple = Tuple.Create(10, 20, 30, 40);
-            Console.WriteLine(myTuple.Item1);  // 10
-            Console.WriteLine(myTuple.Item4);  // 40
+            // Кортеж из одного значения
+            var single = (42,);  // запятая обязательна
+            Console.WriteLine($"Один элемент в кортеже: {single.Item1}");
 
-            // Основные операции с кортежами
-            Tuple<int, int> tupleA = Tuple.Create(1, 2);
-            Tuple<int, int> tupleB = Tuple.Create(3, 4);
+            // Кортеж из двух чисел и их сумма
+            var numbers = (4, 5);
+            int sum = numbers.Item1 + numbers.Item2;
+            Console.WriteLine($"Сумма {numbers.Item1} и {numbers.Item2} = {sum}");
 
-            // Объединение кортежей (не поддерживается напрямую, но можно создать новый кортеж)
-            Tuple<int, int, int, int> combinedTuple = Tuple.Create(tupleA.Item1, tupleA.Item2, tupleB.Item1, tupleB.Item2);
-            Console.WriteLine(combinedTuple);  // (1, 2, 3, 4)
+            // Вложенный кортеж
+            var nested = ((1, 2), (3, 4));
+            Console.WriteLine($"nested: {nested.Item1.Item1}, {nested.Item1.Item2}, {nested.Item2.Item1}, {nested.Item2.Item2}");
 
-            // Проверка на наличие элемента (не поддерживается напрямую, но можно использовать сравнение)
-            bool contains3 = combinedTuple.Item3 == 3;
-            Console.WriteLine(contains3);  // True
+            // Кортеж можно использовать в условии
+            var grade = (score: 85, passed: true);
+            if (grade.passed)
+            {
+                Console.WriteLine($"Оценка: {grade.score} — зачёт");
+            }
 
-            // Итерация по элементам кортежа (не поддерживается напрямую, но можно использовать индексы)
-            Console.WriteLine(combinedTuple.Item1);  // 1
-            Console.WriteLine(combinedTuple.Item2);  // 2
-            Console.WriteLine(combinedTuple.Item3);  // 3
-            Console.WriteLine(combinedTuple.Item4);  // 4
+            // Кортеж для хранения даты
+            var date = (day: 21, month: 5, year: 2025);
+            Console.WriteLine($"Дата: {date.day}.{date.month}.{date.year}");
+
+
 
             // Работа с Random и Math
             Random random = new Random();
@@ -98,12 +122,55 @@ namespace CshBook.Lessons
             DateTime tomorrow = now.AddDays(1);
             Console.WriteLine($"Завтрашняя дата: {tomorrow}");
 
+            DateTime dateTime = new DateTime();
+            
+
             TimeSpan difference = tomorrow - now;
             Console.WriteLine($"Разница во времени: {difference.TotalHours} часов");
 
             // Форматирование даты
-            string formattedDate = now.ToString("dd.MM.yyyy HH:mm:ss пупуп");
+            string formattedDate = now.ToString("dd.MM.yyyy HH:mm:ss");
             Console.WriteLine($"Отформатированная дата: {formattedDate}");
+
+
+            // Конкретная дата
+            DateTime specificDate1 = new DateTime(2023, 5, 15); // 15 мая 2023 года
+            DateTime specificDate2 = new DateTime(2023, 5, 15, 14, 30, 0); // 15 мая 2023, 14:30:00
+            Console.WriteLine($"Конкретная дата 1: {specificDate1}");
+            Console.WriteLine($"Конкретная дата 2: {specificDate2}");
+
+            // Дата из строки
+            DateTime parsedDate = DateTime.Parse("2023-12-31");
+            Console.WriteLine($"Дата из строки: {parsedDate}");
+
+            // UTC время
+            DateTime utcNow = DateTime.UtcNow;
+            Console.WriteLine($"Текущее UTC время: {utcNow}");
+
+
+            DateTime startDate = new DateTime(2023, 1, 1);
+            DateTime endDate = new DateTime(2023, 12, 31);
+
+            // Разница как TimeSpan
+            difference = endDate - startDate;
+
+            // Вывод разницы в разных форматах
+            Console.WriteLine("\nРазница между датами:");
+            Console.WriteLine($"Всего дней: {difference.TotalDays}");
+            Console.WriteLine($"Всего часов: {difference.TotalHours}");
+            Console.WriteLine($"Всего минут: {difference.TotalMinutes}");
+            Console.WriteLine($"Всего секунд: {difference.TotalSeconds}");
+            Console.WriteLine($"Всего миллисекунд: {difference.TotalMilliseconds}");
+
+            Console.WriteLine($"\nРазница в компонентах:");
+            Console.WriteLine($"Дни: {difference.Days}");
+            Console.WriteLine($"Часы: {difference.Hours}");
+            Console.WriteLine($"Минуты: {difference.Minutes}");
+            Console.WriteLine($"Секунды: {difference.Seconds}");
+            Console.WriteLine($"Миллисекунды: {difference.Milliseconds}");
+
+            // Форматированная разница
+            Console.WriteLine($"\nФорматированная разница: {difference.Days} дней, {difference.Hours} часов, {difference.Minutes} минут");
         }
 
         /* Задачи на кортежи
