@@ -69,7 +69,7 @@ namespace CshBook.Lessons
 
     internal static class FifteenthLesson
     {
-        public static void Main()
+        public static void Main_()
         {
             Console.WriteLine("Демонстрация обработки исключений в C#\n");
 

@@ -131,7 +131,7 @@ namespace CshBook.Lessons
             // array[0] = 100; // Ошибка: нельзя изменить значение
         }
 
-        public static void Main()
+        public static void Main_()
         {
             // Пример с ref
             int a = 5;

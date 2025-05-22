@@ -58,7 +58,7 @@ namespace CshBook.Lessons
 
     internal class TwentiethLesson
     {
-        public static void Main()
+        public static void Main_()
         {
             // Использование обычного класса
             MathOperations math = new MathOperations();

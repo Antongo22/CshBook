@@ -67,7 +67,7 @@ namespace CshBook.Lessons
 
     internal class TwentySecondLesson
     {
-        public static void Main()
+        public static void Main_()
         {
             // Пример без инкапсуляции
             NakedAccount acc1 = new NakedAccount();

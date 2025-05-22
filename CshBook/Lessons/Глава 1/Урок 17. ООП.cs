@@ -79,7 +79,7 @@ namespace CshBook.Lessons
 
     internal class SeventeenthLesson
     {
-        public static void Main()
+        public static void Main_()
         {
             // Пример 2 
             Pet pet1 = new Pet(); // тут у нас pet1 - переменная и экземпляр класса Pet.

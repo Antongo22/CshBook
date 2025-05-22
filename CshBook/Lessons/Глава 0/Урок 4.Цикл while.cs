@@ -75,7 +75,7 @@ namespace CshBook.Lessons
 
     internal class FourthLesson
     {
-        public static void Main()
+        public static void Main_()
         {
             // Задача на while: Вывести квадраты чисел от 1 до 5
             int i = 1;

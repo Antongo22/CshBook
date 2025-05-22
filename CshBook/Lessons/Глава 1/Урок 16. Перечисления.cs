@@ -37,7 +37,7 @@ namespace CshBook.Lessons
 
     internal static class SixteenthLesson
     {
-        public static void Main()
+        public static void Main_()
         {
             Console.WriteLine("Демонстрация работы с перечислениями (enum)\n");
 

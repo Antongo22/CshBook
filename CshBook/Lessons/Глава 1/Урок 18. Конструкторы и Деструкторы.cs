@@ -73,7 +73,7 @@ namespace CshBook.Lessons
 
     internal class EighteenthLesson
     {
-        public static void Main()
+        public static void Main_()
         {
             //Pet2 pet1 = new Pet2(); 
             // так нельзя, тк мы не указали пустой конструктор

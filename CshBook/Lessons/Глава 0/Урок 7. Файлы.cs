@@ -116,7 +116,7 @@ namespace CshBook.Lessons
 
     internal class SeventhLesson
     {
-        public static void Main()
+        public static void Main_()
         {
             string filePath = "example.txt";
 

@@ -48,7 +48,7 @@ namespace CshBook.Lessons
 
     internal static class FourteenthLesson
     {
-        public static void Main()
+        public static void Main_()
         {
             Console.WriteLine("Введите email:");
             string input = Console.ReadLine();

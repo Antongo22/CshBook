@@ -101,7 +101,7 @@ namespace CshBook.Lessons
 
     internal static class SecondLesson
     {
-        public static void Main()
+        public static void Main_()
         {
             // Давай в коде решим тестовую задачу, чтобы закрепить теорию
 

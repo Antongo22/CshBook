@@ -46,7 +46,7 @@ namespace CshBook.Lessons
 
     internal class NineteenthLesson
     {
-        public static void Main()
+        public static void Main_()
         {
             // Работа с классом
             ClassPoint classPoint1 = new ClassPoint(5, 10);

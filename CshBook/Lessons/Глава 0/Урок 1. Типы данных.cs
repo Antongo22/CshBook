@@ -121,7 +121,7 @@ namespace CshBook.Lessons
 
     internal static class FirstLesson // Урок 1. Типы данных
     {
-        static void Main()
+        static void Main_()
         {
             // Пройдёмся по всем типам данных
             int a = 23131;

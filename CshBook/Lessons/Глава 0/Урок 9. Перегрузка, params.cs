@@ -80,7 +80,7 @@ namespace CshBook.Lessons
         #endregion
 
 
-        public static void Main()
+        public static void Main_()
         {
             #region Перегрузка
             Console.WriteLine(Add(2, 3)); // Вызов метода Add(int, int)

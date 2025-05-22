@@ -80,7 +80,7 @@ namespace CshBook.Lessons.Ch2
 
     internal class TwentyThirdLesson
     {
-        public static void Main()
+        public static void Main_()
         {
             // Использование наследования
             Dog myDog = new Dog("Rex", 3, "Labrador");

@@ -32,7 +32,7 @@ namespace CshBook.Lessons
 
     internal class ThirdLesson
     {
-        public static void Main()
+        public static void Main_()
         {
             for (int i = 0; i < 10; i++)
             {

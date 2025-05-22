@@ -16,7 +16,7 @@ namespace CshBook.Lessons
 
     internal class SixthLesson
     {
-        public static void Main()
+        public static void Main_()
         {
             // Одномерный массив
             int[] numbers = new int[5];  // Массив из 5 элементов типа int

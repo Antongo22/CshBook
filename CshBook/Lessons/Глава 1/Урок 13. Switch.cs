@@ -98,7 +98,7 @@ namespace CshBook.Lessons
             }
         }
 
-        public static void Main()
+        public static void Main_()
         {
             Console.WriteLine(GetDayOfWeekClassic(3));
             Console.WriteLine(GetCharType('e'));

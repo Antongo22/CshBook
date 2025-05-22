@@ -60,7 +60,7 @@ namespace CshBook.Lessons
             return IsPalindrome(str, left + 1, right - 1); // Рекурсивный вызов
         }
 
-        public static void Main()
+        public static void Main_()
         {
             Console.WriteLine($"Факториал 5: {Factorial(5)}");
             Console.WriteLine($"10-е число Фибоначчи: {Fibonacci(10)}");

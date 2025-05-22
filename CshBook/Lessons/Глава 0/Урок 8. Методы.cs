@@ -104,7 +104,7 @@ namespace CshBook.Lessons
             return res;
         }
 
-        public static void Main()
+        public static void Main_()
         {
             int val = int.Parse(Console.ReadLine());
             int res = Factorial(val);

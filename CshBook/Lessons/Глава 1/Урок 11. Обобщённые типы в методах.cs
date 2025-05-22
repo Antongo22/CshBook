@@ -126,7 +126,7 @@ namespace CshBook.Lessons
         #endregion
 
         // Демонстрация всех возможностей
-        public static void Main()
+        public static void Main_()
         {
             #region База
             // Демонстрация PrintValue
