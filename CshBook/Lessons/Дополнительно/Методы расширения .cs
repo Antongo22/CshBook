@@ -57,7 +57,7 @@ namespace CshBook.Lessons.Дополнительно
     internal class ExtensionMethod
     {
 
-        static void Main()
+        static void Main_()
         {
             Person p = new Person { Name = "Антон" };
             p.SayHello(); // Вывод: Привет, меня зовут Антон!
