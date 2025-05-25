@@ -61,7 +61,7 @@ namespace CshBook.Lessons.Дополнительно
 
     internal class Safety
     {
-        static void Main_()
+        public static void Main_()
         {
             var config = new AppConfig("Мой Проект", "123456");
 

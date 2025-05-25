@@ -52,10 +52,7 @@ namespace CshBook.Lessons
             point.y = 30;
             Console.WriteLine($"Обновлённые координаты: x = {point.x}, y = {point.y}");
 
-            // Кортеж из одного значения
-            var single = (42,);  // запятая обязательна
-            Console.WriteLine($"Один элемент в кортеже: {single.Item1}");
-
+            
             // Кортеж из двух чисел и их сумма
             var numbers = (4, 5);
             int sum = numbers.Item1 + numbers.Item2;
