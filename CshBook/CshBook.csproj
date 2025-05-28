@@ -8,8 +8,4 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
-  <ItemGroup>
-    <None Include="Lessons\Глава 1\Урок 10. Ref, Out, In.cs" />
-  </ItemGroup>
-
 </Project>
