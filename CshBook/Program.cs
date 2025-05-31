@@ -1,5 +1,6 @@
 ﻿using CshBook.Answers.Answ0;
 using CshBook.Lessons;
 using CshBook.Lessons.Дополнительно;
+using CshBook.Ответы.Глава_0;
 
-СompileTime_Helpers.Main_();
+IfSolutions.Main_();
