@@ -3,4 +3,4 @@ using CshBook.Lessons;
 using CshBook.Lessons.Дополнительно;
 using CshBook.Ответы.Глава_0;
 
-IfSolutions.Main_();
+PointerLesson.Main_();
