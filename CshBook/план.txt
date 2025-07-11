@@ -26,7 +26,7 @@ switch
 boxing/unboxing
 Коллекции
 Where с классами
-Указатели
+Указатели (Unsafe)
 Работа с памятью
 Extension методы
 Тестирование
