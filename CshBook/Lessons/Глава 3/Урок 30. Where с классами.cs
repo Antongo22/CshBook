@@ -379,14 +379,6 @@ namespace CshBook.Lessons
           Класс должен иметь ограничение, что тип T является ссылочным типом и имеет
           конструктор без параметров. Реализуйте методы Serialize и Deserialize.
           
-        # Создайте класс EventHandler<TEvent, THandler> с ограничениями:
-          where TEvent : EventArgs и where THandler : class, IEventHandler<TEvent>.
-          Класс должен позволять регистрировать обработчики событий и вызывать их.
-          
-        # Реализуйте обобщенный класс ObjectPool<T>, который управляет пулом объектов.
-          T должен иметь ограничение where T : class, IResetable, new(),
-          где IResetable - пользовательский интерфейс с методом Reset().
-          Реализуйте методы GetObject и ReturnObject.
     */
     #endregion
 }
