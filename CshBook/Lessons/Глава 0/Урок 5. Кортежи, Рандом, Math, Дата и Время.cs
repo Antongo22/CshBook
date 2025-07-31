@@ -40,7 +40,7 @@ namespace CshBook.Lessons
             Console.WriteLine($"tuple1: {tuple1.Item1}, {tuple1.Item2}, {tuple1.Item3}");
 
             // Пример с именованными элементами
-            var person = (name: "Анна", age: 25);
+            (string name, int age) person = (name: "Анна", age: 25);
             Console.WriteLine($"Имя: {person.name}, Возраст: {person.age}");
 
             // Кортеж для координат
@@ -106,6 +106,10 @@ namespace CshBook.Lessons
             double cosValue = Math.Cos(Math.PI);  // Косинус
             double tanValue = Math.Tan(Math.PI / 4);  // Тангенс
             Console.WriteLine($"{absValue}, {sinValue}, {cosValue}, {tanValue}");
+            
+            Math.Floor(3.7);  // Округление вниз
+            Math.Ceiling(3.7);  // Округление вверх
+            Math.Round(3.7);  // Округление до ближайшего целого
 
             // Проверка, целое ли число
             double numberToCheck = 42.0;
