@@ -26,7 +26,6 @@ switch
 boxing/unboxing
 Коллекции
 Дженерики с классами
-Where с классами
 Указатели (Unsafe)
 Extension методы
 Тестирование
