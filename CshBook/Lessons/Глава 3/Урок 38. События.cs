@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CshBook.Lessons.Глава_3
+namespace CshBook.Lessons.Events
 {
     #region Теория
     /*
@@ -638,13 +638,13 @@ namespace CshBook.Lessons.Глава_3
             Logger.Warning("Это предупреждение");
             Logger.Error("Это сообщение об ошибке");
             
-            // Отписываемся от всех обработчиков статического события
-            // Это нужно делать в реальных приложениях, но сложно в контексте нашего примера
-            // Поэтому мы просто покажем как это можно сделать
-            foreach (Delegate d in Logger.LogReceived.GetInvocationList())
-            {
-                Logger.LogReceived -= (EventHandler<LogEventArgs>)d;
-            }
+            // Отписываемся от события (правильный способ)
+            // В реальных приложениях важно отписываться от событий, когда они больше не нужны
+            EventHandler<LogEventArgs> handler = (sender, e) => { };
+            Logger.LogReceived += handler;
+            Logger.LogReceived -= handler;
+            
+            Console.WriteLine("Отписались от события Logger.LogReceived");
 
             Console.WriteLine("\n--- Пример 4: Простое приложение для демонстрации событий ---");
             

@@ -113,7 +113,7 @@ namespace CshBook.Lessons.Глава_3
           
           delegate void ContravarianceDelegate(Derived param);
           
-          void BaseMethod(Base param) { /* ... */ }
+          void BaseMethod(Base param) { ... }
           ContravarianceDelegate del = BaseMethod;  // Допустимо, контрвариантность
        
        Примеры со стандартными делегатами:
@@ -199,14 +199,14 @@ namespace CshBook.Lessons.Глава_3
           IEnumerable<Base> baseCollection = derivedCollection;  // Благодаря ковариантности
           
           // Можно передать коллекцию строк в метод, ожидающий коллекцию объектов
-          void ProcessItems(IEnumerable<object> items) { /* ... */ }
+          void ProcessItems(IEnumerable<object> items) { ... }
           List<string> strings = new List<string>();
           ProcessItems(strings);  // Работает благодаря ковариантности IEnumerable<T>
        
        2. Обработка событий и делегатов:
           
           // Более общий обработчик событий для разных типов данных
-          void HandleEvent(object sender, EventArgs e) { /* ... */ }
+          void HandleEvent(object sender, EventArgs e) { ... }
           
           // Подписка на конкретное событие с более специфичным типом
           button.Click += HandleEvent;  // EventHandler<EventArgs> из HandleEvent
@@ -436,10 +436,10 @@ namespace CshBook.Lessons.Глава_3
             Animal[] animals = dogs;
             
             Console.WriteLine("Доступ к массиву animals (ссылается на массив dogs):");
-            foreach (Animal animal in animals)
+            foreach (Animal animal_ in animals)
             {
-                Console.WriteLine(animal);
-                animal.MakeSound();
+                Console.WriteLine(animal_);
+                animal_.MakeSound();
             }
             
             // Но это может привести к ошибке времени выполнения

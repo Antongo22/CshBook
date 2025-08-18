@@ -284,7 +284,29 @@ namespace CshBook.Lessons.Глава_3
         // Проверка, является ли дата выходным днем
         public static bool IsWeekend(this DateTime date)
         {
-            return date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday;
+            return date.DayOfWeek == System.DayOfWeek.Saturday || date.DayOfWeek == System.DayOfWeek.Sunday;
+        }
+    }
+    
+    // Методы-расширения для файлов
+    public static class FileExtensions
+    {
+        // Получение размера файла в читабельном формате
+        public static string GetReadableSize(this FileInfo file)
+        {
+            long size = file.Length;
+            string[] units = { "Б", "КБ", "МБ", "ГБ", "ТБ" };
+            
+            int unitIndex = 0;
+            double fileSize = size;
+            
+            while (fileSize >= 1024 && unitIndex < units.Length - 1)
+            {
+                fileSize /= 1024;
+                unitIndex++;
+            }
+            
+            return $"{fileSize:0.##} {units[unitIndex]}";
         }
     }
     #endregion
@@ -366,24 +388,8 @@ namespace CshBook.Lessons.Глава_3
             
             Console.WriteLine("\n--- Практический пример: обработка файлов ---");
             
-            // Создаем новый метод-расширение для FileInfo прямо в коде
-            // Обычно это делается в отдельном статическом классе
-            static string GetReadableSize(this FileInfo file)
-            {
-                long size = file.Length;
-                string[] units = { "Б", "КБ", "МБ", "ГБ", "ТБ" };
-                
-                int unitIndex = 0;
-                double fileSize = size;
-                
-                while (fileSize >= 1024 && unitIndex < units.Length - 1)
-                {
-                    fileSize /= 1024;
-                    unitIndex++;
-                }
-                
-                return $"{fileSize:0.##} {units[unitIndex]}";
-            }
+            // Используем метод-расширение для FileInfo из класса FileExtensions
+            // Уже определенный выше в отдельном статическом классе
             
             try
             {
