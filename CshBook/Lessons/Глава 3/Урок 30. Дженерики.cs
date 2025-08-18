@@ -572,7 +572,6 @@ namespace CshBook.Lessons.Глава_3
           - Add(T item) - добавить объект в хранилище
           - Remove(T item) - удалить объект
           - GetAll() - вернуть все объекты
-          - Find(Func<T, bool> predicate) - найти объекты по условию
         
         # СЛОЖНОЕ ЗАДАНИЕ: Создайте обобщенный класс BinarySearchTree<T>,
           реализующий бинарное дерево поиска, с ограничением where T : IComparable<T>.
