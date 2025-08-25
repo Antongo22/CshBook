@@ -187,9 +187,9 @@ namespace CshBook.Lessons.Глава_4
     */
     #endregion
 
-    public class MultithreadingBasicsLesson
+    public static class MultithreadingBasicsLesson
     {
-        public void Main_()
+        public static void Main_()
         {
             Console.WriteLine("*** Урок 40: Основы многопоточности ***\n");
 
@@ -351,7 +351,7 @@ namespace CshBook.Lessons.Глава_4
         }
         
         // Метод, выполняемый в отдельном потоке
-        private void SimpleThreadMethod()
+        private static void SimpleThreadMethod()
         {
             for (int i = 0; i < 5; i++)
             {
@@ -361,7 +361,7 @@ namespace CshBook.Lessons.Глава_4
         }
         
         // Метод, принимающий один параметр
-        private void ParameterizedThreadMethod(object param)
+        private static void ParameterizedThreadMethod(object param)
         {
             int value = (int)param;
             Console.WriteLine($"Поток с параметром получил значение: {value}");
@@ -369,7 +369,7 @@ namespace CshBook.Lessons.Глава_4
         }
         
         // Метод, принимающий сложный параметр
-        private void ComplexParameterThreadMethod(object param)
+        private static void ComplexParameterThreadMethod(object param)
         {
             var parameters = (ThreadParameters)param;
             Console.WriteLine($"Поток получил комплексный параметр: Id={parameters.Id}, Name={parameters.Name}");
@@ -377,7 +377,7 @@ namespace CshBook.Lessons.Глава_4
         }
         
         // Метод, который можно прервать
-        private void InterruptibleMethod()
+        private static void InterruptibleMethod()
         {
             try
             {
@@ -398,7 +398,7 @@ namespace CshBook.Lessons.Глава_4
         }
         
         // Метод для суммирования чисел в диапазоне
-        private long SumNumbersInRange(int start, int end)
+        private static long SumNumbersInRange(int start, int end)
         {
             long sum = 0;
             for (int i = start; i <= end; i++)

@@ -1,10 +1,3 @@
-
-
-
-
-
-
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -219,15 +212,15 @@ namespace CshBook.Lessons.Глава_4
     */
     #endregion
 
-    public class ThreadSynchronizationLesson
+    public static class ThreadSynchronizationLesson
     {
         // Пример 1: Демонстрация проблемы состояния гонки (race condition)
-        private int unsafeCounter = 0;
-        private object lockObject = new object();
-        private int safeCounter = 0;
-        private int interlockedCounter = 0;
+        static private int unsafeCounter = 0;
+        static private object lockObject = new object();
+        static private int safeCounter = 0;
+        static private int interlockedCounter = 0;
 
-        public void Main_()
+        public static void Main_()
         {
             Console.WriteLine("*** Урок 41: Синхронизация потоков ***\n");
 
@@ -504,26 +497,31 @@ namespace CshBook.Lessons.Глава_4
                     lock (resourceA)
                     {
                         Console.WriteLine("Поток 1 (исправл.): захватил ресурс A, ожидание ресурса B...");
-                        Thread.Sleep(1000);
+                        Thread.Sleep(500);
                         
                         lock (resourceB)
                         {
-                            Console.WriteLine("Поток 1 (исправл.): захватил ресурс B");
+                            Console.WriteLine("Поток 1 (исправл.): захватил ресурс B, выполняется работа...");
+                            Thread.Sleep(500);
+                            Console.WriteLine("Поток 1 (исправл.): освобождает ресурсы");
                         }
                     }
                 });
                 
                 Thread thread2 = new Thread(() =>
                 {
+                    Thread.Sleep(100); // Небольшая задержка для демонстрации
                     // Важно: блокировки в том же порядке, что и в потоке 1
                     lock (resourceA)
                     {
                         Console.WriteLine("Поток 2 (исправл.): захватил ресурс A, ожидание ресурса B...");
-                        Thread.Sleep(1000);
+                        Thread.Sleep(500);
                         
                         lock (resourceB)
                         {
-                            Console.WriteLine("Поток 2 (исправл.): захватил ресурс B");
+                            Console.WriteLine("Поток 2 (исправл.): захватил ресурс B, выполняется работа...");
+                            Thread.Sleep(500);
+                            Console.WriteLine("Поток 2 (исправл.): освобождает ресурсы");
                         }
                     }
                 });
@@ -531,10 +529,20 @@ namespace CshBook.Lessons.Глава_4
                 thread1.Start();
                 thread2.Start();
                 
-                thread1.Join();
-                thread2.Join();
+                // Добавляем таймаут для безопасности
+                bool completed = thread1.Join(5000) && thread2.Join(5000);
                 
-                Console.WriteLine("Потоки успешно завершились без взаимоблокировки");
+                if (completed)
+                {
+                    Console.WriteLine("Потоки успешно завершились без взаимоблокировки");
+                }
+                else
+                {
+                    Console.WriteLine("Внимание: потоки не завершились в ожидаемое время");
+                    // Прерываем потоки если они зависли
+                    if (thread1.IsAlive) thread1.Interrupt();
+                    if (thread2.IsAlive) thread2.Interrupt();
+                }
             };
             
             // Сначала демонстрируем потенциальный deadlock
@@ -542,7 +550,7 @@ namespace CshBook.Lessons.Глава_4
             potentialDeadlockAction();
             
             // Затем показываем исправленную версию
-            Console.WriteLine("\nИсправленная версия без deadlock:");
+            Console.WriteLine("\nВерсия без deadlock:");
             fixedDeadlockAction();
 
             // Пример 5: Потокобезопасная коллекция
