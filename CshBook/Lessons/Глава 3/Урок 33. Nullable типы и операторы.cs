@@ -12,9 +12,10 @@ namespace CshBook.Lessons.Глава_3
      * 
      * - Что такое Nullable типы и зачем они нужны
      * - Синтаксис объявления и использования Nullable типов
-     * - Операторы для работы с Nullable: ??, ?.
+     * - Операторы для работы с Nullable: ??, ?., !
      * - Паттерн "защита от null" (null guard pattern)
      * - Null-условные операторы в современном C#
+     * - Оператор подавления предупреждений о null (!) и его безопасное использование
      */
 
     /*
@@ -232,6 +233,81 @@ namespace CshBook.Lessons.Глава_3
            }
        }
     */
+
+    /*
+       Оператор подавления предупреждений о null (!) - Null-forgiving operator
+       ================================================================
+       
+       Оператор "!" (null-forgiving operator) появился в C# 8.0 вместе с nullable context.
+       Этот оператор говорит компилятору: "Я знаю, что это выражение может быть null,
+       но я уверен, что в данном контексте оно не будет null, поэтому не выдавай предупреждение".
+       
+       Синтаксис: <выражение>!
+       
+       ВАЖНО! Оператор ! НЕ выполняет никаких проверок во время выполнения.
+       Он только подавляет предупреждения компилятора. Если значение действительно
+       окажется null, то произойдет NullReferenceException.
+       
+       Примеры использования:
+       
+       #nullable enable
+       
+       string? nullableString = GetStringFromSomewhere();
+       
+       // Без ! компилятор выдаст предупреждение
+       // int length = nullableString.Length;  // Warning: возможен null
+       
+       // С ! предупреждение подавляется
+       int length = nullableString!.Length;  // Мы уверены, что не null
+       
+       Типичные сценарии использования:
+       
+       1. После проверки на null:
+       
+       if (text != null)
+       {
+           // Компилятор может не понять, что text уже проверен
+           ProcessText(text!);  // Подавляем предупреждение
+       }
+       
+       2. При работе с методами, которые гарантированно не возвращают null:
+       
+       string result = GetNonNullString()!;  // Мы знаем, что метод не вернет null
+       
+       3. При инициализации полей в конструкторе:
+       
+       public class MyClass
+       {
+           private string _name = null!;  // Будет инициализировано в конструкторе
+           
+           public MyClass(string name)
+           {
+               _name = name ?? throw new ArgumentNullException(nameof(name));
+           }
+       }
+       
+       ОСТОРОЖНО! Используйте оператор ! только когда вы на 100% уверены,
+       что значение не будет null. Неправильное использование может привести
+       к NullReferenceException во время выполнения.
+       
+       Альтернативы оператору !:
+       
+       1. Использование проверок с throw:
+       
+       string text = nullableString ?? throw new InvalidOperationException("Text cannot be null");
+       
+       2. Использование Debug.Assert для отладочных проверок:
+       
+       Debug.Assert(nullableString != null);
+       string text = nullableString;
+       
+       3. Создание вспомогательных методов:
+       
+       public static T ThrowIfNull<T>(T? value, string paramName) where T : class
+       {
+           return value ?? throw new ArgumentNullException(paramName);
+       }
+    */
     #endregion
 
     #region Примеры использования Nullable типов
@@ -446,6 +522,41 @@ namespace CshBook.Lessons.Глава_3
             
             // Успешный вызов
             ProcessPerson(new Person { Name = "Алексей", Age = 25 });
+            
+            Console.WriteLine("\n--- Оператор подавления предупреждений о null (!) ---");
+            
+            // Демонстрация использования оператора !
+            string? possiblyNullString = GetStringValue();
+            
+            // Пример 1: Использование после проверки на null
+            if (possiblyNullString != null)
+            {
+                // Мы знаем, что строка не null, но компилятор может выдать предупреждение
+                int length = possiblyNullString!.Length;
+                Console.WriteLine($"Длина строки после проверки: {length}");
+            }
+            
+            // Пример 2: Использование с методом, который гарантированно возвращает не-null
+            string guaranteedString = GetGuaranteedNonNullString()!;
+            Console.WriteLine($"Гарантированная строка: {guaranteedString}");
+            
+            // Пример 3: Безопасная альтернатива с throw
+            string safeString = possiblyNullString ?? throw new InvalidOperationException("Строка не может быть null");
+            Console.WriteLine($"Безопасная строка: {safeString}");
+            
+            // Пример 4: Демонстрация опасности неправильного использования !
+            Console.WriteLine("\nВНИМАНИЕ: Демонстрация опасности оператора !");
+            try
+            {
+                string? dangerousNull = null;
+                // Это вызовет NullReferenceException!
+                // int badLength = dangerousNull!.Length;  // Раскомментируйте для демонстрации ошибки
+                Console.WriteLine("Опасный код закомментирован для безопасности");
+            }
+            catch (NullReferenceException ex)
+            {
+                Console.WriteLine($"Поймано исключение NullReferenceException: {ex.Message}");
+            }
         }
         
         // Пример метода с защитой от null
@@ -459,6 +570,20 @@ namespace CshBook.Lessons.Глава_3
             
             // Теперь безопасно работаем с person
             Console.WriteLine($"Обработка данных для: {person.Name}");
+        }
+        
+        // Вспомогательные методы для демонстрации оператора !
+        private static string? GetStringValue()
+        {
+            // Имитируем метод, который может вернуть null или строку
+            Random random = new Random();
+            return random.Next(2) == 0 ? null : "Пример строки";
+        }
+        
+        private static string GetGuaranteedNonNullString()
+        {
+            // Метод, который гарантированно возвращает не-null строку
+            return "Гарантированно не-null строка";
         }
     }
 
