@@ -540,9 +540,25 @@ namespace CshBook.Lessons.Глава_3
             string guaranteedString = GetGuaranteedNonNullString()!;
             Console.WriteLine($"Гарантированная строка: {guaranteedString}");
             
-            // Пример 3: Безопасная альтернатива с throw
-            string safeString = possiblyNullString ?? throw new InvalidOperationException("Строка не может быть null");
-            Console.WriteLine($"Безопасная строка: {safeString}");
+            // Пример 3: Демонстрация различных подходов к обработке null
+            if (possiblyNullString != null)
+            {
+                // Вариант 1: Использование ! после проверки
+                string withNullForgiving = possiblyNullString!;
+                Console.WriteLine($"С оператором !: {withNullForgiving}");
+                
+                // Вариант 2: Безопасная альтернатива с ??
+                string withNullCoalescing = possiblyNullString ?? "значение по умолчанию";
+                Console.WriteLine($"С оператором ??: {withNullCoalescing}");
+            }
+            else
+            {
+                Console.WriteLine("Строка равна null, демонстрируем безопасную обработку:");
+                
+                // Безопасная обработка null
+                string safeHandling = possiblyNullString ?? "Значение по умолчанию";
+                Console.WriteLine($"Безопасная обработка: {safeHandling}");
+            }
             
             // Пример 4: Демонстрация опасности неправильного использования !
             Console.WriteLine("\nВНИМАНИЕ: Демонстрация опасности оператора !");
