@@ -5,4 +5,4 @@ using CshBook.Lessons.Глава_4;
 using CshBook.Lessons.Дополнительно;
 using CshBook.Ответы. Глава_0;
 
-ReflectionExamples.Main_();
+ModernOOPLesson.Main_();
