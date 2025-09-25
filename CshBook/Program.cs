@@ -6,4 +6,4 @@ using CshBook.Lessons.Глава_5;
 using CshBook.Lessons.Дополнительно;
 using CshBook.Ответы. Глава_0;
 
-SingletonDemo.Main_();
+StrategyDemo.Main_();
