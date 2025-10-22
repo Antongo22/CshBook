@@ -99,6 +99,14 @@ namespace CshBook.Lessons
 
             pet1.GettingOld();
             pet2.GettingOld();
+
+
+            Pet pet3 = new Pet()
+            {
+                name = "Example",
+                age = 5
+            }; // Ещё один способ инициализации объекта класса
+
         }
     }
 
