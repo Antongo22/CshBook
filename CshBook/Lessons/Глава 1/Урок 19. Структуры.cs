@@ -87,27 +87,6 @@ namespace CshBook.Lessons
      - Свойство IsSquare (только чтение) проверяющее квадрат
      */
 
-    struct Rectangle
-    {
-        public int Width;
-        public int Height;
-
-        public Rectangle(int width, int height)
-        {
-            Width = width;
-            Height = height;
-        }
-
-        public int GetArea() => Width * Height;
-
-        public void Scale(int factor)
-        {
-            Width *= factor;
-            Height *= factor;
-        }
-
-        public bool IsSquare => Width == Height;
-    }
     #endregion
 
 
