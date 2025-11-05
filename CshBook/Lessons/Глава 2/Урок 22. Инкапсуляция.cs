@@ -183,33 +183,6 @@ namespace CshBook.Lessons
      - Конструктор с установкой в градусах Цельсия
      */
 
-    class Temperature
-    {
-        private double _celsius;
-
-        public Temperature(double celsius)
-        {
-            Celsius = celsius; // Используем свойство для валидации
-        }
-
-        public double Celsius
-        {
-            get => _celsius;
-            set
-            {
-                if (value < -273.15)
-                    throw new ArgumentException("Температура ниже абсолютного нуля");
-                _celsius = value;
-            }
-        }
-
-        public double Fahrenheit => _celsius * 9 / 5 + 32;
-
-        public void SetFromFahrenheit(double fahr)
-        {
-            Celsius = (fahr - 32) * 5 / 9; // Используем сеттер для валидации
-        }
-    }
     #endregion
 
     #region Творческое задание
@@ -221,49 +194,7 @@ namespace CshBook.Lessons
      - Валидация входных значений в методах
      */
 
-    class SmartHouse
-    {
-        private double _temperature;
-        private int _lightLevel;
-        private bool _isSecurityMode;
-
-        public void SetTemperature(double value)
-        {
-            if (value < 10 || value > 35)
-                throw new ArgumentException("Недопустимая температура");
-            _temperature = value;
-            CheckClimateConditions();
-        }
-
-        public void AdjustLight(int level)
-        {
-            if (level < 0 || level > 100)
-                throw new ArgumentException("Уровень света 0-100");
-            _lightLevel = level;
-        }
-
-        public void ToggleSecurity()
-        {
-            _isSecurityMode = !_isSecurityMode;
-            UpdateSecurityLog();
-        }
-
-        private void CheckClimateConditions()
-        {
-            // Внутренняя логика проверки климата
-        }
-
-        private void UpdateSecurityLog()
-        {
-            // Логирование изменений безопасности
-        }
-
-        public string CurrentStatus =>
-            $"Температура: {_temperature}°C, Свет: {_lightLevel}%, Безопасность: {_isSecurityMode}";
-
-        public double EnergyConsumption =>
-            _temperature * 0.5 + _lightLevel * 0.1 + (_isSecurityMode ? 10 : 0);
-    }
+    
     #endregion
 
     /* Преимущества инкапсуляции:
