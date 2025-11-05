@@ -135,49 +135,6 @@ namespace CshBook.Lessons
      - Метод Resize(int newSize)
      */
 
-    class SmartArray
-    {
-        private int[] _array;
-
-        public SmartArray(int size)
-        {
-            _array = new int[size];
-        }
-
-        public int this[int index]
-        {
-            get
-            {
-                if (index < 0 || index >= _array.Length)
-                    throw new IndexOutOfRangeException();
-                return _array[index];
-            }
-            set
-            {
-                if (index < 0 || index >= _array.Length)
-                    throw new IndexOutOfRangeException();
-                _array[index] = value;
-            }
-        }
-
-        public int Length => _array.Length;
-        public int Sum
-        {
-            get
-            {
-                int sum = 0;
-                foreach (int num in _array) sum += num;
-                return sum;
-            }
-        }
-
-        public double Average => (double)Sum / Length;
-
-        public void Resize(int newSize)
-        {
-            Array.Resize(ref _array, newSize);
-        }
-    }
     #endregion
 
     /* Продвинутые возможности:
