@@ -164,40 +164,6 @@ namespace CshBook.Lessons._24
        - Реализуйте разную логику расчета зарплаты
     */
 
-    #region Пример решения задачи с калькулятором
-    class CalculatorTask
-    {
-        public virtual int Compute(int a, int b)
-        {
-            return 0;
-        }
-
-        public double Compute(double a, double b)
-        {
-            return 0.0;
-        }
-
-        public decimal Compute(decimal a, decimal b)
-        {
-            return 0m;
-        }
-    }
-
-    class AddCalculator : CalculatorTask
-    {
-        public override int Compute(int a, int b) => a + b;
-        public new double Compute(double a, double b) => a + b;
-        public new decimal Compute(decimal a, decimal b) => a + b;
-    }
-
-    class MultiplyCalculator : CalculatorTask
-    {
-        public override int Compute(int a, int b) => a * b;
-        public new double Compute(double a, double b) => a * b;
-        public new decimal Compute(decimal a, decimal b) => a * b;
-    }
-    #endregion
-
     /* Дополнительные пояснения:
     
     1. Разница между override и new:
