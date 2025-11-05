@@ -98,38 +98,7 @@ namespace CshBook.Lessons
      - Статический конструктор с установкой Separator = "; "
      */
 
-    static class ArrayUtils
-    {
-        public static string Separator { get; set; }
-
-        static ArrayUtils()
-        {
-            Separator = "; ";
-        }
-
-        public static int FindMax(int[] array)
-        {
-            if (array == null || array.Length == 0)
-                throw new ArgumentException("Массив пуст");
-
-            int max = array[0];
-            foreach (int num in array)
-            {
-                if (num > max) max = num;
-            }
-            return max;
-        }
-
-        public static void Sort(int[] array)
-        {
-            Array.Sort(array);
-        }
-
-        public static string ConvertToString(int[] array)
-        {
-            return string.Join(Separator, array);
-        }
-    }
+    
     #endregion
 
     #region Творческое задание
@@ -140,38 +109,6 @@ namespace CshBook.Lessons
      - Статический конструктор для загрузки настроек
      */
 
-    static class AppSettings
-    {
-        private static Dictionary<string, string> _settings = new Dictionary<string, string>();
-        public static event Action<string> OnSettingsChanged;
-
-        static AppSettings()
-        {
-            // Загрузка настроек из файла при инициализации
-            LoadFromFile("settings.cfg");
-        }
-
-        public static void SetSetting(string key, string value)
-        {
-            _settings[key] = value;
-            OnSettingsChanged?.Invoke(key);
-        }
-
-        public static string GetSetting(string key)
-        {
-            return _settings.TryGetValue(key, out string value) ? value : null;
-        }
-
-        public static void SaveToFile(string path)
-        {
-            // Реализация сохранения в файл
-        }
-
-        public static void LoadFromFile(string path)
-        {
-            // Реализация загрузки из файла
-        }
-    }
     #endregion
 
     /* Лучшие практики:
