@@ -93,36 +93,6 @@ namespace CshBook.Lessons
      - Свойством Info (только чтение) с информацией о счете
      */
 
-    class BankAccount
-    {
-        public string AccountNumber { get; } // Только чтение
-        public decimal Balance { get; private set; }
-        public bool IsClosed { private get; set; } // Только запись
-
-        public BankAccount(string accountNumber)
-        {
-            AccountNumber = accountNumber;
-        }
-
-        public void Deposit(decimal amount)
-        {
-            if (amount <= 0)
-                throw new ArgumentException("Сумма должна быть положительной");
-            Balance += amount;
-        }
-
-        public void Withdraw(decimal amount)
-        {
-            if (amount <= 0)
-                throw new ArgumentException("Сумма должна быть положительной");
-            if (amount > Balance)
-                throw new InvalidOperationException("Недостаточно средств");
-            Balance -= amount;
-        }
-
-        public string Info =>
-            $"Счет: {AccountNumber}, Баланс: {Balance:C}, Статус: {(IsClosed ? "Закрыт" : "Активен")}";
-    }
     #endregion
 
     #region Творческое задание
