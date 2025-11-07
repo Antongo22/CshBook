@@ -101,15 +101,6 @@ namespace CshBook.Lessons
     
     #endregion
 
-    #region Творческое задание
-    /* Реализуйте статический класс AppSettings для управления настройками:
-     - Словарь настроек (ключ-значение)
-     - Методы: SetSetting, GetSetting, SaveToFile, LoadFromFile
-     - Событие OnSettingsChanged
-     - Статический конструктор для загрузки настроек
-     */
-
-    #endregion
 
     /* Лучшие практики:
      1. Используйте для функционала, не требующего состояния
