@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CshBook.Lessons.Глава_5
+namespace CshBook.Lessons
 {
     #region Теория
     /*
@@ -273,7 +273,7 @@ namespace CshBook.Lessons.Глава_5
 
     #region Пример 4: Логгеры с разными форматами
     // Product
-    public interface ILogger
+    file interface ILogger
     {
         void Log(string message, string level);
     }
@@ -304,7 +304,7 @@ namespace CshBook.Lessons.Глава_5
     }
 
     // Creator
-    public abstract class LoggingService
+    file abstract class LoggingService
     {
         protected abstract ILogger CreateLogger();
 
@@ -322,17 +322,17 @@ namespace CshBook.Lessons.Глава_5
     }
 
     // ConcreteCreators
-    public class JsonLoggingService : LoggingService
+    file class JsonLoggingService : LoggingService
     {
         protected override ILogger CreateLogger() => new JsonLogger();
     }
 
-    public class PlainTextLoggingService : LoggingService
+    file class PlainTextLoggingService : LoggingService
     {
         protected override ILogger CreateLogger() => new PlainTextLogger();
     }
 
-    public class XmlLoggingService : LoggingService
+    file class XmlLoggingService : LoggingService
     {
         protected override ILogger CreateLogger() => new XmlLogger();
     }

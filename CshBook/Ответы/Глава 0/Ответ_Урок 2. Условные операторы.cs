@@ -138,7 +138,7 @@ namespace CshBook.Ответы.Глава_0
             if (p2 > 0) count++;
             if (p3 > 0) count++;
 
-            Console.WriteLine(сount);
+            Console.WriteLine(count);
 
 
             // Дана дата из трех чисел (день, месяц и год). Вывести yes, если такая дата существует (например, 12 02 1999 - yes, 22 13 2001 - no). Считать, что в феврале всегда 28 дней.
@@ -177,45 +177,45 @@ namespace CshBook.Ответы.Глава_0
 
 
             // Дано трехзначное число. Переставьте первую и последнюю цифры.
-            int number = int.Parse(Console.ReadLine());
-            int hundreds = number / 100;
-            int tens = (number / 10) % 10;
-            int units = number % 10;
+            int number_ = int.Parse(Console.ReadLine());
+            int hundreds = number_ / 100;
+            int tens = (number_ / 10) % 10;
+            int units = number_ % 10;
             int newNumber = units * 100 + tens * 10 + hundreds;
             Console.WriteLine(newNumber);
 
 
             // Пользователь вводит целое число. Проверьте является ли это число четырехзначным, если является, то выведите строку "Успешно", иначе "Неудача". (+тернарный)
             int number = int.Parse(Console.ReadLine());
-            string result = number >= 1000 && number < 10000 ? "Успешно" : "Неудача";
-            Console.WriteLine(result);
+            string result_ = number >= 1000 && number < 10000 ? "Успешно" : "Неудача";
+            Console.WriteLine(result_);
 
 
 
             // Итоговое задание - написать свой калькулятор. Подумать, как можно добавить тернарный оператор
             Console.WriteLine("Введите первое число: ");
-            double num1 = Convert.ToDouble(Console.ReadLine());
+            double num1_ = Convert.ToDouble(Console.ReadLine());
             Console.WriteLine("Введите второе число: ");
-            double num2 = Convert.ToDouble(Console.ReadLine());
+            double num2_ = Convert.ToDouble(Console.ReadLine());
             Console.WriteLine("Введите операцию (+, -, *, /): ");
             string operation = Console.ReadLine();
 
 
             if (operation == "+")
             {
-                Console.WriteLine($"Результат: {num1 + num2}");
+                Console.WriteLine($"Результат: {num1_ + num2_}");
             }
             else if (operation == "-")
             {
-                Console.WriteLine($"Результат: {num1 - num2}");
+                Console.WriteLine($"Результат: {num1_ - num2_}");
             }
             else if (operation == "*")
             {
-                Console.WriteLine($"Результат: {num1 * num2}");
+                Console.WriteLine($"Результат: {num1_ * num2_}");
             }
             else if (operation == "/")
             {
-                Console.WriteLine($"Результат: {num1 / num2}");
+                Console.WriteLine($"Результат: {num1_ / num2_}");
             }
             else
             {

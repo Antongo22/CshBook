@@ -669,7 +669,7 @@ namespace CshBook.Lessons.Глава_5
     #region Пример 7: Комбинированный Proxy (Кэширование + Логирование + Защита)
 
     // Subject — интерфейс репозитория данных
-    public interface IDataRepository
+    file interface IDataRepository
     {
         string GetData(string key);
         void SetData(string key, string value);
