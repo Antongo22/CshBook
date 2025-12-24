@@ -224,7 +224,7 @@ namespace CshBook.Lessons.Глава_5
         }
     }
 
-    public class PaymentProcessor
+    file class PaymentProcessor
     {
         private IPaymentStrategy _strategy;
         public PaymentProcessor(IPaymentStrategy strategy)

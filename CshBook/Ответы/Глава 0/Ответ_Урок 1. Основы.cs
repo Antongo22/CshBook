@@ -6,37 +6,37 @@ namespace CshBook.Answers.Answ0
     {
         public static void Main_()
         {
-            // 1 Ïîëüçîâàòåëü ââîäèò äâà ÷èñëà, íóæíî íàéòè èõ ñóììó
-            Console.Write("Ââåäèòå ïåðâîå ÷èñëî: ");
+            // 1 ÐŸÐ¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»ÑŒ Ð²Ð²Ð¾Ð´Ð¸Ñ‚ Ð´Ð²Ð° Ñ‡Ð¸ÑÐ»Ð°, Ð½ÑƒÐ¶Ð½Ð¾ Ð½Ð°Ð¹Ñ‚Ð¸ Ð¸Ñ… ÑÑƒÐ¼Ð¼Ñƒ
+            Console.Write("Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¿ÐµÑ€Ð²Ð¾Ðµ Ñ‡Ð¸ÑÐ»Ð¾: ");
             int num1 = int.Parse(Console.ReadLine());
 
-            Console.Write("Ââåäèòå âòîðîå ÷èñëî: ");
+            Console.Write("Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð²Ñ‚Ð¾Ñ€Ð¾Ðµ Ñ‡Ð¸ÑÐ»Ð¾: ");
             int num2 = int.Parse(Console.ReadLine());
             int sum1 = num1 + num2;
-            Console.WriteLine("Ñóììà = " + sum1);
+            Console.WriteLine("Ð¡ÑƒÐ¼Ð¼Ð° = " + sum1);
 
             Console.WriteLine("\n\n");
 
 
-            // 2 Ïîëüçîâàòåëü ââîäèò ÷èñëî, ïîäåëèòü ýòî ÷èñëî íà 5 áåç îñòàòêà
-            Console.Write("Ââåäèòå ÷èñëî: ");
+            // ÐŸÐ¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»ÑŒ Ð²Ð²Ð¾Ð´Ð¸Ñ‚ Ñ‡Ð¸ÑÐ»Ð¾, Ð¿Ð¾Ð´ÐµÐ»Ð¸Ñ‚ÑŒ ÑÑ‚Ð¾ Ñ‡Ð¸ÑÐ»Ð¾ Ð½Ð° 5 Ð±ÐµÐ· Ð¾ÑÑ‚Ð°Ñ‚ÐºÐ°
+            Console.Write("Ð§Ð¸ÑÐ»Ð¾: ");
             int num3 = int.Parse(Console.ReadLine());
             int res1 = num3 / 5;
-            Console.WriteLine("Äåëåíèå áåç îñòàòêà: " + res1);
+            Console.WriteLine("Ð”ÐµÐ»ÐµÐ½Ð¸Ðµ Ð½Ð° 5: " + res1);
 
             Console.WriteLine("\n\n");
             Console.WriteLine("\n\n");
 
 
-            // 3 Ïîëüçîâàòåëü ââîäèò ÷èñëî, íàéòè îñòàòîê îò äåëåíèÿ 100 íà ýòî ÷èñëî
-            Console.Write("Ââåäèòå ÷èñëî: ");
+            // 3 ÐŸÐ¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»ÑŒ Ð²Ð²Ð¾Ð´Ð¸Ñ‚ Ñ‡Ð¸ÑÐ»Ð¾, Ð½Ð°Ð¹Ñ‚Ð¸ Ð¾ÑÑ‚Ð°Ñ‚Ð¾Ðº Ð¾Ñ‚ Ð´ÐµÐ»ÐµÐ½Ð¸Ñ 100 Ð½Ð° ÑÑ‚Ð¾ Ñ‡Ð¸ÑÐ»Ð¾
+            Console.Write("Ð§Ð¸ÑÐ»Ð¾: ");
             int num4 = int.Parse(Console.ReadLine());
             int res2 = num4 % 100;
-            Console.WriteLine("Äåëåíèå ñ îñòàòêîì íà 100: " + res1);
+            Console.WriteLine("ÐžÑÑ‚Ð°Ñ‚Ð¾Ðº Ð¾Ñ‚ Ð´ÐµÐ»ÐµÐ½Ð¸Ñ Ð½Ð°  100: " + res1);
 
             Console.WriteLine("\n\n");
 
-            // 4 Çàïèñàòü äàííûå èç çàäà÷ 1 - 3 è êðàñèâî âûâåñòè èõ ÷åðåç f-ñòðîêó â êîíñîëü
+            // 4 Ð—Ð°Ð¿Ð¸ÑÐ°Ñ‚ÑŒ Ð´Ð°Ð½Ð½Ñ‹Ðµ Ð¸Ð· Ð·Ð°Ð´Ð°Ñ‡ 1-3 Ð¸ ÐºÑ€Ð°ÑÐ¸Ð²Ð¾ Ð²Ñ‹Ð²ÐµÑÑ‚Ð¸ Ð¸Ñ… Ñ‡ÐµÑ€ÐµÐ· f-ÑÑ‚Ñ€Ð¾ÐºÑƒ Ð² ÐºÐ¾Ð½ÑÐ¾Ð»ÑŒ
 
             Console.WriteLine($"{num1} + {num2} = {sum1}");
             Console.WriteLine($"{num3} / 5 = {res1}");
@@ -44,8 +44,8 @@ namespace CshBook.Answers.Answ0
 
             Console.WriteLine("\n\n");
 
-            // 5 Ïîëüçîâàòåëü ââîäèò âîçðàñò. Âûâåñòè True, åñëè ÷åìó áîëüøå 18, èíà÷å else
-            Console.Write("Ââåäèòå âòçðàñò: ");
+            // 5 ÐŸÐ¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»ÑŒ Ð²Ð²Ð¾Ð´Ð¸Ñ‚ Ð²Ð¾Ð·Ñ€Ð°ÑÑ‚. Ð’Ñ‹Ð²ÐµÑÑ‚Ð¸ True, ÐµÑÐ»Ð¸ Ñ‡ÐµÐ¼Ñƒ Ð±Ð¾Ð»ÑŒÑˆÐµ 18, Ð¸Ð½Ð°Ñ‡Ðµ False
+            Console.Write("Ð’Ð°Ñˆ Ð²Ð¾Ð·Ñ€Ð°ÑÑ‚ : ");
             int age = int.Parse(Console.ReadLine());
             Console.WriteLine(age > 18);
 
