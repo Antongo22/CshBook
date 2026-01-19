@@ -305,10 +305,7 @@ namespace CshBook.Lessons._26
           методами StartEngine(), StopEngine() и Drive(). Реализуйте классы Car, Motorcycle и 
           Truck с разными характеристиками и поведением.
         
-        # Разработайте абстрактный класс AbstractFactory с методами CreateProduct() и 
-          GetProductInfo(). Затем реализуйте несколько конкретных фабрик для создания 
-          различных типов продуктов (например, ElectronicsFactory, FurnitureFactory).
-          
+
         # Создайте абстрактный класс Game с абстрактными методами Initialize(), Start(), 
           Update() и End(). Реализуйте несколько простых игр, используя этот абстрактный класс 
           (например, GuessNumber, RockPaperScissors, SimpleQuiz).
