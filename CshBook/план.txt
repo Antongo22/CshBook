@@ -46,7 +46,6 @@ Reflection
 Тестирование
 Чистота кода
 Алгоритмы (1 урок = 1 паттерн)
-Тестирование
 Entity Framework
 WinForms
 WPF
