@@ -6,5 +6,5 @@ using CshBook.Lessons.Глава_5;
 using CshBook.Lessons.Дополнительно;
 using CshBook.Ответы. Глава_0;
 
-await AsyncBasicsLesson.Main_();
+ForSolutions.Main_();
 
