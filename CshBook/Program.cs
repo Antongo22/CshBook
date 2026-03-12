@@ -6,5 +6,5 @@ using CshBook.Lessons.Глава_5;
 using CshBook.Lessons.Дополнительно;
 using CshBook.Ответы. Глава_0;
 
-ForSolutions.Main_();
+WhileSolutions.Main_();
 
