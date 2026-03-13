@@ -95,7 +95,7 @@ namespace CshBook.Lessons
 
     #endregion
 
-    #region Творческое задание
+    #region Задачи
     /* Реализуйте класс SmartArray:
      - Внутренний массив целых чисел
      - Свойство Length (только чтение)

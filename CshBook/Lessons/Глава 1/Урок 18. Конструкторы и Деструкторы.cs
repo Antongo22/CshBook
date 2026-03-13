@@ -119,6 +119,8 @@ namespace CshBook.Lessons
 }
 
 
+#region Задачи
 /* Задание
     Дополни предыдущее задание новыми знаниями 
  */
+#endregion

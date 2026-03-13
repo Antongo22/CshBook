@@ -443,7 +443,7 @@ namespace CshBook.Lessons
     }
     #endregion
 
-    #region Задачи (без ответов)
+    #region Задачи
     /*
      * ЗАДАЧИ ПО ПАТТЕРНУ FACTORY METHOD
      * ==================================

@@ -185,7 +185,7 @@ namespace CshBook.Lessons
 
     #endregion
 
-    #region Творческое задание
+    #region Задачи
     /* Реализуйте класс SmartHouse с инкапсуляцией:
      - Приватные поля: температура, освещенность, безопасный режим
      - Публичные методы: SetTemperature, AdjustLight, ToggleSecurity

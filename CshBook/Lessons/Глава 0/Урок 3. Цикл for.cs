@@ -81,6 +81,7 @@ namespace CshBook.Lessons
         }
     }
 
+    #region Задачи
     /*Задачи
     Выведите на экран 10 раз фразу "You are welcome!"
     Выведите на экран n раз фразу "Silence is golden". Число n вводит пользователь.
@@ -117,4 +118,5 @@ namespace CshBook.Lessons
     Вывести на экран все числа от 1 до n, которые являются степенью двойки.
 
      */
+    #endregion
 }

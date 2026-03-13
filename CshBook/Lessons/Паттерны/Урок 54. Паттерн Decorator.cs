@@ -529,7 +529,7 @@ namespace CshBook.Lessons.Глава_5
     }
     #endregion
 
-    #region Задачи (без ответов)
+    #region Задачи
     /*
      * ЗАДАЧИ ПО ПАТТЕРНУ DECORATOR
      * =============================
