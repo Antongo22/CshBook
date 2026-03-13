@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 
-class ExceptionTasks
+namespace CshBook.Answers.Chapter1.Lesson15ExceptionHandling;
+internal static class AnswerLesson15ExceptionHandling
 {
     // 1. Деление двух чисел с обработкой DivideByZeroException
     public static double DivideNumbers(int a, int b)

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CshBook.Lessons.Delegates
+namespace CshBook.Lessons.Chapter3.Lesson37Delegates
 {
     #region Теория
     /*
@@ -349,7 +349,7 @@ namespace CshBook.Lessons.Delegates
     }
     #endregion
 
-    internal class DelegatesLesson
+    internal class Lesson37Delegates
     {
         public static void Main_()
         {

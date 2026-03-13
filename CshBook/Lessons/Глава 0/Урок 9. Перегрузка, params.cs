@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CshBook.Lessons
+namespace CshBook.Lessons.Chapter0.Lesson09OverloadsAndParams
 {
     /* Перегрузка
         Перегрузка методов в C# — это возможность создавать несколько методов с одинаковым именем, но с разными параметрами. 
@@ -25,7 +25,7 @@ namespace CshBook.Lessons
      */
 
 
-    internal static class NinthLesson
+    internal static class Lesson09OverloadsAndParams
     {
         #region Перегрузка
         public static int Add(int a, int b)

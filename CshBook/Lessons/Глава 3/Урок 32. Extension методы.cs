@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace CshBook.Lessons.Глава_3
+namespace CshBook.Lessons.Chapter3.Lesson32ExtensionMethods
 {
     #region Теория
     /*
@@ -54,7 +54,7 @@ namespace CshBook.Lessons.Глава_3
        
        Синтаксис:
        
-       public static class МояКлассРасширений
+       public static class MyExtensions
        {
            public static ТипРезультата МетодРасширения(this ТипДляРасширения объект, параметры...)
            {
@@ -311,7 +311,7 @@ namespace CshBook.Lessons.Глава_3
     }
     #endregion
 
-    internal class ExtensionMethodsLesson
+    internal class Lesson32ExtensionMethods
     {
         public static void Main_()
         {

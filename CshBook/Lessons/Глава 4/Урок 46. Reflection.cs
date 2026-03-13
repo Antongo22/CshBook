@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CshBook.Lessons.Глава_4
+namespace CshBook.Lessons.Chapter4.Lesson46Reflection
 {
     #region Теория
     /*
@@ -118,7 +118,7 @@ namespace CshBook.Lessons.Глава_4
        MethodInfo[] methods = typeof(string).GetMethods(flags);
     */
 
-    public class ReflectionExamples
+    public class Lesson46Reflection
     {
         // Пример класса для демонстрации Reflection
         public class Person

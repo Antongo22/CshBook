@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CshBook.Lessons
+namespace CshBook.Lessons.Chapter0.Lesson04WhileLoop
 {
     /* while
     Выполняется пока условие написанное после слова while выполняется (даёт true). 
@@ -73,7 +73,7 @@ namespace CshBook.Lessons
     while (count < 5);
      */
 
-    internal class FourthLesson
+    internal class Lesson04WhileLoop
     {
         public static void Main_()
         {

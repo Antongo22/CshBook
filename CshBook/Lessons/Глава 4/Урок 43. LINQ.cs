@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CshBook.Lessons.Глава_4
+namespace CshBook.Lessons.Chapter4.Lesson43Linq
 {
     #region Теория
     /*
@@ -175,7 +175,7 @@ namespace CshBook.Lessons.Глава_4
     */
     #endregion
 
-    public static class LinqLesson
+    public static class Lesson43Linq
     {
         public static void Main_()
         {

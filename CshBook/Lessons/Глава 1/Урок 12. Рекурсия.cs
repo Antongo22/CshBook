@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CshBook.Lessons
+namespace CshBook.Lessons.Chapter1.Lesson12Recursion
 {
     /* Двенадцатый урок: Рекурсия
      
@@ -13,7 +13,7 @@ namespace CshBook.Lessons
        2. Рекурсивный вызов – вызов функции самой себя с новыми параметрами.
     */
 
-    internal static class TwelfthLesson
+    internal static class Lesson12Recursion
     {
         /* Пример 1: Факториал числа */
         public static int Factorial(int n)

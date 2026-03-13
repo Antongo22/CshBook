@@ -1,5 +1,6 @@
 ﻿using System;
 
+namespace CshBook.Answers.Chapter1.Lesson16Enumerations;
 [Flags]
 public enum UserPermissions
 {
@@ -60,7 +61,7 @@ public enum CardSuit
     Clubs
 }
 
-class EnumTasks
+internal static class AnswerLesson16Enumerations
 {
     // 1. Пример месяца по сезону
     public static string GetMonthBySeason(Seasons season)

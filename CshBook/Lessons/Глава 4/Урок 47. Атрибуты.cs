@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CshBook.Lessons.Глава_4
+namespace CshBook.Lessons.Chapter4.Lesson47Attributes
 {
     #region Теория
     /*

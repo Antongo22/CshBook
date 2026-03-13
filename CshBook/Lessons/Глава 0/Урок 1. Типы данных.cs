@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace CshBook.Lessons
+namespace CshBook.Lessons.Chapter0.Lesson01DataTypes
 {
     #region Теория
     /* 
@@ -119,7 +119,7 @@ namespace CshBook.Lessons
 
     #endregion
 
-    internal static class FirstLesson // Урок 1. Типы данных
+    internal static class Lesson01DataTypes // Урок 1. Типы данных
     {
         public static void Main_()
         {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CshBook.Lessons.Ch2
+namespace CshBook.Lessons.Chapter2.Lesson23Inheritance
 {
     /* Урок 23: Наследование в C#
      
@@ -78,7 +78,7 @@ namespace CshBook.Lessons.Ch2
     }
     #endregion
 
-    internal class TwentyThirdLesson
+    internal class Lesson23Inheritance
     {
         public static void Main_()
         {

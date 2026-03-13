@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace CshBook.Lessons
+namespace CshBook.Lessons.Chapter1.Lesson15ExceptionHandling
 {
     /* Урок 15: Обработка исключений в C#
     
@@ -67,7 +67,7 @@ namespace CshBook.Lessons
 
     */
 
-    internal static class FifteenthLesson
+    internal static class Lesson15ExceptionHandling
     {
         public static void Main_()
         {
@@ -256,6 +256,7 @@ namespace CshBook.Lessons
     - Использование `throw ex;` оправдано только в редких случаях, например, если вам нужно изменить сообщение об ошибке.
 */
 
+#region Задачи
 /* Задачи:
 
     1. Напишите программу, которая запрашивает у пользователя два числа и делит первое на второе. Обработайте `DivideByZeroException`.
@@ -266,4 +267,4 @@ namespace CshBook.Lessons
     6. Сделайте метод, который считывает содержимое файла, а в `finally` закрывает поток.
     7. Сделайте программу-калькулятор, в которой все операции защищены `try-catch`, чтобы не было аварийного завершения.
 */
-
+#endregion

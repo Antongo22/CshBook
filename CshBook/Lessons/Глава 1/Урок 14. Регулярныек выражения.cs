@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace CshBook.Lessons
+namespace CshBook.Lessons.Chapter1.Lesson14RegularExpressions
 {
     /* Урок 14: Регулярные выражения в C#
      
@@ -58,7 +58,7 @@ namespace CshBook.Lessons
        Просмотры удобны, когда нужно проверить окружение совпадения, не добавляя его в сам результат.
     */
 
-    internal static class FourteenthLesson
+    internal static class Lesson14RegularExpressions
     {
         public static void Main_()
         {

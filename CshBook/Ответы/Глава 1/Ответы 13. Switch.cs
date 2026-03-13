@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace CshBook.Lessons
+namespace CshBook.Answers.Chapter1.Lesson13Switch
 {
-    internal static class ThirteenthLessonSolutions
+    internal static class AnswerLesson13Switch
     {
         // 1. Определить, является ли введенная буква гласной или согласной, используя when.
         public static string CheckVowelOrConsonant(char letter)

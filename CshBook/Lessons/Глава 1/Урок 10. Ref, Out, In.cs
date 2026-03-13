@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CshBook.Lessons
+namespace CshBook.Lessons.Chapter1.Lesson10RefOutIn
 {
     /* Ref, Out, In - передача параметров по ссылке
 
@@ -84,7 +84,7 @@ namespace CshBook.Lessons
      */
 
 
-    internal static class TenthLesson
+    internal static class Lesson10RefOutIn
     {
         /* Пример с ref */
         public static void ModifyWithRef(ref int x)

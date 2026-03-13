@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Runtime.Serialization;
 
-namespace CshBook.Lessons.Глава_3
+namespace CshBook.Lessons.Chapter3.Lesson35CustomExceptions
 {
     #region Теория
     /*
@@ -557,7 +557,7 @@ namespace CshBook.Lessons.Глава_3
     }
     #endregion
 
-    internal class CustomExceptionsLesson
+    internal class Lesson35CustomExceptions
     {
         public static void Main_()
         {

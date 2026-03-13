@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CshBook.Lessons
+namespace CshBook.Lessons.Chapter2.Lesson25AdditionalOop
 {
     #region Теория
     /*
@@ -142,7 +142,7 @@ namespace CshBook.Lessons
     
     #endregion
 
-    public class AdditionalOOP
+    public class Lesson25AdditionalOop
     {
         public static void Main_()
         {

@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics;
 
-namespace CshBook.Lessons.Глава_4
+namespace CshBook.Lessons.Chapter4.Lesson40MultithreadingBasics
 {
     #region Теория
     /*
@@ -187,7 +187,7 @@ namespace CshBook.Lessons.Глава_4
     */
     #endregion
 
-    public static class MultithreadingBasicsLesson
+    public static class Lesson40MultithreadingBasics
     {
         public static void Main_()
         {

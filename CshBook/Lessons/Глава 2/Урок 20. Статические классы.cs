@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CshBook.Lessons
+namespace CshBook.Lessons.Chapter2.Lesson20StaticClasses
 {
     /* Урок 20: Статические классы в C#
      
@@ -56,7 +56,7 @@ namespace CshBook.Lessons
     }
     #endregion
 
-    internal class TwentiethLesson
+    internal class Lesson20StaticClasses
     {
         public static void Main_()
         {

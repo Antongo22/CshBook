@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CshBook.Lessons
+namespace CshBook.Lessons.Chapter0.Lesson07Files
 {
 
     /* Общая информация
@@ -114,7 +114,7 @@ namespace CshBook.Lessons
      
      */
 
-    internal class SeventhLesson
+    internal class Lesson07Files
     {
         public static void Main_()
         {
@@ -174,6 +174,7 @@ namespace CshBook.Lessons
         }
     }
 
+    #region Задачи
     /* Задачи
      
      1. Чтение и вывод содержимого файла:
@@ -192,4 +193,5 @@ namespace CshBook.Lessons
     5. Копирование содержимого одного файла в другой:
        Напишите программу, которая читает содержимое одного текстового файла и записывает его в другой файл.
      */
+    #endregion
 }

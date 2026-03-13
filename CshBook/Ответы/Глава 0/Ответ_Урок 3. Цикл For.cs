@@ -1,6 +1,5 @@
-namespace CshBook.Ответы.Глава_0;
-
-public class ForSolutions
+namespace CshBook.Answers.Chapter0.Lesson03ForLoop;
+public class AnswerLesson03ForLoop
 {
     public static void Main_()
     {

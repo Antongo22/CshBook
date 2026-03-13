@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CshBook.Lessons
+namespace CshBook.Lessons.Chapter0.Lesson03ForLoop
 {
     /* for начало
     цикл - выполнение блока кода повторно, пока условие истинно.
@@ -30,7 +30,7 @@ namespace CshBook.Lessons
     вложенных циклов может быть сколько угодно
      */
 
-    internal class ThirdLesson
+    internal class Lesson03ForLoop
     {
         public static void Main_()
         {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CshBook.Lessons
+namespace CshBook.Lessons.Chapter2.Lesson21GettersAndSetters
 {
     /* Урок 21: Геттеры и Сеттеры в C#
      
@@ -55,7 +55,7 @@ namespace CshBook.Lessons
     }
     #endregion
 
-    internal class TwentyFirstLesson
+    internal class Lesson21GettersAndSetters
     {
         public static void Main_()
         {

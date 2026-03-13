@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CshBook.Lessons.L
+namespace CshBook.Lessons.Chapter3.Lesson36Lambdas
 {
     #region Теория
     /*
@@ -274,7 +274,7 @@ namespace CshBook.Lessons.L
     }
     #endregion
 
-    internal class LambdasLesson
+    internal class Lesson36Lambdas
     {
         public static void Main_()
         {

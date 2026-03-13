@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Diagnostics;
 
-namespace CshBook.Lessons.Глава_5
+namespace CshBook.Lessons.Patterns.Lesson56ProxyPattern
 {
     #region Теория
     /*
@@ -799,7 +799,7 @@ namespace CshBook.Lessons.Глава_5
 
     #region Демонстрация
 
-    public static class ProxyDemo
+    public static class Lesson56ProxyPattern
     {
         public static void RunDemo()
         {
@@ -1167,4 +1167,3 @@ namespace CshBook.Lessons.Глава_5
  * Помните: Proxy должен быть прозрачным для клиента — клиент не должен знать,
  * что работает с заместителем, а не с реальным объектом!
  */
-

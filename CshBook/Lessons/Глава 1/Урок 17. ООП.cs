@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CshBook.Lessons
+namespace CshBook.Lessons.Chapter1.Lesson17OopBasics
 {
     /* Введение в ООП - Объектно-ориентированное программирование (
     Теперь перейдём к тому, ради чего тут все собрались, а именно ООП!)
@@ -77,7 +77,7 @@ namespace CshBook.Lessons
     }
     #endregion
 
-    internal class SeventeenthLesson
+    internal class Lesson17OopBasics
     {
         public static void Main_()
         {

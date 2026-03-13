@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CshBook.Lessons.Глава_5
+namespace CshBook.Lessons.Patterns.Lesson51StrategyPattern
 {
     #region Теория
     /*
@@ -256,7 +256,7 @@ namespace CshBook.Lessons.Глава_5
     #endregion
 
     #region Демонстрация
-    public static class StrategyDemo
+    public static class Lesson51StrategyPattern
     {
         public static void Main_()
         {

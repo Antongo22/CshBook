@@ -1,8 +1,8 @@
 using System;
 
-namespace CshBook.Answers.Answ0
+namespace CshBook.Answers.Chapter0.Lesson01Basics
 {
-    public class BaseSolutions
+    public class AnswerLesson01Basics
     {
         public static void Main_()
         {

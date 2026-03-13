@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-class RegexTasks
+namespace CshBook.Answers.Chapter1.Lesson14RegularExpressions;
+internal static class AnswerLesson14RegularExpressions
 {
     // 1. Проверить, является ли строка номером телефона в формате "+7(XXX)XXX-XX-XX".
     public static bool IsValidPhoneNumber(string input)

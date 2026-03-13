@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CshBook.Lessons
+namespace CshBook.Lessons.Chapter0.Lesson02Conditionals
 {
     /* Теория
     Мы уже умеем писать простую программу. 
@@ -99,7 +99,7 @@ namespace CshBook.Lessons
      */
 
 
-    internal static class SecondLesson
+    internal static class Lesson02Conditionals
     {
         public static void Main_()
         {

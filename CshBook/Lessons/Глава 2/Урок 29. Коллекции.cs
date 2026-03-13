@@ -4,8 +4,7 @@ using System.Collections;
 using System.Linq;
 using System.Diagnostics;
 
-namespace CshBook.Lessons._29;
-
+namespace CshBook.Lessons.Chapter2.Lesson29Collections;
 #region Теория
 /*
  * В этом уроке ты узнаешь о коллекциях в C#:
@@ -141,7 +140,7 @@ namespace CshBook.Lessons._29;
 */
 #endregion
 
-public class CollectionsLesson
+public class Lesson29Collections
 {
     public static void Main_()
     {

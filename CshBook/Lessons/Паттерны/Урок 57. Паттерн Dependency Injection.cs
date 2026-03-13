@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 // Или в .csproj: <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
 // Для демонстрации создадим упрощённую версию контейнера, но покажем и стандартный подход
 
-namespace CshBook.Lessons.Глава_5
+namespace CshBook.Lessons.Patterns.Lesson57DependencyInjectionPattern
 {
     #region Теория
     /*
@@ -609,7 +609,7 @@ namespace CshBook.Lessons.Глава_5
 
     #region Демонстрация
 
-    public static class DependencyInjectionDemo
+    public static class Lesson57DependencyInjectionPattern
     {
         public static void RunDemo()
         {
@@ -970,4 +970,3 @@ namespace CshBook.Lessons.Глава_5
  * Помните: DI — это не цель, а средство для достижения слабой связанности,
  * тестируемости и соблюдения принципов SOLID!
  */
-

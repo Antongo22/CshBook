@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CshBook.Lessons.Глава_3
+namespace CshBook.Lessons.Chapter3.Lesson33NullableTypes
 {
     #region Теория
     /*
@@ -389,7 +389,7 @@ namespace CshBook.Lessons.Глава_3
     }
     #endregion
 
-    internal class NullableTypesLesson
+    internal class Lesson33NullableTypes
     {
         public static void Main_()
         {

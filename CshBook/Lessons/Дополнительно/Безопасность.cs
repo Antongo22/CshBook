@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CshBook.Lessons.Дополнительно
+namespace CshBook.Lessons.Extra.SecurityLesson
 {
     /*
     | Элемент    | Описание                                                                                                                         |
@@ -59,7 +59,7 @@ namespace CshBook.Lessons.Дополнительно
     }
 
 
-    internal class Safety
+    internal class SecurityLesson
     {
         public static void Main_()
         {

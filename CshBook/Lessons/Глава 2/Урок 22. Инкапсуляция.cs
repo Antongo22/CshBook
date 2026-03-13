@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CshBook.Lessons
+namespace CshBook.Lessons.Chapter2.Lesson22Encapsulation
 {
     /* Урок 22: Инкапсуляция в C#
      
@@ -65,7 +65,7 @@ namespace CshBook.Lessons
     }
     #endregion
 
-    internal class TwentySecondLesson
+    internal class Lesson22Encapsulation
     {
         public static void Main_()
         {

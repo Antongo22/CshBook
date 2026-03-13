@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CshBook.Lessons.Дополнительно
+namespace CshBook.Lessons.Extra.CompileTimeHelpersLesson
 {
 
     /*
@@ -37,7 +37,7 @@ namespace CshBook.Lessons.Дополнительно
 
 
 
-    internal class СompileTime_Helpers
+    internal class CompileTimeHelpersLesson
     {
         public static void Main_()
         {

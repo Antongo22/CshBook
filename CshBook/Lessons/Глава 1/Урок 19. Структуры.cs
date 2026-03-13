@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 
-namespace CshBook.Lessons
+namespace CshBook.Lessons.Chapter1.Lesson19Structs
 {
     /* Урок 19: Структуры в C#
      
@@ -44,7 +44,7 @@ namespace CshBook.Lessons
     }
     #endregion
 
-    internal class NineteenthLesson
+    internal class Lesson19Structs
     {
         public static void Main_()
         {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CshBook.Lessons.Дополнительно
+namespace CshBook.Lessons.Extra.PartialLesson
 {
 
     #region Partial classes
@@ -64,7 +64,7 @@ namespace CshBook.Lessons.Дополнительно
 
 
 
-    internal class Partial
+    internal class PartialLesson
     {
         public static void Main() 
         {

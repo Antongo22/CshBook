@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace CshBook.Lessons
+namespace CshBook.Lessons.Chapter0.Lesson06Arrays
 {
     /* Массивы (Arrays)
     В C# массивы представляют собой структуру данных, которая позволяет хранить коллекцию элементов одного типа. 
@@ -14,7 +14,7 @@ namespace CshBook.Lessons
     В массиве всегда должен быть один тип данных. однако, можно использовать несколько, используя object[].
     */
 
-    internal class SixthLesson
+    internal class Lesson06Arrays
     {
         public static void Main_()
         {

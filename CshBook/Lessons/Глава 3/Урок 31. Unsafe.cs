@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace CshBook.Lessons;
-
+namespace CshBook.Lessons.Chapter3.Lesson31UnsafeCode;
 /*
 ============================================================================================================
 | ЦЕЛЬ УРОКА                                                                                                 |
@@ -249,7 +248,7 @@ public class UnsafeExamples
     }
 }
 
-internal class UnsafeRunner
+internal class Lesson31UnsafeCode
 {
     public static void Main_()
     {

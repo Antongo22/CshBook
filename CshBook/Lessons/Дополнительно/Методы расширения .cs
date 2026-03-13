@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CshBook.Lessons.Дополнительно
+namespace CshBook.Lessons.Extra.ExtraExtensionMethodsLesson
 {
 
     /* Методы расширения
@@ -54,7 +54,7 @@ namespace CshBook.Lessons.Дополнительно
     }
 
 
-    internal class ExtensionMethod
+    internal class ExtraExtensionMethodsLesson
     {
 
         public static void Main_()

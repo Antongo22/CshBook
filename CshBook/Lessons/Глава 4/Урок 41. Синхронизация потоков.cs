@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics;
 
-namespace CshBook.Lessons.Глава_4
+namespace CshBook.Lessons.Chapter4.Lesson41ThreadSynchronization
 {
     #region Теория
     /*
@@ -212,7 +212,7 @@ namespace CshBook.Lessons.Глава_4
     */
     #endregion
 
-    public static class ThreadSynchronizationLesson
+    public static class Lesson41ThreadSynchronization
     {
         // Пример 1: Демонстрация проблемы состояния гонки (race condition)
         static private int unsafeCounter = 0;

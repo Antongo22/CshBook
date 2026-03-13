@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CshBook.Lessons.Глава_4
+namespace CshBook.Lessons.Chapter4.Lesson44Generators
 {
     #region Теория
     /*
@@ -198,7 +198,7 @@ namespace CshBook.Lessons.Глава_4
     */
     #endregion
 
-    public static class GeneratorsLesson
+    public static class Lesson44Generators
     {
         public static void Main_()
         {

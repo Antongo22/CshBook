@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CshBook.Lessons.Глава_3
+namespace CshBook.Lessons.Chapter3.Lesson34ModernOop
 {
     #region Теория
     /*
@@ -380,7 +380,7 @@ namespace CshBook.Lessons.Глава_3
     }
     #endregion
 
-    internal class ModernOOPLesson
+    internal class Lesson34ModernOop
     {
         public static void Main_()
         {

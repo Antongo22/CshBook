@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CshBook.Lessons.Глава_3
+namespace CshBook.Lessons.Chapter3.Lesson39Variance
 {
     #region Теория
     /*
@@ -417,7 +417,7 @@ namespace CshBook.Lessons.Глава_3
     
     #endregion
 
-    internal class VarianceLesson
+    internal class Lesson39Variance
     {
         public static void Main_()
         {

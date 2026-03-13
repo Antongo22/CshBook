@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CshBook.Lessons._27
+namespace CshBook.Lessons.Chapter2.Lesson27Interfaces
 {
     #region Теория
     /*
@@ -254,7 +254,7 @@ namespace CshBook.Lessons._27
     
     #endregion
 
-    public class InterfacesLesson
+    public class Lesson27Interfaces
     {
         public static void Main_()
         {

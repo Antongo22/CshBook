@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CshBook.Ответы.Глава_0
+namespace CshBook.Answers.Chapter0.Lesson02Conditionals
 {
-    internal class IfSolutions
+    internal class AnswerLesson02Conditionals
     {
         public static void Main_()
         {

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace CshBook.Lessons.Глава_5
+namespace CshBook.Lessons.Patterns.Lesson54DecoratorPattern
 {
     #region Теория
     /*

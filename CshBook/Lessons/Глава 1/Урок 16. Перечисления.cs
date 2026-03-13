@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CshBook.Lessons
+namespace CshBook.Lessons.Chapter1.Lesson16Enumerations
 {
     /* Перечисления (Enum) в C#
     
@@ -35,7 +35,7 @@ namespace CshBook.Lessons
        Атрибуты (`[Flags]`, `[Obsolete]`, `[Description]`) позволяют добавлять метаданные. Например, `[Flags]` позволяет `enum` работать с битовыми операциями, а `[Obsolete]` помечает устаревшие значения.
     */
 
-    internal static class SixteenthLesson
+    internal static class Lesson16Enumerations
     {
         public static void Main_()
         {

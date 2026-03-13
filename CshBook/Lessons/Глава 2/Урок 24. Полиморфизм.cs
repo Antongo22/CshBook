@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CshBook.Lessons._24
+namespace CshBook.Lessons.Chapter2.Lesson24Polymorphism
 {
     /* Урок 24: Полиморфизм в C#
      
@@ -63,7 +63,7 @@ namespace CshBook.Lessons._24
     }
     #endregion
 
-    internal class TwentyFourthLesson
+    internal class Lesson24Polymorphism
     {
         public static void Main_()
         {

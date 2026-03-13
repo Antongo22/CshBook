@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CshBook.Lessons
+namespace CshBook.Lessons.Chapter1.Lesson11GenericMethods
 {
     /*Обобщённые методы (Generics)
     
@@ -44,7 +44,7 @@ namespace CshBook.Lessons
        where T : new()           // Тип имеет конструктор по умолчанию
     */
 
-    internal static class EleventhLesson
+    internal static class Lesson11GenericMethods
     {
 
         #region База
@@ -188,6 +188,7 @@ namespace CshBook.Lessons
     }
 }
 
+#region Задачи
 /* Задачи для практики (первые 10 - простые, последние 4 - с WHERE):
 
 1. Метод вывода массива:
@@ -236,6 +237,7 @@ namespace CshBook.Lessons
     Создайте метод AreArraysEqual<T>, который проверяет два массива на полное совпадение элементов.
     Используйте where T : IEquatable<T>.
 */
+#endregion
 
 /* Примеры решения (для проверки):
 

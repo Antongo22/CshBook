@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using System.IO;
 
-namespace CshBook.Lessons.Глава_4
+namespace CshBook.Lessons.Chapter4.Lesson42AsyncBasics
 {
     #region Теория
     /*
@@ -181,7 +181,7 @@ namespace CshBook.Lessons.Глава_4
     */
     #endregion
 
-    public static class AsyncBasicsLesson
+    public static class Lesson42AsyncBasics
     {
         public static async Task Main_()
         {

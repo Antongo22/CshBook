@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CshBook.Lessons.Глава_5
+namespace CshBook.Lessons.Patterns.Lesson55BuilderPattern
 {
     #region Теория
     /*
@@ -760,7 +760,7 @@ namespace CshBook.Lessons.Глава_5
 
     #region Демонстрация
 
-    public static class BuilderDemo
+    public static class Lesson55BuilderPattern
     {
         public static void RunDemo()
         {

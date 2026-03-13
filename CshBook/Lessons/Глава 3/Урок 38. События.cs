@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CshBook.Lessons.Events
+namespace CshBook.Lessons.Chapter3.Lesson38Events
 {
     #region Теория
     /*
@@ -578,7 +578,7 @@ namespace CshBook.Lessons.Events
     }
     #endregion
 
-    internal class EventsLesson
+    internal class Lesson38Events
     {
         public static void Main_()
         {

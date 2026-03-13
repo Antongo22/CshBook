@@ -5,7 +5,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CshBook.Lessons.Глава_5;
+namespace CshBook.Lessons.Patterns.Lesson50SingletonPattern;
+
 #region Теория
 /*
  * В этом уроке ты узнаешь о паттерне проектирования Singleton:
@@ -414,7 +415,7 @@ public class OperationCounter
 
 #region Демонстрация работы
 
-public static class SingletonDemo
+public static class Lesson50SingletonPattern
 {
     public static void Main_()
     {

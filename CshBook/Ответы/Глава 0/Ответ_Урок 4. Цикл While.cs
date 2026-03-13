@@ -1,6 +1,5 @@
-namespace CshBook.Ответы.Глава_0;
-
-public class WhileSolutions
+namespace CshBook.Answers.Chapter0.Lesson04WhileLoop;
+public class AnswerLesson04WhileLoop
 {
     public static void Main_()
     {

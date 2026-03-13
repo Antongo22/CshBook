@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 
-namespace CshBook.Lessons._29
+namespace CshBook.Lessons.Chapter2.Lesson28BoxingUnboxing
 {
     #region Теория
     /*
@@ -183,7 +183,7 @@ namespace CshBook.Lessons._29
     
     #endregion
 
-    public class BoxingUnboxingLesson
+    public class Lesson28BoxingUnboxing
     {
         public static void Main_()
         {

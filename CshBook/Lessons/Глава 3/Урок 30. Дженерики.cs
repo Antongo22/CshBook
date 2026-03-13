@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Collections;
 using System.Diagnostics;
 
-namespace CshBook.Lessons.Глава_3
+namespace CshBook.Lessons.Chapter3.Lesson30Generics
 {
     #region Теория
     /*
@@ -412,7 +412,7 @@ namespace CshBook.Lessons.Глава_3
         }
     }
 
-    internal class GenericLessonMain
+    internal class Lesson30Generics
     {
         public static void Main_()
         {

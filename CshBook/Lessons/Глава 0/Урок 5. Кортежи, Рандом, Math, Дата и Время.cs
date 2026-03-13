@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CshBook.Lessons
+namespace CshBook.Lessons.Chapter0.Lesson05TuplesRandomMathDateTime
 {
     /* Кортежи (Tuples)
 
@@ -30,7 +30,7 @@ namespace CshBook.Lessons
        - для упрощения кода без создания новых классов или структур.
     */
 
-    internal class FifthLesson
+    internal class Lesson05TuplesRandomMathDateTime
     {
         public static void Main_()
         {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CshBook.Lessons
+namespace CshBook.Lessons.Chapter0.Lesson08Methods
 {
     /* Почему не функция
         Ответ простой, это просто терминология. В C# функция - это метод. 
@@ -92,7 +92,7 @@ namespace CshBook.Lessons
      */
 
 
-    internal static class EighthLesson
+    internal static class Lesson08Methods
     {
         public static int Factorial(int val)
         {

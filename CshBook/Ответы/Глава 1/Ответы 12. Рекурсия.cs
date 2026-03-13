@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace CshBook.Lessons.Anws1
+namespace CshBook.Answers.Chapter1.Lesson12Recursion
 {
-    internal static class RecursionSolutions
+    internal static class AnswerLesson12Recursion
     {
         // 1. Найти сумму цифр числа
         public static int SumOfDigits(int n)

@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CshBook.Lessons
+namespace CshBook.Lessons.Chapter1.Lesson18ConstructorsAndDestructors
 {
     /* Конструкторы
     
@@ -71,7 +71,7 @@ namespace CshBook.Lessons
         }
     }
 
-    internal class EighteenthLesson
+    internal class Lesson18ConstructorsAndDestructors
     {
         public static void Main_()
         {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CshBook.Lessons
+namespace CshBook.Lessons.Chapter1.Lesson13Switch
 {
     /* Тринадцатый урок: Оператор switch
        
@@ -8,7 +8,7 @@ namespace CshBook.Lessons
        Он работает с целыми числами, строками, перечислениями и некоторыми другими типами данных.
     */
 
-    internal static class ThirteenthLesson
+    internal static class Lesson13Switch
     {
         /* Пример 1: Определение дня недели по номеру (классический switch) */
         public static string GetDayOfWeekClassic(int dayNumber)
