@@ -1,232 +1,222 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace CshBook.Answers.Chapter0.Lesson02Conditionals
 {
-    internal class AnswerLesson02Conditionals
+    internal static class AnswerLesson02Conditionals
     {
         public static void Main_()
         {
-            // Пользователь вводит возраст, если больше или равно 18, то пропускаем, иначе нет. (+тернарный)
-            Console.WriteLine("Введите возраст: ");
-            int age = int.Parse(Console.ReadLine());
-            if (age >= 18)
+            Console.WriteLine("Урок 2. Условные операторы");
+            Console.WriteLine("==========================");
+            Console.WriteLine();
+
             {
-                Console.WriteLine("Вам можно пройти!");
-            }
-            else
-            {
-                Console.WriteLine("Вы ещё малы!(");
-            }
+                int age = 19;
 
-            Console.WriteLine(age >= 18 ? "Вам можно пройти!" : "Вы ещё малы!(\n\n");
-
-
-
-            // Пользователь вводит число, если оно чётное, то пропускаем, иначе нет. (+тернарный)
-
-            int num1 = int.Parse(Console.ReadLine());
-            if (num1 % 2 == 0)
-            {
-                Console.WriteLine("чётное");
-            }
-            else
-            {
-                Console.WriteLine("нечётное");
-            }
-
-            Console.WriteLine(num1 % 2 == 0 ? "чётное" : "нечётное");
-
-
-            // Пользователь вводит число, если оно кратно 5, проверяем на кратность 3, если нет, то пропускаем. (+тернарный)
-            int num2 = int.Parse(Console.ReadLine());
-            if (num2 % 5 == 0)
-            {
-                if (num2 % 3 == 0)
+                Console.WriteLine("1. Проверка возраста");
+                if (age >= 18)
                 {
-                    Console.WriteLine("кратно 5 и 3");
+                    Console.WriteLine("Можно войти");
                 }
                 else
                 {
-                    Console.WriteLine("кратно 5");
+                    Console.WriteLine("Пока нельзя");
                 }
+                Console.WriteLine();
             }
-            else
+
             {
-                Console.WriteLine("не кратно 5");
+                int number = 14;
+
+                Console.WriteLine("2. Четное или нечетное");
+                if (number % 2 == 0)
+                {
+                    Console.WriteLine("Обычный if: Четное");
+                }
+                else
+                {
+                    Console.WriteLine("Обычный if: Нечетное");
+                }
+
+                string result = number % 2 == 0 ? "Четное" : "Нечетное";
+                Console.WriteLine($"Тернарный оператор: {result}");
+                Console.WriteLine();
             }
 
-            Console.WriteLine(num2 % 5 == 0 ? (num2 % 3 == 0 ? "кратно 5 и 3" : "кратно 5") : "не кратно 5");
-
-
-
-            // Пользователь вводит число, если чётно, то пропускаем, иначе проверяем на кратность 3. (+тернарный)
-            int num3 = int.Parse(Console.ReadLine());
-            if (num3 % 2 == 0)
             {
-                Console.WriteLine("чётное");
+                int firstNumber = 12;
+                int secondNumber = 9;
+
+                Console.WriteLine("3. Кто больше");
+                if (firstNumber > secondNumber)
+                {
+                    Console.WriteLine("Первое больше");
+                }
+                else if (secondNumber > firstNumber)
+                {
+                    Console.WriteLine("Второе больше");
+                }
+                else
+                {
+                    Console.WriteLine("Числа равны");
+                }
+                Console.WriteLine();
             }
-            else if (num3 % 3 == 0)
+
             {
-                Console.WriteLine("нечётное, но кратно 3");
+                int firstNumber = 8;
+                int secondNumber = 15;
+                int thirdNumber = 11;
+                int max = firstNumber;
+
+                if (secondNumber > max)
+                {
+                    max = secondNumber;
+                }
+
+                if (thirdNumber > max)
+                {
+                    max = thirdNumber;
+                }
+
+                Console.WriteLine("4. Самое большое из трех");
+                Console.WriteLine($"Максимальное число: {max}");
+                Console.WriteLine();
             }
-            else
+
             {
-                Console.WriteLine("нечётное и не кратно 3");
+                double purchaseAmount = 2750;
+                double discountRate;
+
+                if (purchaseAmount < 1000)
+                {
+                    discountRate = 0;
+                }
+                else if (purchaseAmount < 3000)
+                {
+                    discountRate = 0.05;
+                }
+                else
+                {
+                    discountRate = 0.10;
+                }
+
+                double discountAmount = purchaseAmount * discountRate;
+                double finalAmount = purchaseAmount - discountAmount;
+
+                Console.WriteLine("5. Скидка в магазине");
+                Console.WriteLine($"Скидка: {discountAmount:F2}");
+                Console.WriteLine($"Итоговая сумма: {finalAmount:F2}");
+                Console.WriteLine();
             }
 
-
-            Console.WriteLine(num3 % 2 == 0 ? "чётное" : (num3 % 3 == 0 ? "нечётное, но кратно 3" : "нечётное и не кратно 3"));
-
-
-
-            // Дано число. Если оно от -10 до 10 не включительно, то увеличить его на 5, иначе уменьшить на 10. (+тернарный)
-            int num4 = int.Parse(Console.ReadLine());
-            if (num4 > -10 && num4 < 10)
             {
-                num4 += 5;
+                string login = "admin";
+                string password = "12345";
+                string expectedLogin = "admin";
+                string expectedPassword = "12345";
+
+                Console.WriteLine("6. Проверка пароля");
+                if (login == expectedLogin && password == expectedPassword)
+                {
+                    Console.WriteLine("Вход выполнен");
+                }
+                else
+                {
+                    Console.WriteLine("Неверный логин или пароль");
+                }
+                Console.WriteLine();
             }
-            else
+
             {
-                num4 -= 10;
+                int age = 15;
+
+                Console.WriteLine("7. Категория билета");
+                if (age < 14)
+                {
+                    Console.WriteLine("Детский билет");
+                }
+                else if (age <= 17)
+                {
+                    Console.WriteLine("Подростковый билет");
+                }
+                else
+                {
+                    Console.WriteLine("Взрослый билет");
+                }
+                Console.WriteLine();
             }
 
-            Console.WriteLine(num4 > -10 && num4 < 10 ? num4 += 5 : num4 -= 10);
-
-
-            // Пользователь вводит три числа. Если все числа больше 10 и первые два числа делятся на 3, то вывести yes, иначе no.
-            int n1 = int.Parse(Console.ReadLine());
-            int n2 = int.Parse(Console.ReadLine());
-            int n3 = int.Parse(Console.ReadLine());
-
-            if (n1 > 10 && n2 > 10 && n3 > 10 && n1 % 3 == 0 && n2 % 3 == 0)
             {
-                Console.WriteLine("yes");
+                int monthNumber = 7;
+
+                Console.WriteLine("8. Номер месяца");
+                if (monthNumber == 12 || monthNumber == 1 || monthNumber == 2)
+                {
+                    Console.WriteLine("Зима");
+                }
+                else if (monthNumber >= 3 && monthNumber <= 5)
+                {
+                    Console.WriteLine("Весна");
+                }
+                else if (monthNumber >= 6 && monthNumber <= 8)
+                {
+                    Console.WriteLine("Лето");
+                }
+                else if (monthNumber >= 9 && monthNumber <= 11)
+                {
+                    Console.WriteLine("Осень");
+                }
+                else
+                {
+                    Console.WriteLine("Такого месяца нет");
+                }
+                Console.WriteLine();
             }
-            else
+
             {
-                Console.WriteLine("no");
+                int number = 2048;
+                int absoluteNumber = number < 0 ? -number : number;
+                string result = absoluteNumber >= 1000 && absoluteNumber <= 9999 ? "Успешно" : "Неудача";
+
+                Console.WriteLine("9. Четырехзначное число");
+                Console.WriteLine(result);
+                Console.WriteLine();
             }
 
-
-            // Дано четыре числа, если первые два числа больше 5, третье число делится на 6, четвертое число не делится на 3, то вывести yes, иначе no.
-            int m1 = int.Parse(Console.ReadLine());
-            int m2 = int.Parse(Console.ReadLine());
-            int m3 = int.Parse(Console.ReadLine());
-            int m4 = int.Parse(Console.ReadLine());
-
-            if (m1 > 5 && m2 > 5 && m3 % 6 == 0 && m4 % 3 != 0)
             {
-                Console.WriteLine("yes");
+                double firstNumber = 12;
+                double secondNumber = 0;
+                string operation = "/";
+
+                Console.WriteLine("10. Мини-калькулятор");
+                if (operation == "+")
+                {
+                    Console.WriteLine($"Результат: {firstNumber + secondNumber}");
+                }
+                else if (operation == "-")
+                {
+                    Console.WriteLine($"Результат: {firstNumber - secondNumber}");
+                }
+                else if (operation == "*")
+                {
+                    Console.WriteLine($"Результат: {firstNumber * secondNumber}");
+                }
+                else if (operation == "/")
+                {
+                    if (secondNumber == 0)
+                    {
+                        Console.WriteLine("Ошибка: деление на 0 невозможно");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Результат: {firstNumber / secondNumber}");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Неизвестная операция");
+                }
+                Console.WriteLine();
             }
-            else
-            {
-                Console.WriteLine("no");
-            }
-
-
-            // Дано три числа. Найти количество положительных чисел среди них.
-            int p1 = int.Parse(Console.ReadLine());
-            int p2 = int.Parse(Console.ReadLine());
-            int p3 = int.Parse(Console.ReadLine());
-
-            int count = 0;
-            if (p1 > 0) count++;
-            if (p2 > 0) count++;
-            if (p3 > 0) count++;
-
-            Console.WriteLine(count);
-
-
-            // Дана дата из трех чисел (день, месяц и год). Вывести yes, если такая дата существует (например, 12 02 1999 - yes, 22 13 2001 - no). Считать, что в феврале всегда 28 дней.
-            int d = int.Parse(Console.ReadLine());
-            int m = int.Parse(Console.ReadLine());
-            int y = int.Parse(Console.ReadLine());
-
-            bool isValidDate = false;
-            if (m == 1 || m == 3 || m == 5 || m == 7 || m == 8 || m == 10 || m == 12)
-            {
-                isValidDate = d <= 31;
-            }
-            else if (m == 4 || m == 6 || m == 9 || m == 11)
-            {
-                isValidDate = d <= 30;
-            }
-            else if (m == 2)
-            {
-                isValidDate = d <= 28;
-            }
-
-            Console.WriteLine(isValidDate ? "yes" : "no");
-
-
-            // Даны действительные положительные числа a, b, с. По трем сторонам с длинами а, Ь, с можно построить треугольник. Найти углы треугольника.
-            double a = Convert.ToDouble(Console.ReadLine());
-            double b = Convert.ToDouble(Console.ReadLine());
-            double c = Convert.ToDouble(Console.ReadLine());
-
-            double A = Math.Acos((b * b + c * c - a * a) / (2 * b * c));
-            double B = Math.Acos((a * a + c * c - b * b) / (2 * a * c));
-            double C = Math.Acos((a * a + b * b - c * c) / (2 * a * b));
-
-            Console.WriteLine($"A = {A}, B = {B}, C = {C}");
-
-
-
-            // Дано трехзначное число. Переставьте первую и последнюю цифры.
-            int number_ = int.Parse(Console.ReadLine());
-            int hundreds = number_ / 100;
-            int tens = (number_ / 10) % 10;
-            int units = number_ % 10;
-            int newNumber = units * 100 + tens * 10 + hundreds;
-            Console.WriteLine(newNumber);
-
-
-            // Пользователь вводит целое число. Проверьте является ли это число четырехзначным, если является, то выведите строку "Успешно", иначе "Неудача". (+тернарный)
-            int number = int.Parse(Console.ReadLine());
-            string result_ = number >= 1000 && number < 10000 ? "Успешно" : "Неудача";
-            Console.WriteLine(result_);
-
-
-
-            // Итоговое задание - написать свой калькулятор. Подумать, как можно добавить тернарный оператор
-            Console.WriteLine("Введите первое число: ");
-            double num1_ = Convert.ToDouble(Console.ReadLine());
-            Console.WriteLine("Введите второе число: ");
-            double num2_ = Convert.ToDouble(Console.ReadLine());
-            Console.WriteLine("Введите операцию (+, -, *, /): ");
-            string operation = Console.ReadLine();
-
-
-            if (operation == "+")
-            {
-                Console.WriteLine($"Результат: {num1_ + num2_}");
-            }
-            else if (operation == "-")
-            {
-                Console.WriteLine($"Результат: {num1_ - num2_}");
-            }
-            else if (operation == "*")
-            {
-                Console.WriteLine($"Результат: {num1_ * num2_}");
-            }
-            else if (operation == "/")
-            {
-                Console.WriteLine($"Результат: {num1_ / num2_}");
-            }
-            else
-            {
-                Console.WriteLine("Неизвестная операция");
-            }
-
-
-            double result = operation == "+" ? num1 + num2 : operation == "-" ? num1 - num2 : operation == "*" ? num1 * num2 : operation == "/" ? num1 / num2 : 0;
-            Console.WriteLine($"Результат: {result}");
-
         }
-
     }
 }
