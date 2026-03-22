@@ -1,221 +1,236 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CshBook.Lessons.Chapter0.Lesson05TuplesRandomMathDateTime
 {
-    /* Кортежи (Tuples)
+    #region Теория
+    /*
+        В этом уроке собраны полезные встроенные инструменты C#, которые часто нужны
+        уже в самых первых программах:
 
-       В C# кортеж — это структура, позволяющая хранить несколько значений разных типов в одной переменной.
-       Кортежи удобны, когда нужно быстро сгруппировать несколько значений без создания отдельного класса.
+        - кортежи - чтобы временно хранить несколько значений рядом;
+        - Random - чтобы получать случайные числа;
+        - Math - чтобы делать базовые вычисления;
+        - DateTime - чтобы работать с датой и временем.
 
-       Современные кортежи (ValueTuple) были введены начиная с C# 7.0.
-       Они поддерживают именованные элементы и могут использоваться без явного вызова методов.
+        Это не "новая большая тема" как циклы или условия.
+        Это набор полезных инструментов, которые удобно знать уже сейчас.
+     */
 
-       Пример простого кортежа:
-       var tuple = (1, "apple", 3.14); // тип (int, string, double)
+    /*
+        Кортеж - это способ хранить несколько значений в одной переменной.
 
-       Доступ к элементам:
-       tuple.Item1, tuple.Item2, tuple.Item3
+        Пример:
+        var user = ("Анна", 25);
 
-       Или с именами:
-       var person = (name: "Анна", age: 25);
-       person.name, person.age
+        Доступ:
+        user.Item1
+        user.Item2
 
-       Кортежи можно использовать:
-       - для возврата нескольких значений из метода (будет в следующих уроках);
-       - как временное объединение данных;
-       - для упрощения кода без создания новых классов или структур.
-    */
+        Можно и с именами:
+        var point = (x: 10, y: 20);
+        point.x
+        point.y
+
+        Кортежи удобны как временная упаковка данных.
+        Пока что относись к ним именно так: быстро сгруппировать несколько значений.
+     */
+
+    /*
+        Random нужен, когда программе надо получить случайное число.
+
+        Пример:
+        Random random = new Random();
+        int dice = random.Next(1, 7);
+
+        Здесь 1 включается, а 7 не включается.
+        Значит можно получить числа от 1 до 6.
+     */
+
+    /*
+        Math - это набор готовых математических методов.
+
+        Самые полезные на старте:
+        - Math.Abs(x) - модуль числа
+        - Math.Max(a, b) - большее из двух чисел
+        - Math.Min(a, b) - меньшее из двух чисел
+        - Math.Floor(x) - округление вниз
+        - Math.Ceiling(x) - округление вверх
+        - Math.Round(x) - округление
+        - Math.Sqrt(x) - квадратный корень
+        - Math.Pow(a, b) - степень
+        - Math.PI - число pi
+     */
+
+    /*
+        DateTime нужен, когда программа работает с датами и временем.
+
+        Полезные вещи на старте:
+        - DateTime.Now - текущая дата и текущее время
+        - AddDays(...) - прибавить дни
+        - AddHours(...) - прибавить часы
+        - ToString("dd.MM.yyyy") - красивый формат вывода
+
+        Разница между двумя датами дает TimeSpan.
+        Через него можно получить, например, количество дней.
+     */
+
+    /*
+        И числа, и даты можно красиво форматировать прямо в интерполированной строке.
+
+        Примеры:
+        double price = 123.456;
+        DateTime now = DateTime.Now;
+
+        Console.WriteLine($"Цена: {price:F2}");
+        Console.WriteLine($"Сегодня: {now:dd.MM.yyyy}");
+        Console.WriteLine($"Сейчас: {now:dd.MM.yyyy HH:mm:ss}");
+
+        Здесь:
+        - F2 оставляет два знака после запятой;
+        - dd.MM.yyyy задает формат даты;
+        - HH:mm:ss добавляет часы, минуты и секунды.
+     */
+
+    /*
+        Еще одна важная деталь про Random:
+        обычно объект Random создают один раз и потом используют дальше.
+
+        То есть так лучше:
+        Random random = new Random();
+        int value1 = random.Next(1, 7);
+        int value2 = random.Next(1, 7);
+
+        На старте этого правила достаточно.
+     */
+
+    /*
+        Главная цель урока:
+        научиться пользоваться готовыми инструментами платформы в маленьких прикладных задачах,
+        не перегружая программу лишним кодом.
+     */
+    #endregion
 
     internal class Lesson05TuplesRandomMathDateTime
     {
         public static void Main_()
         {
+            var player = (name: "Анна", score: 120);
+            Console.WriteLine($"Игрок: {player.name}, очки: {player.score}");
 
+            var point = (x: 5, y: 9);
+            Console.WriteLine($"Координаты точки: ({point.x}, {point.y})");
 
-            var tuple1 = (1, "яблоко", 3.14);
-            Console.WriteLine($"tuple1: {tuple1.Item1}, {tuple1.Item2}, {tuple1.Item3}");
+            Console.WriteLine("----");
 
-            // Пример с именованными элементами
-            (string name, int age) person = (name: "Анна", age: 25);
-            Console.WriteLine($"Имя: {person.name}, Возраст: {person.age}");
-
-            // Кортеж для координат
-            var point = (x: 10, y: 20);
-            Console.WriteLine($"Координаты точки: x = {point.x}, y = {point.y}");
-
-            // Обновление значений кортежа
-            point.x = 15;  // можно изменить, так как это переменная
-            point.y = 30;
-            Console.WriteLine($"Обновлённые координаты: x = {point.x}, y = {point.y}");
-
-            
-            // Кортеж из двух чисел и их сумма
-            var numbers = (4, 5);
-            int sum = numbers.Item1 + numbers.Item2;
-            Console.WriteLine($"Сумма {numbers.Item1} и {numbers.Item2} = {sum}");
-
-            // Вложенный кортеж
-            var nested = ((1, 2), (3, 4));
-            Console.WriteLine($"nested: {nested.Item1.Item1}, {nested.Item1.Item2}, {nested.Item2.Item1}, {nested.Item2.Item2}");
-
-            // Кортеж можно использовать в условии
-            var grade = (score: 85, passed: true);
-            if (grade.passed)
-            {
-                Console.WriteLine($"Оценка: {grade.score} — зачёт");
-            }
-
-            // Кортеж для хранения даты
-            var date = (day: 21, month: 5, year: 2025);
-            Console.WriteLine($"Дата: {date.day}.{date.month}.{date.year}");
-
-
-
-            // Работа с Random и Math
             Random random = new Random();
-            int a = random.Next(0, 10);
-            int b = random.Next(0, 10);
-            int c = random.Next(0, 10);
-            int d = random.Next(0, 10);
-            Console.WriteLine($"{a}, {b}, {c}, {d}");
+            int dice = random.Next(1, 7);
+            int secretNumber = random.Next(10, 21);
 
-            // Методы Random:
-            // Next(): Возвращает неотрицательное случайное целое число.
-            // Next(int maxValue): Возвращает неотрицательное случайное целое число, меньшее maxValue.
-            // Next(int minValue, int maxValue): Возвращает случайное целое число в диапазоне от minValue до maxValue-1.
-            // NextDouble(): Возвращает случайное число с плавающей точкой в диапазоне от 0.0 до 1.0.
+            Console.WriteLine($"Бросок кубика: {dice}");
+            Console.WriteLine($"Случайное число от 10 до 20: {secretNumber}");
 
-            // Пример использования NextDouble()
-            double randomDouble = random.NextDouble();
-            Console.WriteLine(randomDouble);
+            Console.WriteLine("----");
 
-            // Работа с Math
-            double sqrtResult = Math.Sqrt(4);  // Корень квадратный
-            double powResult = Math.Pow(2, 3);  // Возведение в степень
-            double pi = Math.PI;  // Число Пи
-            double e = Math.E;  // Число E
-            Console.WriteLine($"{sqrtResult}, {powResult}, {pi}, {e}");
+            int a = -15;
+            int b = 9;
+            double radius = 4.7;
+            double discount = 12.5;
+            double circleArea = Math.PI * radius * radius;
 
-            // Дополнительные методы Math:
-            double absValue = Math.Abs(-5);  // Абсолютное значение
-            double sinValue = Math.Sin(Math.PI / 2);  // Синус
-            double cosValue = Math.Cos(Math.PI);  // Косинус
-            double tanValue = Math.Tan(Math.PI / 4);  // Тангенс
-            Console.WriteLine($"{absValue}, {sinValue}, {cosValue}, {tanValue}");
-            
-            Math.Floor(3.7);  // Округление вниз
-            Math.Ceiling(3.7);  // Округление вверх
-            Math.Round(3.7);  // Округление до ближайшего целого
+            Console.WriteLine($"Модуль числа {a}: {Math.Abs(a)}");
+            Console.WriteLine($"Максимум из {a} и {b}: {Math.Max(a, b)}");
+            Console.WriteLine($"Округленный радиус: {Math.Round(radius)}");
+            Console.WriteLine($"Округление вниз: {Math.Floor(radius)}");
+            Console.WriteLine($"Округление вверх: {Math.Ceiling(radius)}");
+            Console.WriteLine($"Скидка: {discount:F1}%");
+            Console.WriteLine($"Площадь круга радиуса 4.7: {circleArea:F2}");
 
-            // Проверка, целое ли число
-            double numberToCheck = 42.0;
-            bool isInteger = numberToCheck % 1 == 0;
-            Console.WriteLine(isInteger);  // True
+            Console.WriteLine("----");
 
-            // Работа с DateTime
             DateTime now = DateTime.Now;
-            Console.WriteLine($"Текущая дата и время: {now}");
+            DateTime nextWeek = now.AddDays(7);
+            DateTime newYear = new DateTime(now.Year + 1, 1, 1);
+            TimeSpan difference = newYear - now;
 
-            DateTime tomorrow = now.AddDays(1);
-            Console.WriteLine($"Завтрашняя дата: {tomorrow}");
-
-            DateTime dateTime = new DateTime();
-            
-
-            TimeSpan difference = tomorrow - now;
-            Console.WriteLine($"Разница во времени: {difference.TotalHours} часов");
-
-            // Форматирование даты
-            string formattedDate = now.ToString("dd.MM.yyyy HH:mm:ss");
-            Console.WriteLine($"Отформатированная дата: {formattedDate}");
-
-
-            // Конкретная дата
-            DateTime specificDate1 = new DateTime(2023, 5, 15); // 15 мая 2023 года
-            DateTime specificDate2 = new DateTime(2023, 5, 15, 14, 30, 0); // 15 мая 2023, 14:30:00
-            Console.WriteLine($"Конкретная дата 1: {specificDate1}");
-            Console.WriteLine($"Конкретная дата 2: {specificDate2}");
-
-            // Дата из строки
-            DateTime parsedDate = DateTime.Parse("2023-12-31");
-            Console.WriteLine($"Дата из строки: {parsedDate}");
-
-            // UTC время
-            DateTime utcNow = DateTime.UtcNow;
-            Console.WriteLine($"Текущее UTC время: {utcNow}");
-
-
-            DateTime startDate = new DateTime(2023, 1, 1);
-            DateTime endDate = new DateTime(2023, 12, 31);
-
-            // Разница как TimeSpan
-            difference = endDate - startDate;
-
-            // Вывод разницы в разных форматах
-            Console.WriteLine("\nРазница между датами:");
-            Console.WriteLine($"Всего дней: {difference.TotalDays}");
-            Console.WriteLine($"Всего часов: {difference.TotalHours}");
-            Console.WriteLine($"Всего минут: {difference.TotalMinutes}");
-            Console.WriteLine($"Всего секунд: {difference.TotalSeconds}");
-            Console.WriteLine($"Всего миллисекунд: {difference.TotalMilliseconds}");
-
-            Console.WriteLine($"\nРазница в компонентах:");
-            Console.WriteLine($"Дни: {difference.Days}");
-            Console.WriteLine($"Часы: {difference.Hours}");
-            Console.WriteLine($"Минуты: {difference.Minutes}");
-            Console.WriteLine($"Секунды: {difference.Seconds}");
-            Console.WriteLine($"Миллисекунды: {difference.Milliseconds}");
-
-            // Форматированная разница
-            Console.WriteLine($"\nФорматированная разница: {difference.Days} дней, {difference.Hours} часов, {difference.Minutes} минут");
+            Console.WriteLine($"Сейчас: {now:dd.MM.yyyy HH:mm:ss}");
+            Console.WriteLine($"Через неделю: {nextWeek:dd.MM.yyyy}");
+            Console.WriteLine($"До нового года осталось дней: {difference.Days}");
         }
-
     }
 
     #region Задачи
-    /* Задачи на кортежи
+    /*
+        Разминка
 
-    1. Создайте кортеж, содержащий три элемента разных типов (например, int, string, double).
+        1. Карточка игрока.
+           Создай кортеж с именем игрока и количеством очков.
+           Выведи оба значения в одной строке.
 
-    2. Напишите программу, который принимает кортеж из двух элементов (строки) и возвращает их конкатенацию.
+        2. Координаты точки.
+           Создай кортеж с координатами x и y.
+           Выведи его в формате: "(x; y)".
 
-    3. Создайте кортеж, содержащий два вложенных кортежа. Доступ к элементам вложенных кортежей.
+        3. Случайное число.
+           Сгенерируй случайное число от 1 до 10 и выведи его.
 
-    4. Напишите программу, которая генерирует случайный кортеж из трех элементов (int, double, string) и выводит их на экран.
+        4. Работа с Math.
+           Даны два числа.
+           Выведи:
+           - большее;
+           - меньшее;
+           - модуль первого числа.
 
-    5. Используя кортежи, напишите программу, которая запрашивает у пользователя три числа и возвращает кортеж с их квадратами.
-     */
+        Основные задачи
 
-    /* Задачи на DateTime
+        5. Бросок кубика.
+           Сгенерируй случайное число от 1 до 6.
+           Выведи сообщение:
+           "Выпало: ..."
 
-    1. Напишите программу, которая выводит текущую дату и время в формате "dd.MM.yyyy HH:mm:ss".
+        6. Случайная скидка.
+           Сгенерируй случайную скидку от 5 до 20 процентов.
+           Пусть цена товара равна 1000.
+           Выведи:
+           - размер скидки;
+           - итоговую цену после скидки.
 
-    2. Напишите программу, которая запрашивает у пользователя дату рождения и вычисляет его возраст.
+        7. Длина окружности и площадь круга.
+           Ввод: радиус.
+           Вывод:
+           - длина окружности;
+           - площадь круга.
+           Для вычислений используй Math.PI.
 
-    3. Напишите программу, которая вычисляет количество дней до нового года.
+        8. Округление оценки.
+           Ввод: дробное число.
+           Выведи:
+           - округление вниз;
+           - округление вверх;
+           - обычное округление.
 
-    4. Напишите программу, которая запрашивает у пользователя две даты и вычисляет разницу между ними в днях.
+        9. Работа с текущей датой.
+           Выведи:
+           - текущую дату и время;
+           - дату через 7 дней;
+           - дату через 30 дней.
 
-    5. Напишите программу, которая выводит дату через неделю от текущей даты.
+        10. До нового года.
+            Выведи, сколько дней осталось до 1 января следующего года.
 
-    */
+        Задачи на перенос
 
-    /* Задачи на Math
+        11. Мини-розыгрыш.
+            Создай кортеж вида (имяПобедителя, приз).
+            Имя можно взять из 3-4 заранее заданных вариантов через Random.
+            Приз тоже выбери случайно из нескольких вариантов.
+            Выведи красивую строку о победителе.
 
-     1. Напишите программу, которая рандомно генерирует два числа и вычисляет их среднее арифметическое.
-
-     2. Напишите программу, которая рандомно генерирует радиус круга и вычисляет его площадь.
-
-     3. Напишите программу, которая рандомно генерирует три числа и находит максимальное из них.
-
-     4. Напишите программу, которая рандомно генерирует угол в градусах и вычисляет его синус, косинус и тангенс.
-
-     5. Напишите программу, которая рандомно генерирует число и проверяет, является ли оно простым.
-
+        12. День рождения.
+            Ввод: дата рождения в формате год, месяц, день.
+            Создай DateTime и выведи:
+            - дату рождения в красивом формате;
+            - день недели рождения;
+            - сколько дней прошло с этого дня до текущего момента.
      */
     #endregion
 }
