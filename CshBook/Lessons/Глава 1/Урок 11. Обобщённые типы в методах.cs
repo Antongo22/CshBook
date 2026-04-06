@@ -1,350 +1,209 @@
-﻿using System;
-using System.Collections.Generic;
-
 namespace CshBook.Lessons.Chapter1.Lesson11GenericMethods
 {
-    /*Обобщённые методы (Generics)
-    
-       Обобщённые методы позволяют создавать гибкие и типобезопасные методы, которые могут работать
-       с разными типами данных без необходимости дублирования кода. 
-       
-       Зачем нужны:
-       1. Универсальность: Один метод работает с разными типами
-       2. Типобезопасность: Избегаем ошибок приведения типов
-       3. Производительность: Не требуется упаковка/распаковка значимых типов
-       
-       Как работают:
-       - В объявлении метода указывается тип-параметр в угловых скобках: <T>
-       - T заменяется на конкретный тип при вызове метода
-       - Можно накладывать ограничения на тип (where T: ...)
-    */
+    #region Теория
+    /*
+        До этого момента, если логика была одинаковой,
+        но типы отличались, мы писали несколько похожих методов.
 
-    /* Обобщённые методы (Generics) - Продвинутая теория
-    
-       ЧТО ТАКОЕ ОБОБЩЁННЫЕ МЕТОДЫ?
-       Это методы, которые работают с разными типами данных, сохраняя типобезопасность.
-       Пример: метод для вывода значения, работающий с int, string, double и т.д.
+        Например:
+        - один метод для int;
+        - второй почти такой же для string;
+        - третий для double.
 
-       ЗАЧЕМ НУЖНЫ?
-       1. Универсальность: Один метод вместо множества перегрузок
-       2. Безопасность типов: Компилятор проверяет типы на этапе компиляции
-       3. Эффективность: Для значимых типов не требуется упаковка/распаковка
+        Обобщенный метод позволяет не дублировать такую логику.
+     */
 
-       КЛЮЧЕВОЕ СЛОВО WHERE:
-       Позволяет накладывать ограничения на обобщённые типы.
-       Это нужно, чтобы:
-       - Сообщить компилятору, какие операции доступны для типа T
-       - Гарантировать наличие определённого функционала у типа
+    /*
+        Обобщенный метод - это метод с параметром типа.
 
-       Базовые ограничения:
-       where T : IComparable<T>  // Тип поддерживает сравнение
-       where T : IEquatable<T>   // Тип поддерживает проверку равенства
-       where T : class           // T должен быть ссылочным типом
-       where T : struct          // T должен быть значимым типом
-       where T : new()           // Тип имеет конструктор по умолчанию
-    */
+        Обычно его записывают так:
+        public static void PrintValue<T>(T value)
+
+        Здесь T - это не конкретный тип,
+        а временное имя для "какого-то типа",
+        который станет известен при вызове метода.
+     */
+
+    /*
+        Ментальная модель простая:
+        компилятор как будто подставляет конкретный тип на место T.
+
+        То есть:
+        PrintValue(10)
+        PrintValue("Привет")
+
+        Один и тот же метод работает и для int, и для string.
+     */
+
+    /*
+        Обобщенные методы особенно полезны, когда логика одна и та же:
+
+        - вывести значение;
+        - пройти по массиву;
+        - поменять местами два значения;
+        - вернуть первый элемент массива;
+        - создать массив, заполненный одним значением.
+     */
+
+    /*
+        Важно:
+        обобщенный метод не делает "что угодно".
+        Он все равно должен решать одну понятную задачу.
+
+        Если логика сама по себе разная для разных типов,
+        generics не нужны.
+     */
+
+    /*
+        На этом уроке держим только базу:
+        - один параметр типа T;
+        - простые методы для значений и массивов;
+        - без сложных ограничений where.
+
+        Сейчас важно почувствовать саму идею универсального метода,
+        а не учиться писать библиотеку общего назначения.
+     */
+    #endregion
 
     internal static class Lesson11GenericMethods
     {
-
-        #region База
-        // Простейший обобщённый метод
         public static void PrintValue<T>(T value)
         {
-            Console.WriteLine($"Value: {value}, Type: {typeof(T)}");
+            Console.WriteLine($"Значение: {value}");
         }
 
-        // Обмен значений переменных любого типа
-        public static void Swap<T>(ref T a, ref T b)
+        public static void PrintArray<T>(T[] values)
         {
-            T temp = a;
-            a = b;
-            b = temp;
-        }
-
-        // Поиск элемента в массиве (ограничение where T: IEquatable<T>)
-        public static bool FindInArray<T>(T[] array, T target) where T : IEquatable<T>
-        {
-            foreach (T item in array)
+            for (int i = 0; i < values.Length; i++)
             {
-                if (item.Equals(target)) return true;
+                Console.Write($"{values[i]} ");
             }
+            Console.WriteLine();
+        }
+
+        public static T GetFirst<T>(T[] values)
+        {
+            return values[0];
+        }
+
+        public static void Swap<T>(ref T left, ref T right)
+        {
+            T temp = left;
+            left = right;
+            right = temp;
+        }
+
+        public static T[] CreateFilledArray<T>(int size, T value)
+        {
+            T[] result = new T[size];
+
+            for (int i = 0; i < result.Length; i++)
+            {
+                result[i] = value;
+            }
+
+            return result;
+        }
+
+        public static bool Contains<T>(T[] values, T target)
+        {
+            for (int i = 0; i < values.Length; i++)
+            {
+                if (Equals(values[i], target))
+                {
+                    return true;
+                }
+            }
+
             return false;
         }
 
-        // Обобщённый метод с возвратом массива
-        public static T[] CreateArray<T>(int size, T defaultValue)
-        {
-            T[] arr = new T[size];
-            for (int i = 0; i < size; i++)
-                arr[i] = defaultValue;
-            return arr;
-        }
-
-        // Метод с несколькими типами-параметрами
-        public static void PrintTwoTypes<T, U>(T first, U second)
-        {
-            Console.WriteLine($"First: {first} ({typeof(T)}), Second: {second} ({typeof(U)})");
-        }
-        #endregion
-
-        #region Сложно
-        // Метод с ограничением IComparable для сравнения
-        public static T FindMax<T>(T a, T b) where T : IComparable<T>
-        {
-            // Теперь мы можем использовать CompareTo
-            return a.CompareTo(b) > 0 ? a : b;
-        }
-
-        // Ограничение new() для создания экземпляров
-        public static T CreateInstance<T>() where T : new()
-        {
-            // Можем создавать объекты: new T()
-            return new T();
-        }
-
-        // Ограничение struct для значимых типов
-        public static string GetTypeKind<T>(T value) where T : struct
-        {
-            return "Это значимый тип!";
-        }
-
-        // Комбинирование ограничений
-        public static bool AreEqual<T>(T a, T b) where T : IEquatable<T>, new()
-        {
-            // Используем Equals из IEquatable и создаём новый объект
-            T temp = new T();
-            return a.Equals(b);
-        }
-
-        // Ограничение class для ссылочных типов
-        public static void CheckForNull<T>(T obj) where T : class
-        {
-            // Можем проверять на null
-            Console.WriteLine(obj == null ? "Null!" : "Not null");
-        }
-        #endregion
-
-        // Демонстрация всех возможностей
         public static void Main_()
         {
-            #region База
-            // Демонстрация PrintValue
-            PrintValue(42);                   // int
-            PrintValue("Hello Generics!");    // string
-            PrintValue(3.14);                 // double
+            PrintValue(42);
+            PrintValue("Привет, generics!");
+            PrintValue(true);
 
-            // Демонстрация Swap
-            int x = 5, y = 10;
-            Console.WriteLine($"Before Swap: x={x}, y={y}");
-            Swap(ref x, ref y);
-            Console.WriteLine($"After Swap: x={x}, y={y}");
+            Console.WriteLine("----");
 
-            string s1 = "First", s2 = "Second";
-            Swap(ref s1, ref s2);
-            Console.WriteLine($"Swapped strings: {s1}, {s2}");
-
-            // Демонстрация FindInArray
-            int[] numbers = { 1, 2, 3, 4, 5 };
-            Console.WriteLine("Contains 3? " + FindInArray(numbers, 3));
-
+            int[] numbers = { 1, 2, 3, 4 };
             string[] words = { "apple", "banana", "cherry" };
-            Console.WriteLine("Contains 'orange'? " + FindInArray(words, "orange"));
 
-            // Демонстрация CreateArray
-            int[] defaultInts = CreateArray(5, -1);
-            Console.WriteLine("Int array: " + string.Join(", ", defaultInts));
+            PrintArray(numbers);
+            PrintArray(words);
 
-            string[] defaultStrings = CreateArray(3, "empty");
-            Console.WriteLine("String array: " + string.Join(", ", defaultStrings));
+            Console.WriteLine("----");
 
-            // Демонстрация PrintTwoTypes
-            PrintTwoTypes(42, "Answer");
-            PrintTwoTypes(DateTime.Now, Math.PI);
+            Console.WriteLine($"Первый элемент numbers: {GetFirst(numbers)}");
+            Console.WriteLine($"Первый элемент words: {GetFirst(words)}");
 
-            #endregion
+            Console.WriteLine("----");
 
-            #region Сложно
-            // Сравнение разных типов
-            Console.WriteLine(FindMax(5, 10));                 // 10
-            Console.WriteLine(FindMax("apple", "banana"));     // banana
+            int left = 5;
+            int right = 10;
+            Swap(ref left, ref right);
+            Console.WriteLine($"После Swap: left = {left}, right = {right}");
 
-            //  Создание экземпляров
-            DateTime time = CreateInstance<DateTime>();
-            Console.WriteLine(time);
+            Console.WriteLine("----");
 
-            // Работа только со значимыми типами
-            Console.WriteLine(GetTypeKind(42));       // ОК
-            // Console.WriteLine(GetTypeKind("test")); // Ошибка компиляции!
+            string[] emptyWords = CreateFilledArray(3, "empty");
+            PrintArray(emptyWords);
 
-            // Комбинирование ограничений
-            Console.WriteLine(AreEqual(5, 5));        // True
+            Console.WriteLine("----");
 
-            // Проверка ссылочных типов
-            CheckForNull("test");         // Not null
-            CheckForNull<string>(null);   // Null
-            #endregion
+            Console.WriteLine($"Есть ли 3 в numbers: {Contains(numbers, 3)}");
+            Console.WriteLine($"Есть ли 'orange' в words: {Contains(words, "orange")}");
         }
     }
+
+    #region Задачи
+    /*
+        Разминка
+
+        1. Вывод значения.
+           Напиши метод PrintValue<T>(T value),
+           который выводит переданное значение.
+
+        2. Вывод массива.
+           Напиши метод PrintArray<T>(T[] values),
+           который выводит все элементы массива.
+
+        3. Первый элемент.
+           Напиши метод GetFirst<T>(T[] values),
+           который возвращает первый элемент массива.
+           Считай, что массив не пустой.
+
+        Основные задачи
+
+        4. Последний элемент.
+           Напиши метод GetLast<T>(T[] values),
+           который возвращает последний элемент массива.
+
+        5. Обмен значений.
+           Напиши метод Swap<T>(ref T left, ref T right),
+           который меняет местами два значения любого типа.
+
+        6. Создание заполненного массива.
+           Напиши метод CreateFilledArray<T>(int size, T value),
+           который создает массив заданной длины и заполняет его одним значением.
+
+        7. Поиск элемента.
+           Напиши метод Contains<T>(T[] values, T target),
+           который возвращает true, если элемент есть в массиве.
+
+        8. Подсчет совпадений.
+           Напиши метод CountOccurrences<T>(T[] values, T target),
+           который считает, сколько раз элемент встречается в массиве.
+
+        Задача на перенос
+
+        9. Копирование массива.
+           Напиши метод CopyArray<T>(T[] source),
+           который возвращает новый массив с теми же элементами.
+
+        10. Необязательная задача.
+            Напиши метод PrintReversed<T>(T[] values),
+            который выводит элементы массива в обратном порядке.
+     */
+    #endregion
 }
-
-#region Задачи
-/* Задачи для практики (первые 10 - простые, последние 4 - с WHERE):
-
-1. Метод вывода массива:
-   Напишите обобщённый метод, который принимает массив любого типа и выводит его элементы через запятую.
-
-2. Обмен значений:
-   Напишите обобщённый метод, который меняет местами два значения любого типа.
-
-3. Поиск элемента в массиве:
-   Напишите метод, который проверяет, содержится ли элемент в массиве.
-
-4. Создание массива:
-   Напишите метод, который создаёт массив заданного размера и заполняет его значением по умолчанию.
-
-5. Вывод типа:
-   Напишите метод, который выводит тип переданного значения.
-
-6. Сравнение двух значений:
-   Напишите метод, который сравнивает два значения и возвращает true, если они равны.
-
-7. Подсчёт длины массива:
-   Напишите метод, который возвращает длину массива любого типа.
-
-8. Копирование массива:
-   Напишите метод, который копирует элементы одного массива в другой.
-
-9. Поиск индекса элемента:
-   Напишите метод, который возвращает индекс первого вхождения элемента в массиве.
-
-10. Обнуление массива:
-    Напишите метод, который обнуляет все элементы массива (для чисел) или делает их пустыми (для строк).
-
-11. Поиск максимального элемента (с WHERE):
-    Создайте метод FindMax<T>, который находит максимальный элемент в массиве. 
-    Используйте ограничение where T : IComparable<T>.
-
-12. Подсчёт элементов (с WHERE):
-    Создайте метод CountOccurrences<T>, который подсчитывает, сколько раз элемент встречается в массиве.
-    Используйте where T : IEquatable<T>.
-
-13. Фильтрация элементов (с WHERE):
-    Создайте метод Filter<T>, который возвращает новый массив с элементами, удовлетворяющими условию.
-    Используйте where T : IEquatable<T>.
-
-14. Сравнение массивов (с WHERE):
-    Создайте метод AreArraysEqual<T>, который проверяет два массива на полное совпадение элементов.
-    Используйте where T : IEquatable<T>.
-*/
-#endregion
-
-/* Примеры решения (для проверки):
-
-// Задача 1: Метод вывода массива
-public static void PrintArray<T>(T[] array)
-{
-    Console.WriteLine(string.Join(", ", array));
-}
-
-// Задача 2: Обмен значений
-public static void Swap<T>(ref T a, ref T b)
-{
-    T temp = a;
-    a = b;
-    b = temp;
-}
-
-// Задача 3: Поиск элемента в массиве
-public static bool Contains<T>(T[] array, T target) where T : IEquatable<T>
-{
-    foreach (T item in array)
-        if (item.Equals(target)) return true;
-    return false;
-}
-
-// Задача 10: Обнуление массива
-static void ResetArray<T>(T[] array, T defaultValue)
-{
-    for (int i = 0; i < array.Length; i++)
-    {
-        array[i] = defaultValue;
-    }
-}
-
-// Задача 11: Поиск максимального элемента
-public static T FindMax<T>(T[] array) where T : IComparable<T>
-{
-    if (array.Length == 0) throw new InvalidOperationException();
-    
-    T max = array[0];
-    foreach (T item in array)
-        if (item.CompareTo(max) > 0) max = item;
-    return max;
-}
-
-// Задача 12: Подсчёт элементов
-public static int CountOccurrences<T>(T[] array, T target) where T : IEquatable<T>
-{
-    int count = 0;
-    foreach (T item in array)
-        if (item.Equals(target)) count++;
-    return count;
-}
-
-// Задача 13: Фильтрация элементов
-
-// Метод для проверки чётности числа
-public static bool IsEven(int number)
-{
-    return number % 2 == 0;
-}
-
-// Метод для проверки, больше ли число 5
-public static bool IsGreaterThanFive(int number)
-{
-    return number > 5;
-}
-
-// Метод для проверки, начинается ли строка с 'b'
-public static bool StartsWithB(string word)
-{
-    return word.StartsWith("b", StringComparison.OrdinalIgnoreCase);
-}
-
-public static T[] Filter<T>(T[] array, Func<T, bool> predicate) where T : IEquatable<T>
-{
-    List<T> result = new List<T>();
-    foreach (T item in array)
-        if (predicate(item)) result.Add(item);
-    return result.ToArray();
-}
-
-// Задача 14: Сравнение массивов
-public static bool AreArraysEqual<T>(T[] array1, T[] array2) where T : IEquatable<T>
-{
-    if (array1.Length != array2.Length) return false;
-    for (int i = 0; i < array1.Length; i++)
-        if (!array1[i].Equals(array2[i])) return false;
-    return true;
-}
-*/
-
-/* ЧАСТО ИСПОЛЬЗУЕМЫЕ ИНТЕРФЕЙСЫ ДЛЯ WHERE:
-   - IComparable<T>  : Сравнение объектов (CompareTo)
-   - IEquatable<T>   : Проверка равенства (Equals)
-   - IConvertible    : Преобразование в другие типы
-   - IEnumerable<T>  : Работа с коллекциями
-   - ICloneable      : Поддержка клонирования
-   - IFormattable    : Форматирование в строку
-*/
-
-/* КАК ЭТО РАБОТАЕТ С ТИПАМИ?
-   Для значимых типов (int, struct):
-   - Компилятор генерирует отдельную версию метода для каждого типа
-   - Нет накладных расходов на приведение типов
-
-   Для ссылочных типов (классы):
-   - Все ссылочные типы используют одну скомпилированную версию
-   - Но тип контролируется на этапе компиляции
-*/  
