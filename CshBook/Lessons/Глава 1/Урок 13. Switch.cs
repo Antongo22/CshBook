@@ -1,80 +1,106 @@
-﻿using System;
-
 namespace CshBook.Lessons.Chapter1.Lesson13Switch
 {
-    /* Тринадцатый урок: Оператор switch
-       
-       Оператор switch используется для выбора одного из множества возможных вариантов.
-       Он работает с целыми числами, строками, перечислениями и некоторыми другими типами данных.
-    */
+    #region Теория
+    /*
+        switch нужен тогда, когда одна переменная
+        сравнивается с несколькими конкретными вариантами.
+
+        То есть вопрос обычно звучит так:
+        "если значение вот такое - сделать одно,
+        если другое - сделать второе".
+     */
+
+    /*
+        Это особенно удобно в задачах вроде:
+
+        - номер дня недели;
+        - номер месяца;
+        - код команды;
+        - символ операции;
+        - состояние светофора;
+        - текст по числовой оценке.
+     */
+
+    /*
+        Базовая форма:
+
+        switch (value)
+        {
+            case 1:
+                ...
+                break;
+            case 2:
+                ...
+                break;
+            default:
+                ...
+                break;
+        }
+
+        case - отдельный вариант.
+        default - запасная ветка на случай,
+        если ни один вариант не подошел.
+     */
+
+    /*
+        В C# удобно объединять несколько вариантов
+        в одну ветку:
+
+        case 12:
+        case 1:
+        case 2:
+            return "Зима";
+
+        Это полезно, когда несколько значений
+        должны давать один и тот же результат.
+     */
+
+    /*
+        Когда лучше брать switch:
+
+        - когда проверяются точные значения;
+        - когда вариантов много;
+        - когда длинная цепочка if/else становится тяжелой для чтения.
+
+        Когда лучше if/else:
+        - когда проверяются диапазоны;
+        - когда условия сложные и зависят от нескольких сравнений сразу.
+     */
+
+    /*
+        На этом уроке держим фокус на классическом switch.
+        Есть и более компактные современные формы,
+        но сначала нужно уверенно читать и писать базовый вариант.
+     */
+    #endregion
 
     internal static class Lesson13Switch
     {
-        /* Пример 1: Определение дня недели по номеру (классический switch) */
-        public static string GetDayOfWeekClassic(int dayNumber)
+        public static string GetDayName(int dayNumber)
         {
             switch (dayNumber)
             {
-                case 1: return "Понедельник";
-                case 2: return "Вторник";
-                case 3: return "Среда";
-                case 4: return "Четверг";
-                case 5: return "Пятница";
-                case 6: return "Суббота";
-                case 7: return "Воскресенье";
-                default: return "Некорректный номер дня";
-            }
-        }
-
-        /* Пример 2: Определение типа символа с использованием when */
-        public static string GetCharType(char symbol)
-        {
-            return symbol switch
-            {
-                char c when "aeiouAEIOU".Contains(c) => "Гласная буква",
-                char c when "bcdfgBCDFG".Contains(c) => "Согласная буква",
-                _ => "Неизвестный символ"
-            };
-
-            // Альтернативный вариант
-            switch (symbol)
-            {
-                case 'a':
-                case 'e':
-                case 'i':
-                case 'o':
-                case 'u':
-                case 'A':
-                case 'E':
-                case 'I':
-                case 'O':
-                case 'U':
-                    return "Гласная буква";
-                case 'b':
-                case 'c':
-                case 'd':
-                case 'f':
-                case 'g':
-                    return "Согласная буква";
+                case 1:
+                    return "Понедельник";
+                case 2:
+                    return "Вторник";
+                case 3:
+                    return "Среда";
+                case 4:
+                    return "Четверг";
+                case 5:
+                    return "Пятница";
+                case 6:
+                    return "Суббота";
+                case 7:
+                    return "Воскресенье";
                 default:
-                    return "Неизвестный символ";
+                    return "Некорректный номер дня";
             }
         }
 
-        /* Пример 3: Определение сезона по месяцу с использованием when */
         public static string GetSeason(int month)
         {
-            return month switch
-            {
-                int m when m == 12 || m == 1 || m == 2 => "Зима",
-                int m when m >= 3 && m <= 5 => "Весна",
-                int m when m >= 6 && m <= 8 => "Лето",
-                int m when m >= 9 && m <= 11 => "Осень",
-                _ => "Некорректный месяц"
-            };
-
-            // Альтернативный вариант
-
             switch (month)
             {
                 case 12:
@@ -94,59 +120,127 @@ namespace CshBook.Lessons.Chapter1.Lesson13Switch
                 case 11:
                     return "Осень";
                 default:
-                    return "Некорректный месяц";
+                    return "Некорректный номер месяца";
+            }
+        }
+
+        public static string Calculate(double left, double right, char operation)
+        {
+            switch (operation)
+            {
+                case '+':
+                    return (left + right).ToString();
+                case '-':
+                    return (left - right).ToString();
+                case '*':
+                    return (left * right).ToString();
+                case '/':
+                    if (right == 0)
+                    {
+                        return "На ноль делить нельзя";
+                    }
+
+                    return (left / right).ToString("F2");
+                default:
+                    return "Неизвестная операция";
+            }
+        }
+
+        public static string GetTrafficLightAction(string color)
+        {
+            switch (color.ToLower())
+            {
+                case "красный":
+                    return "Стой";
+                case "желтый":
+                    return "Приготовься";
+                case "зеленый":
+                    return "Можно идти";
+                default:
+                    return "Неизвестный сигнал";
+            }
+        }
+
+        public static string GetShortDayName(int dayNumber)
+        {
+            switch (dayNumber)
+            {
+                case 1:
+                    return "Пн";
+                case 2:
+                    return "Вт";
+                case 3:
+                    return "Ср";
+                case 4:
+                    return "Чт";
+                case 5:
+                    return "Пт";
+                case 6:
+                    return "Сб";
+                case 7:
+                    return "Вс";
+                default:
+                    return "Ошибка";
             }
         }
 
         public static void Main_()
         {
-            Console.WriteLine(GetDayOfWeekClassic(3));
-            Console.WriteLine(GetCharType('e'));
+            Console.WriteLine(GetDayName(3));
             Console.WriteLine(GetSeason(7));
-
-            // Альтернатива в when
-            object obj = "Hello";
-
-            switch (obj)
-            {
-                case string s when s.Length > 5:
-                    Console.WriteLine("Длинная строка");
-                    break;
-                case string s:
-                    Console.WriteLine("Короткая строка");
-                    break;
-                case int i when i > 0:
-                    Console.WriteLine("Положительное число");
-                    break;
-                case int i:
-                    Console.WriteLine("Отрицательное число или ноль");
-                    break;
-                default:
-                    Console.WriteLine("Неизвестный тип");
-                    break;
-            }
-
+            Console.WriteLine(Calculate(10, 4, '/'));
+            Console.WriteLine(GetTrafficLightAction("Желтый"));
+            Console.WriteLine(GetShortDayName(6));
         }
     }
+
+    #region Задачи
+    /*
+        Разминка
+
+        1. Название месяца.
+           Напиши метод GetMonthName(int month),
+           который по номеру месяца возвращает его название.
+
+        2. Текст по оценке.
+           Напиши метод GetGradeText(int grade),
+           который превращает оценку от 1 до 5 в текст.
+
+        3. Короткое название дня.
+           Напиши метод GetShortDayName(int dayNumber),
+           который возвращает "Пн", "Вт", "Ср" и так далее.
+
+        Основные задачи
+
+        4. Светофор.
+           Напиши метод GetTrafficLightAction(string color),
+           который возвращает действие для пешехода.
+
+        5. Мини-калькулятор.
+           Напиши метод Calculate(double left, double right, char operation),
+           который умеет работать с +, -, * и /.
+
+        6. Время года.
+           Напиши метод GetSeason(int month),
+           который по номеру месяца возвращает время года.
+
+        7. Выходной или рабочий день.
+           Напиши метод GetDayType(int dayNumber),
+           который возвращает "Рабочий день" или "Выходной".
+
+        8. Тип номера в отеле.
+           Напиши метод GetRoomType(int code),
+           который по коду 1, 2, 3, 4 возвращает тип номера.
+
+        Задачи на перенос
+
+        9. Команда в игре.
+           Напиши метод GetCommandDescription(char command),
+           который описывает команды W, A, S, D, E.
+
+        10. Статус заказа.
+            Напиши метод GetOrderStatus(int statusCode),
+            который по коду возвращает понятный статус заказа.
+     */
+    #endregion
 }
-
-#region Задачи
-/* Задачи для отработки оператора switch
-
-1. Определить, является ли введенная буква гласной или согласной, используя when.
-2. Определить, является ли число четным, нечетным или нулем, используя when.
-3. Вывести название месяца по его номеру.
-4. Определить, является ли символ цифрой, буквой или специальным знаком, используя when.
-5. Определить категорию возраста (ребенок, подросток, взрослый, пенсионер).
-6. Определить результат математической операции (+, -, *, /).
-7. Преобразовать числовую оценку (1-5) в текстовое описание ("Отлично", "Хорошо" и т.д.).
-8. Определить пору года по номеру месяца, используя классический switch.
-9. Определить, является ли год високосным или обычным, используя классический switch.
-10. Преобразовать день недели в его краткое обозначение ("Пн", "Вт" и т.д.), используя классический switch.
-11. Определить, является ли введенное число положительным, отрицательным или нулем, используя when.
-12. Определить, к какому классу животных относится животное (млекопитающее, птица, рептилия и т.д.), используя классический switch.
-13. Преобразовать числовую оценку в буквенную (A, B, C, D, F), используя when.
-14. Определить уровень заряда батареи (низкий, средний, высокий), используя классический switch.
-15. Определить, является ли введенный день выходным или рабочим, используя when.
-*/
-#endregion
