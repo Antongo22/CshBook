@@ -1,270 +1,298 @@
-﻿using System;
-using System.IO;
-
 namespace CshBook.Lessons.Chapter1.Lesson15ExceptionHandling
 {
-    /* Урок 15: Обработка исключений в C#
-    
-       Исключения (Exceptions) – это особые ситуации, возникающие во время выполнения программы, 
-       которые могут привести к её аварийному завершению, если их не обработать.
+    #region Теория
+    /*
+        Исключение - это ошибка, которая происходит во время выполнения программы.
 
-       В C# для работы с исключениями используется механизм try-catch-finally.
-       
-       Зачем нужна обработка исключений?
-       - Позволяет перехватывать ошибки и предотвращать аварийное завершение программы.
-       - Упрощает отладку, предоставляя информацию об ошибке.
-       - Позволяет корректно завершать работу (например, закрывать файлы или соединения).
-    */
+        Например:
+        - деление на ноль;
+        - неверный формат числа;
+        - попытка открыть несуществующий файл;
+        - выход за границы массива.
+     */
 
-    /* Основные конструкции:
-       - try         – блок, в котором выполняется код, который может вызвать исключение.
-       - catch       – блок, перехватывающий исключение и обрабатывающий его.
-       - finally     – блок, который выполняется в любом случае (даже если исключение не произошло).
-       - throw       – оператор для явного вызова исключения.
-    */
+    /*
+        Если исключение не обработать,
+        программа может аварийно завершиться.
 
-    /* Как правильно располагать блоки catch?
+        Для обработки используется конструкция:
 
-       - Специфичные исключения (например, `FormatException`, `IndexOutOfRangeException`)  
-         должны идти вверху.
-       - Общие исключения (Exception) должны быть в самом низу.  
+        try
+        {
+            код, в котором может быть ошибка
+        }
+        catch
+        {
+            что делать, если ошибка произошла
+        }
+     */
 
-       Ошибка: 
-       ```
-       try
-       {
-           // Код, который может вызвать исключение
-       }
-       catch (Exception ex)  // Ловит ВСЕ исключения
-       {
-           Console.WriteLine("Общая ошибка");
-       }
-       catch (FormatException ex) // Этот код НИКОГДА не выполнится!
-       {
-           Console.WriteLine("Ошибка формата");
-       }
-       ```
+    /*
+        Смысл такой:
 
-       Правильный порядок:
-       ```
-       try
-       {
-           // Код, который может вызвать исключение
-       }
-       catch (FormatException ex)  // Более конкретный тип исключения
-       {
-           Console.WriteLine("Ошибка формата");
-       }
-       catch (Exception ex)  // Общее исключение в самом низу
-       {
-           Console.WriteLine("Общая ошибка");
-       }
-       ```
+        - try -> пробуем выполнить опасный код;
+        - catch -> перехватываем ошибку;
+        - finally -> выполняем завершающие действия в любом случае.
+     */
 
-       Почему важен порядок?
-       Если сначала поставить `catch (Exception)`, то он поймает любое исключение,  
-       и остальные `catch` никогда не выполнятся.
+    /*
+        finally особенно полезен,
+        когда нужно обязательно освободить ресурс:
 
-    */
+        - закрыть файл;
+        - завершить работу с потоком;
+        - убрать временные данные.
+
+        Позже ты познакомишься с using.
+        Он часто закрывает ресурсы удобнее,
+        но сначала важно понять саму идею finally.
+     */
+
+    /*
+        На раннем этапе важно различать две идеи:
+
+        1. Ошибка ожидаемая и понятная.
+           Например, пользователь может ввести не число.
+           Здесь обработка исключения уместна.
+
+        2. Ошибка проектирования.
+           Например, логика программы сама неверная.
+           Здесь try/catch не должен скрывать проблему.
+     */
+
+    /*
+        throw нужен, когда ты сам хочешь явно сообщить об ошибке.
+
+        Например:
+        если возраст отрицательный,
+        можно выбросить ArgumentException.
+     */
+
+    /*
+        Если catch несколько, порядок важен.
+
+        Сначала ставят более конкретные ошибки:
+
+        catch (FormatException)
+        catch (DivideByZeroException)
+
+        А общий catch (Exception) ставят внизу.
+
+        Почему так:
+        Exception - это слишком общий тип.
+        Если поставить его первым,
+        он перехватит почти все ошибки,
+        и более точные catch уже не сработают.
+     */
+
+    /*
+        Важно помнить про Parse и TryParse.
+
+        int.Parse(text) кидает исключение,
+        если строка не похожа на число.
+
+        int.TryParse(text, out int number)
+        не кидает исключение,
+        а возвращает true или false.
+
+        Для обычной проверки пользовательского ввода
+        TryParse часто удобнее.
+
+        Но на этом уроке мы специально разбираем Parse через try/catch,
+        чтобы понять сам механизм исключений.
+     */
+
+    /*
+        Главное правило урока:
+        try/catch нужен не для того,
+        чтобы "замолчать" любую ошибку,
+        а чтобы корректно обработать конкретную ситуацию.
+
+        То есть после catch программа должна вести себя понятно:
+        сообщить об ошибке, вернуть безопасный результат
+        или завершить текущую операцию без падения.
+     */
+    #endregion
 
     internal static class Lesson15ExceptionHandling
     {
-        public static void Main_()
-        {
-            Console.WriteLine("Демонстрация обработки исключений в C#\n");
-
-            // 1. Простой try-catch
-            HandleBasicException();
-
-            // 2. Обработка нескольких исключений
-            HandleMultipleExceptions();
-
-            // 3. Использование блока finally
-            HandleWithFinally();
-
-            // 4. Создание и выброс собственных исключений
-            ThrowCustomException();
-
-            // 5. Catch без параметров
-            CatchWithoutParameters();
-
-            // 6. Разница между throw и throw ex
-            DemonstrateThrowVsThrowEx();
-        }
-
-        /* Пример 1: Простейший try-catch */
-        public static void HandleBasicException()
+        public static void SafeDivide(int left, int right)
         {
             try
             {
-                Console.Write("Введите число: ");
-                int number = int.Parse(Console.ReadLine()); // Ошибка, если введён нечисловой ввод
-                Console.WriteLine($"Вы ввели число: {number}");
+                int result = left / right;
+                Console.WriteLine($"Результат: {result}");
             }
-            catch (FormatException ex)
+            catch (DivideByZeroException)
             {
-                Console.WriteLine($"Ошибка: Введено не число! {ex.Message}");
+                Console.WriteLine("Делить на ноль нельзя.");
             }
         }
 
-        /* Пример 2: Обработка нескольких исключений */
-        public static void HandleMultipleExceptions()
+        public static void ParseNumber(string text)
         {
             try
             {
-                int[] numbers = { 1, 2, 3 };
-                Console.WriteLine("Введите индекс массива:");
-                int index = int.Parse(Console.ReadLine()); // Может вызвать FormatException
-                Console.WriteLine($"Значение: {numbers[index]}"); // Может вызвать IndexOutOfRangeException
+                int number = int.Parse(text);
+                Console.WriteLine($"Число: {number}");
             }
             catch (FormatException)
             {
-                Console.WriteLine("Ошибка: Введено не число!");
+                Console.WriteLine("Строку нельзя преобразовать в число.");
+            }
+        }
+
+        public static void ParseNumberWithTryParse(string text)
+        {
+            if (int.TryParse(text, out int number))
+            {
+                Console.WriteLine($"Число: {number}");
+            }
+            else
+            {
+                Console.WriteLine("TryParse: строка не является числом.");
+            }
+        }
+
+        public static void PrintArrayItem(int[] numbers, int index)
+        {
+            try
+            {
+                Console.WriteLine($"Элемент: {numbers[index]}");
             }
             catch (IndexOutOfRangeException)
             {
-                Console.WriteLine("Ошибка: Выход за границы массива!");
+                Console.WriteLine("Такого индекса в массиве нет.");
             }
         }
 
-        /* Пример 3: Использование блока finally */
-        public static void HandleWithFinally()
+        public static void ValidateAge(int age)
         {
-            StreamReader reader = null;
+            if (age < 0)
+            {
+                throw new ArgumentException("Возраст не может быть отрицательным.");
+            }
+
+            Console.WriteLine($"Возраст: {age}");
+        }
+
+        public static void ShowFileExample()
+        {
+            string path = "lesson15-demo.txt";
+            StreamWriter? writer = null;
 
             try
             {
-                reader = new StreamReader("nonexistent.txt");
-                Console.WriteLine(reader.ReadToEnd());
-            }
-            catch (FileNotFoundException)
-            {
-                Console.WriteLine("Ошибка: Файл не найден.");
+                writer = new StreamWriter(path);
+                writer.WriteLine("Пример работы finally.");
+                Console.WriteLine("Файл успешно записан.");
             }
             finally
             {
-                if (reader != null)
-                {
-                    reader.Close();
-                    Console.WriteLine("Файл закрыт.");
-                }
+                writer?.Close();
+                Console.WriteLine("Поток закрыт.");
             }
         }
 
-        /* Пример 4: Создание и выброс собственного исключения */
-        public static void ThrowCustomException()
+        public static void Main_()
         {
+            SafeDivide(10, 2);
+            SafeDivide(10, 0);
+
+            Console.WriteLine("----");
+
+            ParseNumber("42");
+            ParseNumber("abc");
+            ParseNumberWithTryParse("55");
+            ParseNumberWithTryParse("text");
+
+            Console.WriteLine("----");
+
+            int[] numbers = { 5, 7, 9 };
+            PrintArrayItem(numbers, 1);
+            PrintArrayItem(numbers, 5);
+
+            Console.WriteLine("----");
+
             try
             {
-                Console.Write("Введите возраст: ");
-                int age = int.Parse(Console.ReadLine());
-
-                if (age < 0)
-                {
-                    throw new ArgumentException("Возраст не может быть отрицательным!");
-                }
-
-                Console.WriteLine($"Ваш возраст: {age}");
+                ValidateAge(25);
+                ValidateAge(-3);
             }
             catch (ArgumentException ex)
             {
-                Console.WriteLine($"Ошибка: {ex.Message}");
-            }
-        }
-
-        /* Пример 5: Catch без параметров */
-        public static void CatchWithoutParameters()
-        {
-            try
-            {
-                int x = 10;
-                int y = 0;
-                Console.WriteLine(x / y); // Деление на ноль
-            }
-            catch
-            {
-                Console.WriteLine("Произошла ошибка!"); // Общий catch без указания типа исключения
-            }
-        }
-
-        /* Пример 6: Разница между throw и throw ex */
-        public static void DemonstrateThrowVsThrowEx()
-        {
-            try
-            {
-                MethodWithThrow();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Перехвачено в Main():");
-                Console.WriteLine(ex);
+                Console.WriteLine(ex.Message);
             }
 
-            Console.WriteLine("\n---\n");
+            Console.WriteLine("----");
 
-            try
-            {
-                MethodWithThrowEx();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Перехвачено в Main():");
-                Console.WriteLine(ex);
-            }
-        }
-
-        public static void MethodWithThrow()
-        {
-            try
-            {
-                throw new InvalidOperationException("Произошла ошибка в MethodWithThrow.");
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("Исключение обработано в MethodWithThrow, но снова выброшено.");
-                throw; // Сохраняет стек вызовов
-            }
-        }
-
-        public static void MethodWithThrowEx()
-        {
-            try
-            {
-                throw new InvalidOperationException("Произошла ошибка в MethodWithThrowEx.");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Исключение обработано в MethodWithThrowEx, но снова выброшено.");
-                throw ex; // Перезаписывает стек вызовов
-            }
+            ShowFileExample();
         }
     }
+
+    #region Задачи
+    /*
+        Разминка
+
+        1. Деление с защитой.
+           Напиши метод SafeDivide(int left, int right),
+           который делит одно число на другое
+           и обрабатывает DivideByZeroException.
+
+        2. Преобразование строки в число.
+           Напиши метод ParseNumber(string text),
+           который пытается преобразовать строку в int
+           и обрабатывает FormatException.
+
+        3. Доступ к элементу массива.
+           Напиши метод PrintArrayItem(int[] numbers, int index),
+           который выводит элемент массива
+           и обрабатывает IndexOutOfRangeException.
+
+        Основные задачи
+
+        4. Проверка возраста.
+           Напиши метод ValidateAge(int age),
+           который выбрасывает ArgumentException,
+           если возраст отрицательный.
+
+        5. TryParse без исключения.
+           Напиши метод ParseNumberWithTryParse(string text),
+           который делает похожую проверку через int.TryParse
+           и не использует try/catch.
+
+        6. Чтение файла.
+           Напиши метод ReadFile(string path),
+           который пытается прочитать файл
+           и обрабатывает FileNotFoundException.
+
+        7. Калькулятор без падения.
+           Напиши метод Calculate(double left, double right, char operation),
+           который выполняет +, -, *, /
+           и не падает на неверной операции или делении на ноль.
+
+        8. Безопасный ввод индекса.
+           Напиши метод GetItemOrMessage(int[] numbers, int index),
+           который возвращает элемент массива
+           или понятное сообщение об ошибке.
+
+        9. finally на практике.
+           Напиши метод WriteTextToFile(string path, string text),
+           который записывает строку в файл
+           и в finally закрывает поток.
+
+        Задачи на перенос
+
+        10. Проверка скидки.
+           Напиши метод ValidateDiscount(int discount),
+           который выбрасывает ArgumentException,
+           если скидка меньше 0 или больше 100.
+
+        11. Безопасная цепочка.
+            Напиши небольшой сценарий:
+            получить строку, преобразовать ее в число,
+            проверить число и вывести результат,
+            не допуская аварийного завершения программы.
+     */
+    #endregion
 }
-
-/* Разница между `throw;` и `throw ex;`:
-    
-    - `throw;` (без параметров)  
-      Повторно выбрасывает исключение без изменения информации о нём.  
-      Сохраняет оригинальный стек вызовов, что полезно для отладки.
-
-    - throw ex; (с параметром)  
-      Перезаписывает стек вызовов, теряя информацию о том, где именно произошло исключение.  
-      Использовать **не рекомендуется**, так как это усложняет отладку.
-
-    Вывод:
-    - Всегда используйте `throw;`, если хотите повторно выбросить исключение.
-    - Использование `throw ex;` оправдано только в редких случаях, например, если вам нужно изменить сообщение об ошибке.
-*/
-
-#region Задачи
-/* Задачи:
-
-    1. Напишите программу, которая запрашивает у пользователя два числа и делит первое на второе. Обработайте `DivideByZeroException`.
-    2. Реализуйте метод, который открывает файл и считывает его содержимое. Обработайте `FileNotFoundException`.
-    3. Напишите метод, который просит ввести число и проверяет, является ли оно положительным. Если нет, выбросите `ArgumentException`.
-    4. Создайте метод, который конвертирует строку в число и ловит `FormatException`.
-    5. Реализуйте метод, который запрашивает индекс массива и обрабатывает `IndexOutOfRangeException`.
-    6. Сделайте метод, который считывает содержимое файла, а в `finally` закрывает поток.
-    7. Сделайте программу-калькулятор, в которой все операции защищены `try-catch`, чтобы не было аварийного завершения.
-*/
-#endregion
