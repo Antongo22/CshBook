@@ -1,194 +1,217 @@
-﻿using System;
-
 namespace CshBook.Lessons.Chapter1.Lesson16Enumerations
 {
-    /* Перечисления (Enum) в C#
-    
-       Что такое перечисления?
-       
-       Перечисления (`enum`) – это именованные наборы целочисленных констант. Они делают код более читаемым, заменяя "магические числа" осмысленными именами.
+    #region Теория
+    /*
+        enum - это перечисление.
 
-       Где использовать `enum`?
-       - Фиксированные списки значений (например, дни недели, времена года, статусы заказов).
-       - Улучшение читаемости кода (вместо `if (status == 1)`, используем `if (status == OrderStatus.Pending)`).
-       - Предотвращение ошибок при передаче некорректных значений.
+        Оно нужно тогда, когда у нас есть
+        фиксированный набор возможных значений.
 
-       Как работают `enum`?
-       - По умолчанию значения имеют тип `int` и начинаются с `0`.
-       - Можно задать свои числовые значения (`enum HttpStatus { OK = 200, NotFound = 404 }`).
-       - Можно преобразовывать `enum` в число и обратно (`(int)EnumValue` и `(EnumType)number`).
+        Например:
+        - времена года;
+        - дни недели;
+        - статус заказа;
+        - уровень сложности;
+        - сигнал светофора.
+     */
 
-       Базовые методы Enum
-       В .NET `enum` имеет несколько встроенных методов, которые позволяют работать с ним:
-       `Enum.GetValues(typeof(T))` – возвращает массив всех значений `enum`.
-       `Enum.GetNames(typeof(T))` – возвращает массив строковых представлений `enum`.
-       `Enum.IsDefined(typeof(T), value)` – проверяет, существует ли значение в `enum`.
-       `Enum.Parse(typeof(T), "Value")` – преобразует строку в `enum`.
-       `Enum.TryParse("Value", out T result)` – безопасный вариант `Parse`, не вызывает исключения.
-       
-       Что такое `[Flags]`
-       - Позволяет использовать `enum` как набор битовых флагов (для прав доступа, настроек и т. д.).
-       - Значения должны быть степенями двойки (`1, 2, 4, 8...`), чтобы можно было их комбинировать (`|`).
-       - Проверять наличие флага можно через `HasFlag()` или битовые операции `&`.
+    /*
+        Без enum такие вещи часто хранят как числа:
 
-       Атрибуты и `enum`
-       Атрибуты (`[Flags]`, `[Obsolete]`, `[Description]`) позволяют добавлять метаданные. Например, `[Flags]` позволяет `enum` работать с битовыми операциями, а `[Obsolete]` помечает устаревшие значения.
-    */
+        1 - новый заказ
+        2 - в пути
+        3 - доставлен
+
+        Это неудобно, потому что числа сами по себе
+        ничего не объясняют.
+
+        enum делает код понятнее:
+        OrderStatus.New
+        OrderStatus.InDelivery
+        OrderStatus.Delivered
+     */
+
+    /*
+        По умолчанию элементы enum имеют числовые значения:
+
+        enum Season
+        {
+            Winter,   // 0
+            Spring,   // 1
+            Summer,   // 2
+            Autumn    // 3
+        }
+
+        При необходимости числа можно задать явно.
+     */
+
+    /*
+        С enum обычно делают четыре вещи:
+
+        - хранят значение;
+        - сравнивают в if или switch;
+        - преобразуют из числа или строки;
+        - перебирают все значения через Enum.GetValues(...).
+     */
+
+    /*
+        На этом уроке важнее всего понять идею:
+        enum - это не "еще один сложный тип",
+        а способ заменить магические числа
+        понятными именами.
+     */
+
+    /*
+        Флаги через [Flags] тоже полезны,
+        но это уже следующий уровень.
+        Здесь достаточно увидеть базовую идею:
+        одно значение хранит набор прав или возможностей.
+     */
+    #endregion
 
     internal static class Lesson16Enumerations
     {
+        public enum Season
+        {
+            Winter,
+            Spring,
+            Summer,
+            Autumn
+        }
+
+        public enum OrderStatus
+        {
+            New = 1,
+            Paid = 2,
+            InDelivery = 3,
+            Delivered = 4
+        }
+
+        [Flags]
+        public enum UserPermission
+        {
+            None = 0,
+            Read = 1,
+            Write = 2,
+            Delete = 4
+        }
+
+        public static string GetMonthExample(Season season)
+        {
+            switch (season)
+            {
+                case Season.Winter:
+                    return "Декабрь";
+                case Season.Spring:
+                    return "Апрель";
+                case Season.Summer:
+                    return "Июль";
+                case Season.Autumn:
+                    return "Октябрь";
+                default:
+                    return "Неизвестный сезон";
+            }
+        }
+
+        public static string GetOrderMessage(OrderStatus status)
+        {
+            switch (status)
+            {
+                case OrderStatus.New:
+                    return "Заказ создан";
+                case OrderStatus.Paid:
+                    return "Заказ оплачен";
+                case OrderStatus.InDelivery:
+                    return "Заказ в доставке";
+                case OrderStatus.Delivered:
+                    return "Заказ доставлен";
+                default:
+                    return "Неизвестный статус";
+            }
+        }
+
         public static void Main_()
         {
-            Console.WriteLine("Демонстрация работы с перечислениями (enum)\n");
+            Season season = Season.Summer;
+            Console.WriteLine($"Сезон: {season}");
+            Console.WriteLine($"Пример месяца: {GetMonthExample(season)}");
 
-            // 1. Базовое использование enum
-            UseBasicEnum();
+            Console.WriteLine("----");
 
-            // 2. Преобразование enum в число и обратно
-            ConvertEnum();
+            OrderStatus status = OrderStatus.Paid;
+            Console.WriteLine($"Статус: {(int)status} -> {status}");
+            Console.WriteLine(GetOrderMessage(status));
 
-            // 3. Работа с методами Enum
-            EnumMethods();
+            Console.WriteLine("----");
 
-            // 4. Перечисление в switch
-            UseEnumInSwitch();
-
-            // 5. Перебор всех значений перечисления
-            IterateOverEnum();
-
-            // 6. Перечисления с флагами
-            UseFlagsEnum();
-        }
-
-        /* Пример 1: Базовое использование перечислений */
-        public static void UseBasicEnum()
-        {
-            DayOfWeek today = DayOfWeek.Wednesday;
-            Console.WriteLine($"Сегодня: {today} ({(int)today})");
-        }
-
-        /* Пример 2: Преобразование enum в число и обратно */
-        public static void ConvertEnum()
-        {
-            int dayNumber = 4;
-            DayOfWeek day = (DayOfWeek)dayNumber;
-            Console.WriteLine($"\nЧисло {dayNumber} соответствует дню: {day}");
-
-            string dayString = "Monday";
-            DayOfWeek parsedDay = (DayOfWeek)Enum.Parse(typeof(DayOfWeek), dayString);
-            Console.WriteLine($"Строка \"{dayString}\" преобразована в {parsedDay}");
-        }
-
-        /* Пример 3: Базовые методы Enum */
-        public static void EnumMethods()
-        {
-            Console.WriteLine("\nВсе значения enum DayOfWeek:");
-            foreach (DayOfWeek value in Enum.GetValues(typeof(DayOfWeek)))
+            if (Enum.TryParse("Autumn", out Season parsedSeason))
             {
-                Console.WriteLine($"{(int)value} - {value}");
+                Console.WriteLine($"Из строки получили: {parsedSeason}");
             }
 
-            Console.WriteLine("\nПроверка существования значения:");
-            bool exists = Enum.IsDefined(typeof(DayOfWeek), 5);
-            Console.WriteLine($"Значение 5 есть в enum DayOfWeek? {exists}");
+            Console.WriteLine("----");
 
-            Console.WriteLine("\nПример TryParse:");
-            if (Enum.TryParse("Friday", out DayOfWeek result))
+            Console.WriteLine("Все сезоны:");
+            foreach (Season item in Enum.GetValues(typeof(Season)))
             {
-                Console.WriteLine($"Строка \"Friday\" успешно преобразована в {result}");
+                Console.WriteLine($"{(int)item} - {item}");
             }
-        }
 
-        /* Пример 4: Перечисления в switch */
-        public static void UseEnumInSwitch()
-        {
-            Console.Write("\nВведите день недели (0-6): ");
-            int dayNumber = int.Parse(Console.ReadLine());
+            Console.WriteLine("----");
 
-            if (Enum.IsDefined(typeof(DayOfWeek), dayNumber))
-            {
-                DayOfWeek day = (DayOfWeek)dayNumber;
-
-                switch (day)
-                {
-                    case DayOfWeek.Saturday:
-                    case DayOfWeek.Sunday:
-                        Console.WriteLine("Выходной день!");
-                        break;
-                    default:
-                        Console.WriteLine("Рабочий день.");
-                        break;
-                }
-            }
-            else
-            {
-                Console.WriteLine("Некорректный день недели.");
-            }
-        }
-
-        /* Пример 5: Перебор всех значений перечисления */
-        public static void IterateOverEnum()
-        {
-            Console.WriteLine("\nДни недели:");
-            foreach (DayOfWeek day in Enum.GetValues(typeof(DayOfWeek)))
-            {
-                Console.WriteLine($"{(int)day} - {day}");
-            }
-        }
-
-        /* Пример 6: Использование флагов в enum */
-        public static void UseFlagsEnum()
-        {
-            UserRoles user = UserRoles.User | UserRoles.Moderator;
-            Console.WriteLine($"\nРоли пользователя: {user}");
-
-            if (user.HasFlag(UserRoles.Admin))
-                Console.WriteLine("Пользователь - администратор.");
-
-            if (user.HasFlag(UserRoles.Moderator))
-                Console.WriteLine("Пользователь - модератор.");
-
-            if (user.HasFlag(UserRoles.User))
-                Console.WriteLine("Пользователь - обычный пользователь.");
+            UserPermission permission = UserPermission.Read | UserPermission.Write;
+            Console.WriteLine($"Права: {permission}");
+            Console.WriteLine($"Есть Write: {permission.HasFlag(UserPermission.Write)}");
+            Console.WriteLine($"Есть Delete: {permission.HasFlag(UserPermission.Delete)}");
         }
     }
 
-    /* Перечисление для дней недели */
-    enum DayOfWeek
-    {
-        Monday,
-        Tuesday,
-        Wednesday,
-        Thursday,
-        Friday,
-        Saturday,
-        Sunday
-    }
+    #region Задачи
+    /*
+        Разминка
 
-    /* Флаговое перечисление для ролей пользователей */
-    [Flags]
-    enum UserRoles
-    {
-        None = 0,
-        User = 1,
-        Moderator = 2,
-        Admin = 4
-    }
+        1. Времена года.
+           Создай enum Season с элементами Winter, Spring, Summer, Autumn.
+
+        2. Пример месяца.
+           Напиши метод GetMonthExample(Season season),
+           который возвращает пример месяца для выбранного сезона.
+
+        3. Статус заказа.
+           Создай enum OrderStatus и метод GetOrderMessage(OrderStatus status),
+           который возвращает текст по статусу.
+
+        Основные задачи
+
+        4. Тип дня.
+           Создай enum DayType со значениями Workday и Weekend.
+           Напиши метод, который по дню недели возвращает тип дня.
+
+        5. Сложность игры.
+           Создай enum GameDifficulty со значениями Easy, Normal, Hard.
+           Напиши метод, который возвращает описание сложности.
+
+        6. Светофор.
+           Создай enum TrafficLight со значениями Red, Yellow, Green.
+           Напиши метод, который возвращает действие для пешехода.
+
+        7. HTTP-статусы.
+           Создай enum HttpStatusCode с несколькими явными числовыми значениями,
+           например 200, 400, 404.
+           Напиши метод, который возвращает описание статуса.
+
+        8. Перебор значений.
+           Выведи все значения и имена любого enum через Enum.GetValues(...).
+
+        Задачи на перенос
+
+        9. Права пользователя.
+           Создай [Flags] enum UserPermission с правами Read, Write, Delete.
+           Напиши метод проверки наличия права.
+
+        10. Транспорт.
+            Создай enum TransportMode и метод,
+            который возвращает пример времени в пути для каждого варианта.
+     */
+    #endregion
 }
-
-
-
-/* Задания на практику:
-
-    1. Создайте перечисление `Seasons` с элементами: `Winter`, `Spring`, `Summer`, `Autumn`.
-    2. Напишите метод, который принимает `Seasons` и выводит пример месяца (например, `Winter → Декабрь`).
-    3. Реализуйте перечисление `HttpStatusCode` с популярными кодами (например, `OK = 200`, `NotFound = 404`).
-       Напишите метод, который принимает `HttpStatusCode` и возвращает его текстовое описание.
-    4. Создайте `enum` с флагами `UserPermissions` (Чтение, Запись, Удаление) и реализуйте метод для проверки прав.
-    5. Создайте `enum` `DayType` (Рабочий, Выходной) и метод, который определяет тип дня по `DayOfWeek`.
-    6. Реализуйте `enum` `GameDifficulty` (Легко, Нормально, Сложно) и настройте параметры игры в зависимости от сложности.
-    7. Создайте `enum` `TransportMode` (Автомобиль, Поезд, Самолет) и метод, возвращающий среднее время в пути.
-    8. Реализуйте `enum` `TrafficLight` (Красный, Желтый, Зеленый) и метод, определяющий, можно ли двигаться.
-    9. Создайте `enum` `CardSuit` (Черви, Бубны, Пики, Крести) и напишите метод для генерации случайной карты.
-    10. Используйте `Enum.GetValues()` и `Enum.GetNames()`, чтобы вывести все значения произвольного перечисления.
-*/
