@@ -1,126 +1,204 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace CshBook.Lessons.Chapter1.Lesson18ConstructorsAndDestructors
 {
-    /* Конструкторы
-    
-    Вспомним наш прошлый пример с питомцами. 
-    Неудобно заполнять вручную поля. 
-    Поэтому есть конструкторы, которые вызываются при создании экземпляра класса.
+    #region Теория
+    /*
+        В прошлом уроке мы создавали объект,
+        а потом вручную заполняли его поля:
 
-    Конструкторов может быть несколько у одного класса.
-    Так же можно наследовать конструкторы, чтобы была гибкость.
+        Pet pet = new Pet();
+        pet.Name = "Бобик";
+        pet.Age = 5;
+
+        Это работает, но легко забыть заполнить важное поле.
      */
 
+    /*
+        Конструктор - это специальный метод,
+        который вызывается при создании объекта.
 
-    /* Деструкторы
-    Вызываются, когда наш экземпляр класса уничтожается сборщиком мусора.
-    Мы не можем предугадать когда это точно произойдёт. 
-    Однако, можно считать тогда, когда ссылка не объект перестаёт использоваться кодом
-     
+        Его задача:
+        сразу привести объект в нормальное начальное состояние.
      */
 
+    /*
+        У конструктора:
 
-    /* Ссылки
-     
-    Важно сказать, что мы можем ссылаться на один объект сразу несколькими переменными. Об этом подробнее в коде
+        - имя совпадает с именем класса;
+        - нет типа возвращаемого значения;
+        - он вызывается через new.
 
+        Пример:
+
+        Pet pet = new Pet("Бобик", 5);
      */
 
-    class Pet2
+    /*
+        Конструкторов может быть несколько.
+
+        Это называется перегрузка конструкторов.
+
+        Например:
+        - Pet(string name)
+        - Pet(string name, int age)
+
+        Первый вариант может поставить возраст по умолчанию.
+     */
+
+    /*
+        this означает "текущий объект".
+
+        Обычно this помогает отличить поле объекта
+        от параметра конструктора:
+
+        this.Name = name;
+     */
+
+    /*
+        Важно помнить про ссылки.
+
+        Если написать:
+
+        Pet second = first;
+
+        новый объект не создается.
+        Обе переменные указывают на один и тот же объект.
+     */
+
+    /*
+        Деструктор в C# чаще называют финализатором.
+
+        Он вызывается сборщиком мусора,
+        но точный момент вызова мы не контролируем.
+
+        Для обычного junior-кода финализаторы почти не нужны.
+        На этом уроке важно просто знать, что такая возможность есть,
+        но не строить на ней обычную логику программы.
+     */
+    #endregion
+
+    class PetWithConstructor
     {
-        public string name; // поле имени питомца
+        public string Name;
+        public int Age;
+        public int Mood;
 
-        // У поля мы убрали public, по умолчанию private. Это значит что менять значения в этом поле можно только внутри этого класса
-
-        int age; // поле возраста питомца
-
-        public Pet2(string name, int age)
+        public PetWithConstructor(string name)
         {
-            // this внутри класса по сути указывает на самого себя
-            this.name = name;
-            this.age = age;
-
-            Console.WriteLine("Я появился!");
+            Name = name;
+            Age = 0;
+            Mood = 50;
         }
 
-        public Pet2(string _name) : this(_name, 1) // если пользователь не указывает возраст, то 
+        public PetWithConstructor(string name, int age)
         {
-            Console.WriteLine($"Мне задали только имя - {name}, поэтому мой возраст по умолчанию - {age}");
+            Name = name;
+            Age = age;
+            Mood = 50;
         }
 
-        public void Play() // метод для игры
+        public PetWithConstructor(string name, int age, int mood)
         {
-            Console.WriteLine($"{name} играет!");
+            Name = name;
+            Age = age;
+            Mood = mood;
         }
 
-        public void GettingOld() // метод старения
+        public void PrintInfo()
         {
-            age++;
-            Console.WriteLine($"{name} постарел на 1 год(. Теперь ему {age}");
+            Console.WriteLine($"{Name}: возраст {Age}, настроение {Mood}");
         }
 
-        ~Pet2() // аргументов не может быть, 1 на всё
+        public PetWithConstructor CreateCopy()
         {
-            Console.WriteLine($"Сообщение от - {name}: Я умер!((((");
+            return new PetWithConstructor(Name, Age, Mood);
+        }
+
+        ~PetWithConstructor()
+        {
+            // Финализатор здесь только для демонстрации синтаксиса.
         }
     }
 
-    internal class Lesson18ConstructorsAndDestructors
+    internal static class Lesson18ConstructorsAndDestructors
     {
         public static void Main_()
         {
-            //Pet2 pet1 = new Pet2(); 
-            // так нельзя, тк мы не указали пустой конструктор
+            PetWithConstructor bobik = new PetWithConstructor("Бобик");
+            PetWithConstructor sharik = new PetWithConstructor("Шарик", 3);
+            PetWithConstructor barsik = new PetWithConstructor("Барсик", 2, 80);
 
-            Pet2 pet1 = new Pet2("Бобик");
-            Console.WriteLine();
-            Pet2 pet2 = new Pet2("Шарик", 5);
-            Console.WriteLine();
+            bobik.PrintInfo();
+            sharik.PrintInfo();
+            barsik.PrintInfo();
 
-            // обрати внимание в каком порядке вызывались конструкторы
+            Console.WriteLine("----");
 
-            // теперь нельзя, тк private
-            //pet2.age = 2;
+            PetWithConstructor sameBobik = bobik;
+            sameBobik.Name = "Бобик через вторую ссылку";
+            bobik.PrintInfo();
 
+            Console.WriteLine("----");
 
-            // Теперь поговорим про ссылки
-            // Если мы сделаем так - 
-            Pet2 pet3 = pet1;
-            pet3.name = "Барбос";
+            PetWithConstructor copy = bobik.CreateCopy();
+            copy.Name = "Копия Бобика";
 
-            Console.WriteLine(pet1.name); // имя поменялось, тк pet1 и pet3 указывают на оин и тот же экземпляр класса
-
-
-            // Создаём нагрузку на память
-            for (int i = 0; i < 10; i++)
-            {
-                var temp = new Pet2(i.ToString());
-            }
-
-            // Принудительно вызываем сборщик мусора
-            GC.Collect();
-            GC.WaitForPendingFinalizers(); // Ждём завершения финализаторов
-
-            // Даём время для вывода сообщений
-            Thread.Sleep(1000);
-
-            Console.WriteLine("Программа завершена.");
-
-            // Можно увидеть что не всё успели удалиться.А те что удалялись вызывались в хаотичном порядке
-
+            bobik.PrintInfo();
+            copy.PrintInfo();
         }
     }
+
+    #region Задачи
+    /*
+        Разминка
+
+        1. Конструктор питомца.
+           Создай класс Pet с полями Name, Age и Mood.
+           Добавь конструктор Pet(string name),
+           который задает имя, возраст 0 и настроение 50.
+
+        2. Конструктор с возрастом.
+           Добавь второй конструктор Pet(string name, int age),
+           который задает имя и возраст.
+
+        3. Вывод информации.
+           Добавь метод PrintInfo(),
+           который выводит все поля объекта.
+
+        Основные задачи
+
+        4. Перегрузка конструкторов.
+           Добавь третий конструктор Pet(string name, int age, int mood).
+
+        5. this на практике.
+           В конструкторах используй this,
+           чтобы явно обращаться к полям объекта.
+
+        6. Ссылка на тот же объект.
+           Создай один объект Pet.
+           Присвой его во вторую переменную.
+           Измени поле через вторую переменную
+           и выведи первую.
+
+        7. Копия объекта.
+           Добавь метод CreateCopy(),
+           который возвращает новый объект Pet
+           с такими же значениями полей.
+
+        Задачи на перенос
+
+        8. Класс Player.
+           Создай класс Player с конструкторами:
+           Player(string name)
+           Player(string name, int level, int coins)
+
+        9. Класс Product.
+           Создай класс Product с полями Title, Price и Count.
+           Через конструктор запрети создавать товар с отрицательной ценой.
+
+        10. Обзор финализатора.
+            Добавь пустой финализатор в один из классов
+            и оставь комментарий, почему не стоит полагаться
+            на точное время его вызова.
+     */
+    #endregion
 }
-
-
-#region Задачи
-/* Задание
-    Дополни предыдущее задание новыми знаниями 
- */
-#endregion
