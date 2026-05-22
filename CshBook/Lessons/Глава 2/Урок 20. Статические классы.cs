@@ -1,132 +1,211 @@
-﻿using System;
-using System.Collections.Generic;
-
 namespace CshBook.Lessons.Chapter2.Lesson20StaticClasses
 {
-    /* Урок 20: Статические классы в C#
-     
-    Статические классы - специальный тип классов, которые:
-    - Не могут быть инстанцированы (нельзя создать объект через new)
-    - Содержат только статические члены
-    - Являются sealed по умолчанию (нельзя наследовать)
-    - Часто используются для утилитарных функций и глобальных сервисов
+    #region Теория
+    /*
+        Обычный класс нужен, когда мы создаем объекты.
+
+        Например:
+        Pet bobik = new Pet();
+        Pet sharik = new Pet();
+
+        У каждого объекта свои поля и свое состояние.
      */
 
-    #region Сравнение обычного и статического классов
-    // Обычный класс
-    class MathOperations
-    {
-        public int Add(int a, int b) => a + b;
-    }
+    /*
+        Статический класс нужен для логики,
+        которой не нужен отдельный объект.
 
-    // Статический класс
-    static class StaticMathOperations
-    {
-        public static int Add(int a, int b) => a + b;
-        public static int Multiply(int a, int b) => a * b;
-    }
-    #endregion
+        Например:
+        - математические операции;
+        - работа со строками;
+        - простые проверки;
+        - методы для массивов;
+        - вывод служебных сообщений.
+     */
 
-    #region Пример использования
-    static class Logger
-    {
-        private static List<string> _logEntries = new List<string>();
+    /*
+        Статический класс объявляется через static:
 
-        // Статический конструктор
-        static Logger()
+        static class MathHelper
         {
-            Console.WriteLine("Logger initialized");
-        }
-
-        public static void Log(string message)
-        {
-            string entry = $"{DateTime.Now:HH:mm:ss} | {message}";
-            _logEntries.Add(entry);
-            Console.WriteLine(entry);
-        }
-
-        public static void ShowLogHistory()
-        {
-            Console.WriteLine("\nИстория логов:");
-            foreach (var entry in _logEntries)
+            public static int Add(int a, int b)
             {
-                Console.WriteLine(entry);
+                return a + b;
             }
         }
-    }
+
+        Вызывается такой метод через имя класса:
+
+        MathHelper.Add(2, 3);
+     */
+
+    /*
+        Важное отличие:
+        статический класс нельзя создать через new.
+
+        Нельзя:
+        MathHelper helper = new MathHelper();
+
+        Потому что у статического класса нет экземпляров.
+     */
+
+    /*
+        Статические поля существуют в одном экземпляре на всю программу.
+
+        Это удобно для констант и настроек,
+        но опасно для изменяемых глобальных данных.
+
+        Если все части программы меняют одно статическое поле,
+        становится сложнее понять, кто и когда изменил значение.
+     */
+
+    /*
+        Простое правило:
+
+        static хорошо подходит для чистых вспомогательных методов,
+        которые получают данные через параметры
+        и возвращают результат.
+
+        Если объект должен хранить свое состояние,
+        лучше использовать обычный класс.
+     */
     #endregion
 
-    internal class Lesson20StaticClasses
+    class Calculator
+    {
+        public int Add(int left, int right)
+        {
+            return left + right;
+        }
+    }
+
+    static class MathHelper
+    {
+        public static int Add(int left, int right)
+        {
+            return left + right;
+        }
+
+        public static int Multiply(int left, int right)
+        {
+            return left * right;
+        }
+
+        public static bool IsEven(int value)
+        {
+            return value % 2 == 0;
+        }
+    }
+
+    static class ArrayHelper
+    {
+        public static string Separator = ", ";
+
+        public static int FindMax(int[] numbers)
+        {
+            int max = numbers[0];
+
+            for (int i = 1; i < numbers.Length; i++)
+            {
+                if (numbers[i] > max)
+                {
+                    max = numbers[i];
+                }
+            }
+
+            return max;
+        }
+
+        public static string ConvertToString(int[] numbers)
+        {
+            string result = "";
+
+            for (int i = 0; i < numbers.Length; i++)
+            {
+                result += numbers[i];
+
+                if (i < numbers.Length - 1)
+                {
+                    result += Separator;
+                }
+            }
+
+            return result;
+        }
+    }
+
+    internal static class Lesson20StaticClasses
     {
         public static void Main_()
         {
-            // Использование обычного класса
-            MathOperations math = new MathOperations();
-            Console.WriteLine(math.Add(5, 3)); // 8
+            Calculator calculator = new Calculator();
+            Console.WriteLine(calculator.Add(2, 3));
 
-            // Использование статического класса
-            Console.WriteLine(StaticMathOperations.Multiply(5, 3)); // 15
+            Console.WriteLine("----");
 
-            // Работа с логгером
-            Logger.Log("Запуск приложения");
-            Logger.Log("Выполнение операции");
-            Logger.ShowLogHistory();
+            Console.WriteLine(MathHelper.Add(2, 3));
+            Console.WriteLine(MathHelper.Multiply(4, 5));
+            Console.WriteLine(MathHelper.IsEven(10));
 
-            // Попытка создать экземпляр приведёт к ошибке
-            // Logger logger = new Logger(); // Ошибка компиляции
+            Console.WriteLine("----");
+
+            int[] numbers = { 4, 9, 2, 7 };
+            Console.WriteLine(ArrayHelper.FindMax(numbers));
+            Console.WriteLine(ArrayHelper.ConvertToString(numbers));
+
+            ArrayHelper.Separator = " | ";
+            Console.WriteLine(ArrayHelper.ConvertToString(numbers));
         }
     }
 
-    /* Особенности статических классов:
-     1. Не могут иметь конструкторов экземпляров
-     2. Не поддерживают наследование
-     3. Могут содержать статические конструкторы
-     4. Все члены должны быть явно объявлены как static
-     5. Идеальны для:
-        - Утилитарных функций (Math, Convert)
-        - Сервисов глобального доступа
-        - Фабричных методов
-        - Хранения глобальных настроек
+    #region Задачи
+    /*
+        Разминка
+
+        1. Математический помощник.
+           Создай статический класс MathUtils
+           с методами Add, Subtract и Multiply.
+
+        2. Проверка числа.
+           Добавь в MathUtils метод IsEven(int value),
+           который возвращает true, если число четное.
+
+        3. Помощник для строк.
+           Создай статический класс StringUtils
+           с методом Repeat(string text, int count),
+           который повторяет строку несколько раз.
+
+        Основные задачи
+
+        4. Максимум массива.
+           Создай статический класс ArrayUtils
+           с методом FindMax(int[] numbers).
+
+        5. Сумма массива.
+           Добавь метод Sum(int[] numbers),
+           который возвращает сумму элементов.
+
+        6. Строка из массива.
+           Добавь метод ConvertToString(int[] numbers),
+           который превращает массив в строку.
+
+        7. Разделитель.
+           Добавь в ArrayUtils статическое поле Separator.
+           Используй его в ConvertToString.
+
+        8. Настройки приложения.
+           Создай статический класс AppSettings
+           со статическими полями AppName и Version.
+
+        Задачи на перенос
+
+        9. Проверки пользователя.
+           Создай статический класс UserValidator
+           с методами IsValidAge(int age) и IsValidName(string name).
+
+        10. Геометрия.
+            Создай статический класс GeometryUtils
+            с методами GetRectangleArea и GetCircleArea.
      */
-
-    #region Задание
-    /* Создайте статический класс ArrayUtils с функционалом:
-     - Метод FindMax(int[] array)
-     - Метод Sort(int[] array)
-     - Метод ConvertToString(int[] array)
-     - Свойство Separator (для ConvertToString)
-     - Статический конструктор с установкой Separator = "; "
-     */
-
-    
-    #endregion
-
-
-    /* Лучшие практики:
-     1. Используйте для функционала, не требующего состояния
-     2. Избегайте хранить изменяемые глобальные данные
-     3. Хорошо подходят для extension-методов
-     4. Не злоупотребляйте - избыток статики усложняет тестирование
-     5. Используйте readonly для статических полей где возможно
-     */
-
-    #region Дополнительные примеры
-    static class Geometry
-    {
-        public static double CircleArea(double radius) => Math.PI * radius * radius;
-        public static double TriangleArea(double a, double h) => 0.5 * a * h;
-
-        public static readonly double GoldenRatio = 1.618033988749894;
-    }
-
-    static class StringExtensions
-    {
-        public static string Reverse(this string str)
-        {
-            char[] chars = str.ToCharArray();
-            Array.Reverse(chars);
-            return new string(chars);
-        }
-    }
     #endregion
 }
