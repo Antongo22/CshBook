@@ -1,143 +1,217 @@
-﻿using System;
-
 namespace CshBook.Lessons.Chapter2.Lesson21GettersAndSetters
 {
-    /* Урок 21: Геттеры и Сеттеры в C#
-     
-    Геттеры (get) и Сеттеры (set) - это специальные методы доступа к полям класса,
-    которые позволяют контролировать чтение и запись значений.
-    
-    Основные цели:
-    - Инкапсуляция данных
-    - Валидация значений
-    - Гибкость при изменении внутренней реализации
-    - Добавление дополнительной логики при доступе к полям
+    #region Теория
+    /*
+        В первых ООП-уроках мы использовали public-поля:
+
+        public string Name;
+        public int Age;
+
+        Это просто, но небезопасно.
+        Любой код может записать туда любое значение.
      */
 
-    #region Пример без геттеров/сеттеров (плохая практика)
-    class BadUser
-    {
-        public string Name; // Публичное поле - можно изменять напрямую
-        public int Age;     // Нет контроля за значениями
-    }
-    #endregion
+    /*
+        Пример проблемы:
 
-    #region Пример с геттерами/сеттерами (правильный подход)
-    class User
-    {
-        private string _name;
+        user.Age = -100;
+
+        Для программы это обычная запись в поле,
+        но для смысла предметной области такой возраст невозможен.
+     */
+
+    /*
+        Свойство позволяет управлять чтением и записью значения.
+
+        У свойства есть:
+
+        - get: что делать при чтении;
+        - set: что делать при записи.
+     */
+
+    /*
+        В set есть специальное слово value.
+
+        value - это новое значение,
+        которое пытаются записать в свойство.
+
+        Например:
+        user.Age = 25;
+
+        Внутри set value будет равно 25.
+     */
+
+    /*
+        Полный вариант свойства обычно работает
+        через приватное поле:
+
         private int _age;
 
-        // Свойство с базовым геттером/сеттером
-        public string Name
-        {
-            get { return _name; }
-            set { _name = value; }
-        }
-
-        // Свойство с валидацией
         public int Age
         {
-            get => _age; // Сокращенная запись геттера
+            get { return _age; }
+            set { ... }
+        }
+
+        Приватное поле хранит данные,
+        а свойство контролирует доступ к ним.
+     */
+
+    /*
+        Есть и автоматические свойства:
+
+        public string Name { get; set; }
+
+        Они удобны, когда проверка не нужна.
+        Компилятор сам создаст скрытое поле.
+     */
+
+    /*
+        Иногда запись нужно закрыть снаружи:
+
+        public int Balance { get; private set; }
+
+        Читать Balance можно откуда угодно,
+        но менять его можно только внутри класса.
+     */
+    #endregion
+
+    class UserWithFields
+    {
+        public string Name = "";
+        public int Age;
+    }
+
+    class UserWithProperties
+    {
+        private int _age;
+
+        public string Name { get; set; } = "";
+        public string Email { get; set; } = "";
+
+        public int Age
+        {
+            get
+            {
+                return _age;
+            }
             set
             {
                 if (value < 0 || value > 120)
-                    throw new ArgumentException("Недопустимый возраст");
+                {
+                    Console.WriteLine("Возраст должен быть от 0 до 120.");
+                    return;
+                }
+
                 _age = value;
             }
         }
 
-        // Автоматическое свойство (компилятор создаст поле автоматически)
-        public string Email { get; set; }
-
-        // Свойство только для чтения
-        public string Info => $"{Name}, {Age} лет"; // Вычисляемое свойство
+        public string Info
+        {
+            get
+            {
+                return $"{Name}, {Age} лет, email: {Email}";
+            }
+        }
     }
-    #endregion
 
-    internal class Lesson21GettersAndSetters
+    class BankAccountExample
+    {
+        public string AccountNumber { get; }
+        public int Balance { get; private set; }
+
+        public BankAccountExample(string accountNumber, int startBalance)
+        {
+            AccountNumber = accountNumber;
+            Balance = startBalance;
+        }
+
+        public void Deposit(int amount)
+        {
+            if (amount > 0)
+            {
+                Balance += amount;
+            }
+        }
+    }
+
+    internal static class Lesson21GettersAndSetters
     {
         public static void Main_()
         {
-            // Пример с плохим подходом
-            BadUser badUser = new BadUser();
+            UserWithFields badUser = new UserWithFields();
             badUser.Name = "Иван";
-            badUser.Age = -100; // Некорректный возраст, но ошибки не будет
+            badUser.Age = -100;
+            Console.WriteLine($"{badUser.Name}: {badUser.Age}");
 
-            // Пример с хорошим подходом
-            User user = new User();
+            Console.WriteLine("----");
+
+            UserWithProperties user = new UserWithProperties();
             user.Name = "Мария";
-            // user.Age = -5; // Выбросит исключение
-            user.Age = 25;
-
-            Console.WriteLine(user.Info); // Мария, 25 лет
-
-            // Использование автоматического свойства
             user.Email = "maria@example.com";
-            Console.WriteLine(user.Email);
+            user.Age = 25;
+            Console.WriteLine(user.Info);
+
+            user.Age = -5;
+            Console.WriteLine(user.Info);
+
+            Console.WriteLine("----");
+
+            BankAccountExample account = new BankAccountExample("ACC-1", 1000);
+            account.Deposit(500);
+            Console.WriteLine($"{account.AccountNumber}: {account.Balance}");
         }
     }
-
-    /* Основные концепции:
-     1. get - метод для получения значения
-     2. set - метод для установки значения (value - ключевое слово)
-     3. Модификаторы доступа (private set, protected get и т.д.)
-     */
-
-    #region Задание
-    /* Создайте класс BankAccount с:
-     - Автоматическим свойством AccountNumber (только чтение)
-     - Свойством Balance с private set
-     - Методами Deposit и Withdraw (с проверкой на отрицательные значения)
-     - Свойством IsClosed (только для записи)
-     - Свойством Info (только чтение) с информацией о счете
-     */
-
-    #endregion
 
     #region Задачи
-    /* Реализуйте класс SmartArray:
-     - Внутренний массив целых чисел
-     - Свойство Length (только чтение)
-     - Свойство Sum (только чтение) - возвращает сумму элементов
-     - Свойство Average (только чтение) - возвращает среднее
-     - Метод Resize(int newSize)
+    /*
+        Разминка
+
+        1. Пользователь.
+           Создай класс User со свойствами Name и Email.
+           Используй автоматические свойства.
+
+        2. Возраст с проверкой.
+           Добавь приватное поле _age и свойство Age.
+           Возраст должен быть от 0 до 120.
+
+        3. Информация.
+           Добавь свойство Info только для чтения,
+           которое возвращает строку с именем и возрастом.
+
+        Основные задачи
+
+        4. Банковский счет.
+           Создай класс BankAccount.
+           Добавь свойство AccountNumber только для чтения.
+
+        5. Баланс.
+           Добавь свойство Balance с private set.
+           Баланс нельзя менять напрямую снаружи.
+
+        6. Пополнение.
+           Добавь метод Deposit(int amount),
+           который увеличивает Balance только на положительную сумму.
+
+        7. Снятие.
+           Добавь метод Withdraw(int amount),
+           который уменьшает Balance,
+           если сумма положительная и денег достаточно.
+
+        8. Описание счета.
+           Добавь свойство Info только для чтения
+           с номером счета и балансом.
+
+        Задачи на перенос
+
+        9. Товар.
+           Создай класс Product со свойствами Title, Price и Count.
+           Price и Count не должны становиться отрицательными.
+
+        10. Умный массив.
+            Создай класс SmartArray с приватным массивом.
+            Добавь свойства Length, Sum и Average только для чтения.
      */
-
-    #endregion
-
-    /* Продвинутые возможности:
-     1. init-аксессоры (C# 9.0) - для инициализации только при создании
-     2. required модификатор (C# 11) - обязательные свойства
-     3. Модификаторы доступа к аксессорам
-     4. Ковариантные возвращаемые типы свойств
-     */
-
-    #region Примеры продвинутых возможностей
-    class AdvancedExample
-    {
-        // Свойство с разными модификаторами доступа
-        public string ImportantData { get; protected set; }
-
-        // Init-only свойство
-        public string Config { get; init; }
-
-        // Required свойство (C# 11)
-        public required string RequiredField { get; set; }
-    }
-
-    class UsageExample
-    {
-        public static void Demo()
-        {
-            var example = new AdvancedExample
-            {
-                Config = "Some config",    // Можно установить только при инициализации
-                RequiredField = "Value"   // Обязательное поле
-            };
-
-            // example.Config = "New value"; // Ошибка - только для инициализации
-        }
-    }
     #endregion
 }
