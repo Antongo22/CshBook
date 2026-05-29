@@ -1,245 +1,215 @@
-﻿using System;
-
 namespace CshBook.Lessons.Chapter2.Lesson22Encapsulation
 {
-    /* Урок 22: Инкапсуляция в C#
-     
-    Инкапсуляция - один из ключевых принципов ООП, заключающийся в:
-    - Сокрытии внутренней реализации объекта
-    - Защите данных от некорректного доступа
-    - Управлении доступом к состоянию объекта
-    - Объединении данных и методов работы с ними в единую сущность
+    #region Теория
+    /*
+        Инкапсуляция - это принцип ООП,
+        при котором объект сам защищает свое состояние.
+
+        Проще:
+        поля объекта не должны свободно меняться откуда угодно.
+        Объект должен давать понятные методы и свойства
+        для работы с собой.
      */
 
-    #region Пример без инкапсуляции (проблемный подход)
-    class NakedAccount
-    {
-        public decimal Balance; // Публичное поле - опасно!
+    /*
+        Плохой пример:
 
-        public void PrintBalance()
-        {
-            Console.WriteLine($"Баланс: {Balance}");
-        }
-    }
+        account.Balance = -1000000;
+
+        Если Balance - обычное public-поле,
+        программа позволит записать некорректное значение.
+     */
+
+    /*
+        Хороший подход:
+
+        - поле баланса private;
+        - снаружи можно вызвать Deposit или Withdraw;
+        - методы сами проверяют правила.
+
+        Так объект не дает привести себя
+        в неправильное состояние.
+     */
+
+    /*
+        Инкапсуляция строится из нескольких инструментов:
+
+        - private-поля;
+        - public-методы;
+        - свойства с get/set;
+        - private-вспомогательные методы;
+        - проверка данных в одном месте.
+     */
+
+    /*
+        Модификаторы доступа на этом этапе:
+
+        private - доступ только внутри класса;
+        public - доступ снаружи;
+        internal - доступ внутри проекта.
+
+        protected разберем подробнее вместе с наследованием.
+     */
+
+    /*
+        Главное правило:
+        сначала делай поле private.
+
+        Если внешнему коду нужно читать значение,
+        добавь свойство get.
+
+        Если внешнему коду нужно менять состояние,
+        дай метод с понятным названием и проверками.
+     */
+
+    /*
+        Инкапсуляция не про "спрятать все".
+        Она про четкую границу:
+        что объект разрешает делать снаружи,
+        а что остается его внутренней логикой.
+     */
     #endregion
 
-    #region Пример с инкапсуляцией (правильный подход)
-    class ProtectedAccount
+    class OpenAccount
     {
-        private decimal _balance; // Приватное поле
-        private string _password;
+        public int Balance;
+    }
 
-        public ProtectedAccount(string password, decimal initialBalance)
+    class SafeAccount
+    {
+        private int _balance;
+        private string _pin;
+
+        public string OwnerName { get; }
+
+        public SafeAccount(string ownerName, string pin, int startBalance)
         {
-            _password = password;
-            _balance = initialBalance;
+            OwnerName = ownerName;
+            _pin = pin;
+
+            if (startBalance > 0)
+            {
+                _balance = startBalance;
+            }
         }
 
-        // Публичные методы для работы с балансом
-        public void Deposit(decimal amount, string password)
+        public string Info
         {
-            ValidatePassword(password);
-            if (amount <= 0) throw new ArgumentException("Сумма должна быть положительной");
+            get
+            {
+                return $"{OwnerName}: баланс {_balance}";
+            }
+        }
+
+        public void Deposit(int amount)
+        {
+            if (amount <= 0)
+            {
+                Console.WriteLine("Сумма пополнения должна быть положительной.");
+                return;
+            }
+
             _balance += amount;
         }
 
-        public void Withdraw(decimal amount, string password)
+        public void Withdraw(int amount, string pin)
         {
-            ValidatePassword(password);
-            if (amount <= 0) throw new ArgumentException("Сумма должна быть положительной");
-            if (amount > _balance) throw new InvalidOperationException("Недостаточно средств");
+            if (!IsCorrectPin(pin))
+            {
+                Console.WriteLine("Неверный PIN.");
+                return;
+            }
+
+            if (amount <= 0)
+            {
+                Console.WriteLine("Сумма снятия должна быть положительной.");
+                return;
+            }
+
+            if (amount > _balance)
+            {
+                Console.WriteLine("Недостаточно средств.");
+                return;
+            }
+
             _balance -= amount;
         }
 
-        public void PrintBalance(string password)
+        private bool IsCorrectPin(string pin)
         {
-            ValidatePassword(password);
-            Console.WriteLine($"Баланс: {_balance}");
-        }
-
-        private void ValidatePassword(string password)
-        {
-            if (_password != password)
-                throw new UnauthorizedAccessException("Неверный пароль");
+            return _pin == pin;
         }
     }
-    #endregion
 
-    internal class Lesson22Encapsulation
+    internal static class Lesson22Encapsulation
     {
         public static void Main_()
         {
-            // Пример без инкапсуляции
-            NakedAccount acc1 = new NakedAccount();
-            acc1.Balance = -1000000; // Некорректное значение
-            acc1.PrintBalance();     // Баланс: -1000000
+            OpenAccount openAccount = new OpenAccount();
+            openAccount.Balance = -1000000;
+            Console.WriteLine($"Открытый счет: {openAccount.Balance}");
 
-            // Пример с инкапсуляцией
-            ProtectedAccount acc2 = new ProtectedAccount("qwerty", 1000);
+            Console.WriteLine("----");
 
-            // Попытка прямого доступа к полям:
-            // acc2._balance = 5000; // Ошибка компиляции
-            // acc2._password = "new"; // Ошибка компиляции
+            SafeAccount safeAccount = new SafeAccount("Мария", "1234", 1000);
+            safeAccount.Deposit(500);
+            safeAccount.Withdraw(300, "1234");
+            safeAccount.Withdraw(5000, "1234");
+            safeAccount.Withdraw(100, "0000");
 
-            acc2.Deposit(500, "qwerty");
-            // acc2.Withdraw(2000, "wrong_pass"); // Выбросит исключение
-            acc2.PrintBalance("qwerty"); // Баланс: 1500
+            Console.WriteLine(safeAccount.Info);
         }
     }
-
-    /* Ключевые аспекты инкапсуляции:
-     1. Модификаторы доступа (private, protected, internal)
-     2. Свойства вместо публичных полей
-     3. Методы для управления состоянием
-     4. Валидация данных при изменении состояния
-     5. Сокрытие сложной внутренней логики
-     */
-
-
-    /*
-     * Модификаторы доступа в C#
-     * 
-     * Модификаторы доступа определяют видимость и доступность членов класса:
-     * 
-     * 1. private (по умолчанию для полей класса)
-     *    - Доступ только внутри класса/структуры
-     *    - Пример:
-    */
-    class Example
-    {
-        private int _secret; // Видно только внутри Example1
-    }
-
-    /*
-     * 2. protected
-     *    - Доступ внутри класса и производных классов
-     *    - Пример:
-    */
-    class BaseClass
-    {
-        protected int x; // Видно в BaseClass и наследниках
-    }
-
-    class DerivedClass : BaseClass
-    {
-        void Method() => x = 10; // OK
-    }
-
-    /*
-     * 3. internal
-     *    - Доступ в пределах сборки (проекта)
-     *    - Пример:
-    */
-    internal class InternalClass { } // Видна во всей сборке
-
-    /*
-     * 4. protected internal
-     *    - Объединение protected и internal
-     *    - Доступен: 
-     *      - В текущей сборке
-     *      - В производных классах других сборок
-     *    - Пример:
-    */
-    public class Example4
-    {
-        protected internal int hybridValue;
-    }
-
-    /*
-     * 5. public
-     *    - Полный доступ из любого места
-     *    - Пример:
-    */
-    public class PublicClass
-    {
-        public string OpenData; // Доступна везде
-    }
-
-    /*
-     * Особые случаи:
-     * - Для членов интерфейса: по умолчанию public (нельзя указывать модификаторы)
-     * - Для структур: по умолчанию private (как у классов)
-     * - Для пространств имен: всегда public (неявно)
-     * 
-     * Таблица видимости:
-     * 
-     * | Модификатор     | Текущий класс | Наследники | Сборка  | Вне сборки |
-     * |-----------------|---------------|------------|---------|------------|
-     * | private         |       ✓       |     ✗      |    ✗    |     ✗      |
-     * | protected       |       ✓       |     ✓      |    ✗    |     ✗      |
-     * | internal        |       ✓       |     ✗      |    ✓    |     ✗      |
-     * | protected internal|     ✓       |     ✓      |    ✓    |     ✗      |
-     * | public          |       ✓       |     ✓      |    ✓    |     ✓      |
-     */
-
-
-
-    #region Задание
-    /* Создайте класс Temperature с инкапсуляцией:
-     - Приватное поле _celsius
-     - Публичное свойство Celsius с валидацией (-273.15 <= value)
-     - Свойство Fahrenheit (только чтение) с преобразованием
-     - Метод SetFromFahrenheit(double fahr)
-     - Конструктор с установкой в градусах Цельсия
-     */
-
-    #endregion
 
     #region Задачи
-    /* Реализуйте класс SmartHouse с инкапсуляцией:
-     - Приватные поля: температура, освещенность, безопасный режим
-     - Публичные методы: SetTemperature, AdjustLight, ToggleSecurity
-     - Приватные методы: CheckClimateConditions, UpdateSecurityLog
-     - Свойства только для чтения: CurrentStatus, EnergyConsumption
-     - Валидация входных значений в методах
+    /*
+        Разминка
+
+        1. Закрытый баланс.
+           Создай класс Wallet.
+           Сделай поле _money private.
+
+        2. Чтение баланса.
+           Добавь свойство Money только для чтения.
+
+        3. Пополнение.
+           Добавь метод AddMoney(int amount),
+           который принимает только положительную сумму.
+
+        Основные задачи
+
+        4. Снятие денег.
+           Добавь метод SpendMoney(int amount),
+           который тратит деньги только если их достаточно.
+
+        5. Приватная проверка.
+           Добавь private-метод IsValidAmount(int amount),
+           который проверяет, что сумма больше нуля.
+
+        6. Банковский счет.
+           Создай класс BankAccount с private-полями _balance и _pin.
+           Добавь методы Deposit и Withdraw.
+
+        7. Проверка PIN.
+           В BankAccount добавь private-метод IsCorrectPin(string pin).
+           Снятие денег должно работать только с правильным PIN.
+
+        8. Температура.
+           Создай класс Temperature.
+           Храни градусы Цельсия в private-поле.
+           Не разрешай устанавливать температуру ниже -273.
+
+        Задачи на перенос
+
+        9. Умный дом.
+           Создай класс SmartHouse.
+           Внутри храни температуру, свет и режим охраны.
+           Снаружи дай методы SetTemperature, SetLight и ToggleSecurity.
+
+        10. Игровой персонаж.
+            Создай класс GameCharacter.
+            Закрой здоровье в private-поле.
+            Добавь методы TakeDamage и Heal с проверками.
      */
-
-    
-    #endregion
-
-    /* Преимущества инкапсуляции:
-     1. Защита от некорректных данных
-     2. Возможность изменения внутренней реализации без влияния на клиентов
-     3. Упрощение использования сложных систем
-     4. Улучшение безопасности данных
-     5. Централизация логики управления состоянием
-     */
-
-    #region Советы по инкапсуляции
-    class EncapsulationTips
-    {
-        // 1. Всегда делайте поля приватными по умолчанию
-        private int _hiddenData;
-
-        // 2. Используйте свойства вместо публичных полей
-        public string SafeData { get; private set; }
-
-        // 3. Группируйте связанные поля в классы
-        private class EngineInternals
-        {
-            public int RPM;
-            public double OilPressure;
-        }
-
-        // 4. Разделяйте методы на публичные и приватные
-        public void PublicMethod()
-        {
-            // Вызывает внутренние методы
-            PrivateMethod();
-        }
-
-        private void PrivateMethod()
-        {
-            // Скрытая реализация
-        }
-
-        // 5. Используйте фабричные методы для сложной инициализации
-        public static EncapsulationTips CreateAdvanced()
-        {
-            var obj = new EncapsulationTips();
-            // Сложная логика инициализации
-            return obj;
-        }
-    }
     #endregion
 }
