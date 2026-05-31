@@ -1,184 +1,182 @@
-﻿using System;
-
 namespace CshBook.Lessons.Chapter2.Lesson24Polymorphism
 {
-    /* Урок 24: Полиморфизм в C#
-     
-    Полиморфизм - это способность объектов с одинаковой спецификацией 
-    иметь различную реализацию. В C# полиморфизм реализуется через:
-    - Переопределение методов (override)
-    - Перегрузку методов (overload)
-    - Приведение типов
-    - Виртуальные методы
+    #region Теория
+    /*
+        Полиморфизм - это возможность работать с разными объектами
+        через один общий тип.
+
+        Главное ощущение:
+        команда одна, а поведение разное.
      */
 
-    #region Базовый пример с животными
+    /*
+        Например, есть базовый класс Animal
+        и наследники Dog и Cat.
+
+        Мы можем хранить их в массиве Animal[],
+        вызывать MakeSound(),
+        но каждый объект издаст свой звук.
+     */
+
+    /*
+        Для такого поведения нужны два ключевых слова:
+
+        virtual - базовый класс разрешает переопределить метод;
+        override - наследник дает свою реализацию метода.
+     */
+
+    /*
+        Если метод не virtual,
+        обычный наследник не может переопределить его через override.
+
+        Поэтому полиморфизм проектируют заранее:
+        базовый класс сам показывает,
+        какие методы наследники могут менять.
+     */
+
+    /*
+        Полиморфизм особенно полезен,
+        когда код должен работать не с конкретным Dog или Cat,
+        а с любым Animal.
+
+        Так программа становится гибче:
+        можно добавить новый класс Bird,
+        и общий код почти не изменится.
+     */
+
+    /*
+        Не смешивай сейчас полиморфизм с перегрузкой методов.
+
+        Перегрузка - это несколько методов с одним именем,
+        но разными параметрами.
+
+        Полиморфизм в этом уроке - это virtual/override
+        и работа через базовый тип.
+     */
+    #endregion
+
     class Animal
     {
-        public string Name { get; set; }
+        public string Name { get; }
 
         public Animal(string name)
         {
             Name = name;
         }
 
-        // Виртуальный метод - может быть переопределен
         public virtual void MakeSound()
         {
-            Console.WriteLine("Some animal sound");
+            Console.WriteLine($"{Name} издает обычный звук.");
         }
 
-        // Перегрузка метода
-        public void MakeSound(int volume)
+        public virtual void Move()
         {
-            Console.WriteLine($"Animal sound at volume {volume}");
+            Console.WriteLine($"{Name} двигается.");
         }
     }
 
     class Dog : Animal
     {
-        public Dog(string name) : base(name) { }
+        public Dog(string name) : base(name)
+        {
+        }
 
-        // Переопределение метода
         public override void MakeSound()
         {
-            Console.WriteLine($"{Name} says: Woof!");
+            Console.WriteLine($"{Name}: гав!");
+        }
+
+        public override void Move()
+        {
+            Console.WriteLine($"{Name} бежит.");
         }
     }
 
     class Cat : Animal
     {
-        public Cat(string name) : base(name) { }
+        public Cat(string name) : base(name)
+        {
+        }
 
         public override void MakeSound()
         {
-            Console.WriteLine($"{Name} says: Meow!");
+            Console.WriteLine($"{Name}: мяу!");
         }
 
-        // Новая реализация для кошки
-        public new void MakeSound(int volume)
+        public override void Move()
         {
-            Console.WriteLine($"Purring at volume {volume}");
+            Console.WriteLine($"{Name} крадется.");
         }
     }
-    #endregion
 
-    internal class Lesson24Polymorphism
+    internal static class Lesson24Polymorphism
     {
         public static void Main_()
         {
-            // Полиморфизм через переопределение
-            Animal myDog = new Dog("Rex");
-            Animal myCat = new Cat("Whiskers");
-
-            myDog.MakeSound(); // Вызовется Dog.MakeSound()
-            myCat.MakeSound(); // Вызовется Cat.MakeSound()
-
-            // Полиморфизм через перегрузку
-            myDog.MakeSound(5); // Вызовется Animal.MakeSound(int)
-            ((Cat)myCat).MakeSound(3); // Явное приведение к Cat
-
-            // Массив разных животных
-            Animal[] zoo = { new Dog("Buddy"), new Cat("Misty") };
-            foreach (var animal in zoo)
+            Animal[] animals =
             {
-                animal.MakeSound(); // Вызовется соответствующая реализация
+                new Dog("Бобик"),
+                new Cat("Муся"),
+                new Animal("Неизвестное животное")
+            };
+
+            for (int i = 0; i < animals.Length; i++)
+            {
+                animals[i].MakeSound();
+                animals[i].Move();
+                Console.WriteLine("----");
             }
         }
     }
 
-    /* Виды полиморфизма:
-     1. Ad-hoc (перегрузка методов)
-     2. Параметрический (дженерики)
-     3. Подтипов (наследование и переопределение)
-     */
-
-    #region Пример с перегрузкой
-    class Calculator
-    {
-        // Перегрузка метода Add
-        public int Add(int a, int b) => a + b;
-        public double Add(double a, double b) => a + b;
-        public string Add(string a, string b) => a + b;
-    }
-    #endregion
-
     #region Задачи
-    /* Задание:
-    Создайте класс Shape с:
-    - Виртуальным методом Draw()
-    - Перегруженным методом Draw(int thickness)
-    Наследуйте классы Circle и Square, переопределив Draw()
-    */
+    /*
+        Разминка
 
-    /* Творческое задание:
-    Реализуйте систему для рисования фигур:
-    - Базовый класс GraphicObject с виртуальными методами
-    - Подклассы: Line, Rectangle, Text
-    - Переопределите методы отрисовки
-    - Реализуйте перегрузку методов
-    */
-    #endregion
+        1. Базовая фигура.
+           Создай класс Shape с виртуальным методом Draw().
 
-    /* Особенности полиморфизма в C#:
-     1. virtual - разрешает переопределение
-     2. override - заменяет реализацию
-     3. new - скрывает метод родителя
-     4. abstract - требует переопределения
-     5. sealed - запрещает дальнейшее переопределение
+        2. Круг и квадрат.
+           Создай классы Circle и Square,
+           которые наследуются от Shape
+           и переопределяют Draw().
+
+        3. Массив фигур.
+           Создай массив Shape[] с кругом и квадратом.
+           В цикле вызови Draw() у каждой фигуры.
+
+        Основные задачи
+
+        4. Площадь.
+           Добавь в Shape виртуальный метод GetArea(),
+           который возвращает 0.
+           Переопредели его в Circle и Square.
+
+        5. Транспорт.
+           Создай базовый класс Vehicle с виртуальным методом Move().
+           Создай Car, Boat и Airplane с разным поведением.
+
+        6. Уведомления.
+           Создай базовый класс Notification с виртуальным методом Send().
+           Создай EmailNotification и SmsNotification.
+
+        7. Зарплата сотрудников.
+           Создай базовый класс Employee с виртуальным методом CalculateSalary().
+           Создай Manager, Developer и Intern.
+
+        Задачи на перенос
+
+        8. Игровые атаки.
+           Создай базовый класс AttackAction с виртуальным методом Execute().
+           Создай SwordAttack, FireballAttack и BowAttack.
+
+        9. Документы.
+           Создай базовый класс Document с виртуальным методом Print().
+           Создай PdfDocument и TextDocument.
+
+        10. Новый наследник без изменения цикла.
+            Добавь новый класс-наследник к любой задаче выше
+            и проверь, что общий цикл по базовому массиву работает без переписывания.
      */
-
-    #region Пример с new и sealed
-    class BaseClass
-    {
-        public virtual void Method1() { Console.WriteLine("Base Method1"); }
-        public virtual void Method2() { Console.WriteLine("Base Method2"); }
-    }
-
-    class Derived : BaseClass
-    {
-        public new void Method1() { Console.WriteLine("Derived Method1"); }
-        public sealed override void Method2() { Console.WriteLine("Derived Method2"); }
-    }
-
-    class SecondDerived : Derived
-    {
-        // public override void Method2() {} // Ошибка - метод sealed
-    }
     #endregion
-
-
-    /* Дополнительные задачи для практики:
-    
-    1. Создайте класс Calculator с:
-       - Виртуальным методом int Compute(int a, int b)
-       - Перегруженными версиями для double и decimal
-       - Наследники: AddCalculator, MultiplyCalculator
-    
-    2. Реализуйте систему для банковских операций:
-       - Базовый класс Account с виртуальными методами Deposit/Withdraw
-       - Подклассы: SavingsAccount, CheckingAccount
-       - Каждый тип счета должен иметь свою логику операций
-    
-    3. Создайте иерархию сотрудников компании:
-       - Базовый класс Employee с виртуальным методом CalculateSalary()
-       - Подклассы: Manager, Developer, Intern
-       - Реализуйте разную логику расчета зарплаты
-    */
-
-    /* Дополнительные пояснения:
-    
-    1. Разница между override и new:
-       - override заменяет реализацию в иерархии
-       - new создает новый метод, скрывая родительский
-    
-    2. Когда использовать virtual/override:
-       - Когда нужна возможность изменения поведения в наследниках
-       - Для реализации полиморфных вызовов через базовый класс
-    
-    3. Особенности производительности:
-       - Виртуальные методы немного медленнее из-за vtable
-       - Невиртуальные вызовы разрешаются на этапе компиляции
-    */
-
 }
